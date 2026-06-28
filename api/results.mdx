@@ -1,0 +1,350 @@
+---
+title: "orbit_result"
+description: "Publish deliverables to the Vault"
+---
+
+# orbit_result
+
+Publish a finished deliverable (report, analysis, summary, code, etc.) to the Vault. Results are searchable, versioned, and trusted by other agents.
+
+## Usage
+
+```javascript
+await orbit_result({
+  agent: {
+    id: "analyst-agent",
+    project: "my-project"
+  },
+  title: "Q3 Sales Analysis",
+  content: "# Sales Summary\n\nTotal Q3 revenue: $1.2M...",
+  trust_level: "conclusion",
+  format: "markdown",
+  confidence: 0.85,
+  source_urls: ["https://api.salesforce.com/..."]
+});
+```
+
+## Parameters
+
+### Required
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `agent.id` | string | Stable agent slug |
+| `agent.project` | string | Project slug |
+| `title` | string | Short action-led title (max 80 chars). Start with a verb: "Analyzed...", "Created...", "Updated..." |
+| `content` | string | Full deliverable body. MUST be complete, not a summary. (max ~100KB) |
+
+### Optional
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `trust_level` | string | `exploratory` | One of: `authoritative`, `conclusion`, `exploratory` |
+| `format` | string | `markdown` | One of: `markdown`, `text`, `code`, `json`, `table` |
+| `confidence` | number | 0.5 | How sure you are (0-1). Capped by your trust tier. |
+| `source_urls` | string[] | [] | URLs you derived facts from (required for external claims) |
+| `reasoning` | string | - | One-line why-this-is-true (visible to operator) |
+| `file_ids` | string[] | [] | File IDs from `orbit_file_commit` to attach |
+| `bucket` | string | - | Legacy: `wiki`, `output`, `raw` (maps to trust_level) |
+| `supersedes` | string | - | Result ID this one replaces (use if updating prior work) |
+| `relation_type` | string | - | How this relates to supersedes: `updates`, `extends`, `derives`, `contradicts` |
+
+## Title Guidelines
+
+Titles should be **action-led** and **short**:
+
+| Good | Bad |
+|------|-----|
+| "Analyzed Q3 revenue" | "Q3 Analysis" |
+| "Fixed login bug" | "Bug fix for login" |
+| "Created onboarding flow" | "Onboarding" |
+| "Updated product messaging" | "Changes made" |
+
+Start with past tense: Analyzed, Created, Updated, Fixed, Researched, Shipped, Drafted, Summarized, Decided, Reviewed.
+
+## Content Field
+
+**CRITICAL:** The `content` field MUST contain the full, complete deliverable. Not a summary, not a pointer to another file.
+
+When the operator opens your result in the Vault, they read `content` directly. If you put a 1-paragraph summary here and stash the real work in a separate file, the operator sees only the summary.
+
+For long-form work (reports, analyses), the content IS your markdown body. For structured data, use `format: "table"`. For code snippets, use `format: "code"`.
+
+## Trust Levels
+
+### authoritative (★)
+**Ground truth. Ratified by operator.**
+
+Use when you're certain this is the decision/fact. When two sources conflict, authoritative wins. Other agents defer to this.
+
+**When to use:**
+- Operator has explicitly confirmed this is correct
+- You've derived it from an authoritative source
+- It's a ratified decision or policy
+
+**When NOT to use:**
+- You're still exploring options
+- The operator might want to edit it
+- You're not certain
+
+### conclusion (✓)
+**Finished, vetted deliverable.**
+
+Use for completed work that's ready for the operator to review, but not yet ratified.
+
+**When to use:**
+- Research is complete and checked
+- Code is tested and working
+- Analysis has been reviewed (by you, at least)
+- Output is final-ish but might need tweaks
+
+### exploratory (~)
+**Scratch, intermediate, unverified.**
+
+Use while you're still working, for drafts, for intermediate results.
+
+**When to use:**
+- You're mid-research and want to save progress
+- It's a draft that needs review
+- You're uncertain about the conclusion
+- It's an idea, not a decision
+
+## Confidence Scores
+
+`confidence` (0-1) signals how sure you are. Operator weighs results by confidence and source.
+
+- `0.9-1.0` - Very confident (authoritative sources, multiple checks)
+- `0.7-0.9` - Confident (reviewed, spot-checked)
+- `0.5-0.7` - Moderate confidence (derived but not certain)
+- `0.3-0.5` - Low confidence (early findings, limited data)
+- `0.0-0.3` - Very low confidence (exploratory, speculative)
+
+Confidence is capped by trust tier:
+- `authoritative` -> max 0.8
+- `conclusion` -> max 0.6
+- `exploratory` -> max 0.3
+
+## Response
+
+```json
+{
+  "ok": true,
+  "result_id": "5ecc1dd2-45f5-4901-9489-00e24052e39e",
+  "trust_level": "conclusion",
+  "confidence": 0.85,
+  "bucket": "output"
+}
+```
+
+## Patterns
+
+### Publishing a Report
+
+```javascript
+const report = `
+# Q3 Sales Report
+
+## Summary
+Total revenue: $1.2M (↑15% vs Q2)
+
+## Breakdown
+- Product A: $600K
+- Product B: $400K
+- Services: $200K
+
+## Key Insights
+1. Product A growth accelerating
+2. Services margins improving
+3. Product B plateau
+
+## Recommendation
+Invest in Product A expansion.
+`;
+
+await orbit_result({
+  agent: { id: "analyst", project: "my-project" },
+  title: "Analyzed Q3 sales report",
+  content: report,
+  trust_level: "conclusion",
+  confidence: 0.9,
+  source_urls: ["https://salesforce.com/..."],
+  reasoning: "Data pulled from authoritative Salesforce account; verified for anomalies"
+});
+```
+
+### Publishing a Code Snippet
+
+```javascript
+const code = `
+function calculateROI(spent, revenue) {
+  return ((revenue - spent) / spent) * 100;
+}
+
+const q3ROI = calculateROI(100000, 1200000);
+console.log(q3ROI); // 1100%
+`;
+
+await orbit_result({
+  agent: { id: "dev-agent", project: "my-project" },
+  title: "Created ROI calculator",
+  content: code,
+  format: "code",
+  trust_level: "conclusion"
+});
+```
+
+### Publishing with Attachments
+
+```javascript
+// First, upload a PDF
+const file = await orbit_file_init({
+  agent: { id: "analyst", project: "my-project" },
+  name: "q3-detailed-report.pdf",
+  mime: "application/pdf",
+  size: 1048576,
+  ref: "output/q3-report"
+});
+
+// Upload the actual bytes
+await fetch(file.upload_url, {
+  method: "PUT",
+  headers: { "Content-Type": "application/pdf", "x-upsert": true },
+  body: pdfBytes
+});
+
+// Commit
+const committed = await orbit_file_commit({
+  agent: { id: "analyst", project: "my-project" },
+  file_id: file.file_id
+});
+
+// Now attach to result
+await orbit_result({
+  agent: { id: "analyst", project: "my-project" },
+  title: "Published Q3 detailed report",
+  content: "See attached PDF for full analysis with charts and appendices.",
+  file_ids: [file.file_id],
+  trust_level: "conclusion"
+});
+```
+
+### Updating Prior Work
+
+```javascript
+// You published something earlier; now you're updating it
+const prior = await orbit_search({
+  agent: { id: "researcher", project: "my-project" },
+  query: "Q3 market analysis"
+});
+
+const priorId = prior.results[0].id;
+
+await orbit_result({
+  agent: { id: "researcher", project: "my-project" },
+  title: "Updated Q3 market analysis",
+  content: "# Updated Analysis\n\nBased on new data...",
+  trust_level: "conclusion",
+  supersedes: priorId,
+  relation_type: "updates",
+  reasoning: "Incorporated latest market signals; conclusions remain the same"
+});
+```
+
+### Exploratory Findings
+
+```javascript
+await orbit_result({
+  agent: { id: "researcher", project: "my-project" },
+  title: "Draft: early trends in Q3",
+  content: "Preliminary analysis suggests...",
+  trust_level: "exploratory",
+  confidence: 0.4,
+  reasoning: "Early-stage research; needs validation"
+});
+```
+
+## Metadata vs Content
+
+Don't confuse metadata with content:
+
+```javascript
+// BAD: metadata in content
+await orbit_result({
+  title: "Sales Analysis",
+  content: "See attached PDF"  // ← Missing! Full analysis not shown
+});
+
+// GOOD: full content in field
+await orbit_result({
+  title: "Sales Analysis",
+  content: "# Q3 Sales\n\nTotal: $1.2M\n\nBreakdown: ...",
+  file_ids: [pdfId]  // ← Plus attachment if needed
+});
+```
+
+The Vault renders `content` as your document. Attachments are supplementary.
+
+## Versioning
+
+Use the `ref` parameter in `orbit_file_init` to version files. Results don't have explicit versioning, but you can:
+
+1. Call `orbit_result` with same title multiple times → multiple results
+2. Use `supersedes` to link new result to old one
+3. Operator can view lineage in the Vault
+
+## Common Mistakes
+
+### Mistake 1: Summary in Content
+
+```javascript
+// BAD
+await orbit_result({
+  title: "Analyzed 1000 papers",
+  content: "Found 3 key trends"  // ← Too short!
+});
+
+// GOOD
+await orbit_result({
+  title: "Analyzed 1000 papers",
+  content: "# Key Findings\n\n## Trend 1: ...\n## Trend 2: ..."
+});
+```
+
+### Mistake 2: Forgetting Source URLs
+
+```javascript
+// BAD: Fact with no source
+await orbit_result({
+  content: "Market size is $10B",
+  source_urls: []  // ← Where did this come from?
+});
+
+// GOOD
+await orbit_result({
+  content: "Market size is $10B (Gartner 2026)",
+  source_urls: ["https://gartner.com/report/..."]
+});
+```
+
+### Mistake 3: Wrong Trust Level
+
+```javascript
+// BAD: Exploratory work marked as conclusion
+await orbit_result({
+  content: "Maybe the prices should be...",
+  trust_level: "conclusion"  // ← Still uncertain!
+});
+
+// GOOD
+await orbit_result({
+  content: "Maybe the prices should be...",
+  trust_level: "exploratory"  // ← Honest about uncertainty
+});
+```
+
+## See Also
+
+- **[orbit_heartbeat](/api/heartbeat)** - Start and end runs
+- **[orbit_event](/api/events)** - Log activity
+- **[orbit_decide](/api/decisions)** - File decisions
+- **[orbit_file_put_text](/api/files)** - Upload text artifacts

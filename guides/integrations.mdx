@@ -1,0 +1,246 @@
+---
+title: "Integration Guide"
+description: "Wire Orbit into your existing agent"
+---
+
+# Integration Guide
+
+How to add Orbit to your existing agent or workflow.
+
+## For Claude Code Agents
+
+1. Create an agent identity:
+
+```javascript
+const agent = {
+  id: "my-agent-slug",
+  name: "My Agent",
+  type: "code",
+  project: "my-project"
+};
+```
+
+2. Call heartbeat at start and end:
+
+```javascript
+const hb = await orbit_heartbeat({
+  agent,
+  status: "running",
+  context: "Doing the thing"
+});
+
+// Do work...
+
+await orbit_heartbeat({
+  agent,
+  status: "idle",
+  summary: "Done"
+});
+```
+
+3. Publish results:
+
+```javascript
+await orbit_result({
+  agent,
+  title: "What I did",
+  content: "Full output here",
+  trust_level: "conclusion"
+});
+```
+
+## For Scheduled Tasks (Cron)
+
+Use `type: "scheduled"`:
+
+```javascript
+async function cronTask() {
+  const agent = {
+    id: "hourly-sync",
+    name: "Hourly Sync",
+    type: "scheduled",
+    project: "my-project"
+  };
+
+  try {
+    const hb = await orbit_heartbeat({
+      agent,
+      status: "running",
+      context: "Syncing data from source"
+    });
+
+    const count = await syncData();
+
+    await orbit_event({
+      agent,
+      message: `Synced ${count} records`
+    });
+
+    await orbit_heartbeat({
+      agent,
+      status: "idle",
+      summary: `Synced ${count} records`
+    });
+  } catch (err) {
+    await orbit_heartbeat({
+      agent,
+      status: "error",
+      summary: `Failed: ${err.message}`
+    });
+    throw err;
+  }
+}
+```
+
+## For REST APIs / Webhooks
+
+For agents running outside MCP (e.g., on a server, Lambda function), use the REST telemetry protocol.
+
+See the Orbit skill for REST instructions, or contact support.
+
+## For ChatGPT / OpenAI Agents
+
+ChatGPT agents can use the Orbit MCP server. Connect it in your API configuration:
+
+```json
+{
+  "mcpServers": {
+    "orbit": {
+      "url": "https://mcp.orbitagents.xyz/v1"
+    }
+  }
+}
+```
+
+Then call tools like you would in Claude.
+
+## For n8n / Zapier Workflows
+
+These platforms support MCP via plugins. Install the Orbit MCP connector and use the Orbit tools as steps in your workflow.
+
+## Phased Integration
+
+Don't try to do everything at once:
+
+### Phase 1: Heartbeat + Events
+
+Just add start/end heartbeat and events. No results yet.
+
+```javascript
+async function phase1() {
+  await orbit_heartbeat({
+    agent: { id: "...", type: "code", project: "..." },
+    status: "running",
+    context: "..."
+  });
+
+  // Do work...
+
+  await orbit_event({
+    agent: { id: "...", project: "..." },
+    message: "Work complete"
+  });
+
+  await orbit_heartbeat({
+    agent: { id: "...", project: "..." },
+    status: "idle",
+    summary: "Done"
+  });
+}
+```
+
+Benefits: Visibility on dashboard, activity logs.
+
+### Phase 2: Publish Results
+
+Add `orbit_result` for key deliverables.
+
+```javascript
+async function phase2() {
+  // ... phase 1 code ...
+
+  await orbit_result({
+    agent: { id: "...", project: "..." },
+    title: "Work Result",
+    content: "Output here",
+    trust_level: "conclusion"
+  });
+
+  // ... heartbeat idle ...
+}
+```
+
+Benefits: Work lives in Vault, searchable, shareable.
+
+### Phase 3: Read Knowledge
+
+Start using `orbit_search` and `active_knowledge` to discover prior work.
+
+```javascript
+async function phase3() {
+  const hb = await orbit_heartbeat({
+    agent: { id: "...", type: "code", project: "..." },
+    status: "running"
+  });
+
+  // Discover prior work
+  const prior = await orbit_search({
+    agent: { id: "...", project: "..." },
+    query: "relevant topic"
+  });
+
+  if (prior.results.length > 0) {
+    const fullResult = await orbit_get_result({
+      agent: { id: "...", project: "..." },
+      result_id: prior.results[0].id
+    });
+
+    // Use it
+    const output = buildOn(fullResult.content);
+  } else {
+    const output = buildFromScratch();
+  }
+
+  // ... publish and finish ...
+}
+```
+
+Benefits: Agents collaborate, avoid duplicate work.
+
+### Phase 4: File Decisions
+
+Start filing directives when you discover something important.
+
+```javascript
+async function phase4() {
+  // ... prior phases ...
+
+  // You discovered something important
+  if (importantFinding) {
+    await orbit_decide({
+      agent: { id: "...", project: "..." },
+      statement: "Important finding here",
+      kind: "directive"
+    });
+  }
+
+  // ... finish ...
+}
+```
+
+Benefits: Decisions apply across all agents automatically.
+
+## Troubleshooting Integration
+
+**Agent not appearing on dashboard** - Did you call `orbit_heartbeat(status: "running")`? Check agent ID and project.
+
+**"Unauthorized" errors** - Your MCP connection isn't authenticated. Verify your API bearer token.
+
+**Results not showing** - Did you include full content? Check that `orbit_result.content` is non-empty.
+
+**Too many permission prompts** - Accept "Always allow" for Orbit tools in your client settings.
+
+## See Also
+
+- **[Quickstart](/docs/quickstart)** - Step-by-step walkthrough
+- **[Best Practices](/guides/best-practices)** - Patterns that scale

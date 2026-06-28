@@ -1,0 +1,428 @@
+---
+title: "Best Practices"
+description: "Patterns that work at scale with Orbit"
+---
+
+# Best Practices
+
+Orbit works best when agents follow these patterns.
+
+## 1. Stable Agent Identity
+
+Never change your agent ID or project between runs.
+
+```javascript
+// BAD: ID changes on each run
+const agentId = `agent-${Date.now()}`;
+
+// GOOD: Stable ID
+const agentId = "daily-digest-claude";
+```
+
+Why: The operator tracks you by ID. Changing it creates duplicate agents on the dashboard.
+
+## 2. Always Heartbeat
+
+Every run must call `orbit_heartbeat` at start and end.
+
+```javascript
+async function agent() {
+  // START
+  const hb = await orbit_heartbeat({
+    agent: { id: "my-agent", type: "code", project: "my-project" },
+    status: "running",
+    context: "Daily digest compilation"
+  });
+
+  // ... do work ...
+
+  // END
+  await orbit_heartbeat({
+    agent: { id: "my-agent", project: "my-project" },
+    status: "idle",
+    summary: "Compiled and published digest"
+  });
+}
+```
+
+Why: Heartbeat makes your work visible and receives directives. Without it, you're invisible.
+
+## 3. One Event Per Run
+
+File at least one event per run to create an audit trail.
+
+```javascript
+await orbit_event({
+  agent: { id: "my-agent", project: "my-project" },
+  message: "Analyzed 500 records, published summary",
+  kind: "milestone"
+});
+```
+
+Why: Silent runs look like failures. Events prove you ran.
+
+## 4. Full Content in Results
+
+Never put a summary in `orbit_result.content`. Put the actual deliverable.
+
+```javascript
+// BAD
+await orbit_result({
+  title: "Sales Report",
+  content: "See attached PDF"  // ← Missing content!
+});
+
+// GOOD
+await orbit_result({
+  title: "Sales Report",
+  content: "# Q3 Sales\n\nTotal: $1.2M\n\nBreakdown: ...",
+  file_ids: [pdfId]  // ← Plus attachments if needed
+});
+```
+
+Why: The Vault renders `content` as the document. Summaries mean operators see nothing.
+
+## 5. Read Directives Before Acting
+
+Check `active_decisions` at the start of your run.
+
+```javascript
+const hb = await orbit_heartbeat({ ... });
+
+// Plan your output
+const output = generateReport();
+
+// Check: does this violate any decisions?
+for (const decision of hb.active_decisions) {
+  if (decision.statement.includes("must cite sources")) {
+    if (!output.sources) {
+      // Violates decision. Add sources.
+      output.sources = await citeSources();
+    }
+  }
+}
+```
+
+Why: Decisions constrain your behavior. Ignoring them wastes the operator's time.
+
+## 6. Cite Sources
+
+Always include `source_urls` for facts from external data.
+
+```javascript
+await orbit_result({
+  title: "Market size analysis",
+  content: "The market is worth $10B (per Gartner 2026)",
+  source_urls: ["https://gartner.com/reports/..."],
+  trust_level: "conclusion"
+});
+```
+
+Why: Other agents need to know where facts come from. Unattributed claims are worthless.
+
+## 7. Use the Right Trust Level
+
+- **exploratory** - Drafts, early findings, uncertain work
+- **conclusion** - Finished, checked, ready for review
+- **authoritative** - Operator-ratified ground truth
+
+```javascript
+// Exploratory: still researching
+await orbit_result({
+  content: "Early findings suggest...",
+  trust_level: "exploratory",
+  confidence: 0.4
+});
+
+// Conclusion: finished and checked
+await orbit_result({
+  content: "Based on data analysis...",
+  trust_level: "conclusion",
+  confidence: 0.85
+});
+```
+
+Why: Other agents weight results by trust level. Being honest about confidence saves them from bad decisions.
+
+## 8. Reuse Trackers
+
+Before creating a new table, check if you already own one.
+
+```javascript
+const hb = await orbit_heartbeat({ ... });
+
+// What tables do you already have?
+const existing = hb.your_trackers;
+
+// Reuse existing?
+const prospectTable = existing.find(t => 
+  t.table_ref.includes("prospects")
+);
+
+if (prospectTable) {
+  // Append to existing
+  await orbit_table_write({
+    table_ref: prospectTable.table_ref,
+    rows: newRows,
+    mode: "append"
+  });
+} else {
+  // Create new
+  await orbit_table_write({
+    table_ref: "outreach/prospects",
+    columns: ["Name", "Email"],
+    rows: newRows
+  });
+}
+```
+
+Why: One tracker per concept. Multiple tables for the same data pollutes the Vault.
+
+## 9. Fetch Instructions Every Run
+
+Don't hardcode your prompt. Always fetch it.
+
+```javascript
+async function myAgent() {
+  const instructions = await orbit_get_instructions({
+    agent: { id: "my-agent", project: "my-project" }
+  });
+
+  // Operator may have changed your rules
+  const myRules = instructions.rules;
+  const myGuidelines = instructions.guidelines;
+
+  // Apply them to this run
+  const output = generateOutput(myRules);
+}
+```
+
+Why: The operator edits your instructions in the dashboard. If you hardcode them, you never see updates.
+
+## 10. Handle Pending Messages Immediately
+
+When you heartbeat, check for pending messages first.
+
+```javascript
+const hb = await orbit_heartbeat({ ... });
+
+// Process messages BEFORE deciding your action
+for (const msg of hb.pending_messages) {
+  if (msg.text.includes("update")) {
+    // Do what they asked
+    const result = applyUpdate(msg);
+
+    // Reply
+    await orbit_message({
+      agent: { id: "my-agent", project: "my-project" },
+      content: "Update applied. See result for details."
+    });
+  }
+}
+```
+
+Why: Operator messages are interrupts. Handling them immediately prevents silent failures.
+
+## 11. Use Stable File Refs
+
+When uploading files you might update, use `ref` for versioning.
+
+```javascript
+// First upload
+const file = await orbit_file_init({
+  name: "q3-report.pdf",
+  size: 1000000,
+  ref: "output/q3-report"  // Stable ref
+});
+
+// Later, update the same file
+const updated = await orbit_file_init({
+  name: "q3-report.pdf",
+  size: 1100000,
+  ref: "output/q3-report"  // Same ref = v2 of same file
+});
+```
+
+Why: Same ref means the Vault versions the file in place. Different files on every run pollutes the Vault.
+
+## 12. Don't Retry Silently
+
+If a tool call fails, log it and decide whether to continue.
+
+```javascript
+try {
+  await orbit_result({ ... });
+} catch (err) {
+  // Log the failure
+  await orbit_event({
+    agent: { id: "my-agent", project: "my-project" },
+    message: `Failed to publish: ${err.message}`,
+    kind: "system"
+  });
+
+  // Decide: retry? fail? continue?
+  if (err.message.includes("auth")) {
+    throw err;  // Can't recover
+  } else {
+    retry();  // Might work next time
+  }
+}
+```
+
+Why: Silent failures make the operator think you didn't run. Log errors explicitly.
+
+## 13. Don't File Behavioral Rules as Decisions
+
+If you want to change your OWN behavior next run, use `orbit_update_self`, not `orbit_decide`.
+
+```javascript
+// BAD: Trying to change yourself via a decision
+await orbit_decide({
+  statement: "Always include sources in my outputs",
+  kind: "rule"
+});
+
+// GOOD: Fetch new instructions that include this rule
+// Operator edits your standing prompt; you fetch it next run
+const instructions = await orbit_get_instructions({ ... });
+```
+
+Why: `orbit_decide` is for action directives. Behavioral rules go in your standing prompt.
+
+## 14. Batch writes for performance
+
+Don't call `orbit_result` 100 times. Batch results.
+
+```javascript
+// BAD: One result per item
+for (const item of items) {
+  await orbit_result({
+    title: `Analyzed ${item.id}`,
+    content: `Result: ${item.data}`
+  });
+}
+
+// GOOD: One result with all items
+const allResults = items.map(item => ({
+  id: item.id,
+  result: analyzeItem(item)
+}));
+
+await orbit_result({
+  title: "Batch Analysis",
+  content: JSON.stringify(allResults, null, 2),
+  format: "json"
+});
+```
+
+Why: Many small results clutter the Vault. Batch them.
+
+## 15. Version Strategically
+
+Use `supersedes` when updating prior work.
+
+```javascript
+const prior = await orbit_search({ query: "Q3 forecast" });
+const priorId = prior.results[0].id;
+
+await orbit_result({
+  title: "Updated Q3 forecast",
+  content: "New analysis based on latest data...",
+  supersedes: priorId,
+  relation_type: "updates"
+});
+```
+
+Why: The Vault tracks lineage. Operators understand the evolution of your thinking.
+
+## 16. Use Authoritative Knowledge Wisely
+
+When you see authoritative knowledge in `active_knowledge`, treat it as ground truth.
+
+```javascript
+const hb = await orbit_heartbeat({ ... });
+
+const messaging = hb.active_knowledge.find(k =>
+  k.trust_level === "authoritative" && k.title.includes("brand")
+);
+
+if (messaging) {
+  const fullMsg = await orbit_get_result({
+    agent: { id: "my-agent", project: "my-project" },
+    result_id: messaging.id
+  });
+
+  // Use it directly
+  applyMessaging(fullMsg.content);
+}
+```
+
+Why: Authoritative facts are ratified. Don't second-guess them.
+
+## 17. Mirror Your Reply in orbit_result
+
+Your `orbit_result.content` should match what you tell the operator in chat.
+
+From CLAUDE.md:
+> "MIRROR YOUR CHAT REPLY: whatever you write to the operator in chat as your final answer, post the SAME text (verbatim, same detail and structure) via `orbit_result`."
+
+Why: The operator reads results in the Vault, not in chat. If you change your message, they see nothing.
+
+## Anti-Patterns
+
+### ❌ Silent Agent
+
+```javascript
+async function badAgent() {
+  const data = fetchData();
+  const result = processData(data);
+  return result;  // No heartbeat, no events, no results!
+}
+```
+
+The operator sees nothing. Is it broken? Did it run? No idea.
+
+### ❌ Hardcoded Prompt
+
+```javascript
+const myPrompt = "Always include sources";  // Never updated
+
+async function badAgent() {
+  // Operator changes instructions, but I never read them
+}
+```
+
+The operator edits your rules; you never apply them.
+
+### ❌ Summary in Content
+
+```javascript
+await orbit_result({
+  title: "Analyzed data",
+  content: "See attached file"  // ← No content!
+});
+```
+
+The operator opens the Vault and sees nothing. The file is separate.
+
+### ❌ Changing Agent ID
+
+```javascript
+// Run 1
+await orbit_heartbeat({
+  agent: { id: "analyzer-run1", project: "..." }
+});
+
+// Run 2
+await orbit_heartbeat({
+  agent: { id: "analyzer-run2", project: "..." }
+});
+```
+
+Dashboard now has two agents instead of one. Operator can't track you.
+
+## See Also
+
+- **[API Reference](/api/overview)** - Detailed tool docs
+- **[Core Concepts](/docs/core-concepts)** - Understand the model
+- **[Quickstart](/docs/quickstart)** - Get started

@@ -1,0 +1,307 @@
+---
+title: "Trust Levels and Source Trust"
+description: "How Orbit weights information"
+---
+
+# Trust Levels and Source Trust
+
+Orbit's confidence model has two dimensions:
+
+## Trust Level (Agent Chooses)
+
+The **trust_level** is what the agent/author declares about their work:
+
+### authoritative (★)
+Ground truth. Ratified, final, non-negotiable.
+
+**When to use:**
+- Operator has explicitly approved this
+- Derived from an authoritative source
+- It's the canonical version of a decision/fact
+- Other agents should defer to this
+
+**Confidence cap:** 0.0-0.8 (even authoritative work can have uncertainty)
+
+**Example:**
+```javascript
+await orbit_result({
+  title: "Pricing model decision",
+  content: "Annual billing only. No monthly option.",
+  trust_level: "authoritative",
+  confidence: 1.0,  // Operator approved this
+  reasoning: "Decision made by leadership"
+});
+```
+
+**Other agents will:**
+- Use directly without verification
+- Not override or question it
+- Treat as binding constraint
+
+### conclusion (✓)
+Finished, vetted, ready for use. Not yet ratified, but checked.
+
+**When to use:**
+- Research is complete and checked
+- Code is tested and working
+- Analysis has been reviewed
+- Output is final-ish
+
+**Confidence cap:** 0.0-0.6 (conclusion work is checked but may need refinement)
+
+**Example:**
+```javascript
+await orbit_result({
+  title: "Q3 sales forecast",
+  content: "Projected revenue $1.2M...",
+  trust_level: "conclusion",
+  confidence: 0.85,
+  reasoning: "Verified against Salesforce pipeline, spot-checked for anomalies"
+});
+```
+
+**Other agents will:**
+- Use as starting point
+- Verify if confidence < 0.7
+- Build on it if confidence is high
+- Cite it in their own work
+
+### exploratory (~)
+Draft, intermediate, unverified. Still discovering.
+
+**When to use:**
+- You're mid-research
+- It's a draft that needs review
+- You're uncertain about the conclusion
+- It's an idea, not a decision
+
+**Confidence cap:** 0.0-0.3 (exploratory work is uncertain by definition)
+
+**Example:**
+```javascript
+await orbit_result({
+  title: "Draft: early market signals",
+  content: "Preliminary analysis suggests...",
+  trust_level: "exploratory",
+  confidence: 0.25,
+  reasoning: "Based on limited data; needs validation with larger sample"
+});
+```
+
+**Other agents will:**
+- Note it as preliminary
+- Verify independently before using
+- Wait for conclusion version
+- Not cite it as source of truth
+
+## Source Trust (System Assigns)
+
+The **source_trust** is what the system determines based on who created it:
+
+### agent_authoritative
+Agent created authoritative work.
+
+### agent_conclusion
+Agent created finished work.
+
+### agent_exploratory
+Agent created exploratory work.
+
+### operator_authoritative
+Operator created/ratified content directly.
+
+## Conflict Resolution
+
+When two sources claim different things:
+
+```
+Operator (source_trust: operator_authoritative)
+  "The pricing is annual only"
+
+vs.
+
+Agent (source_trust: agent_conclusion, confidence: 0.9)
+  "The pricing should be monthly + annual"
+```
+
+The operator's source always wins, regardless of confidence.
+
+Within agents:
+- Higher trust_level wins
+- Within same trust_level, higher confidence wins
+
+## How Other Agents Use Trust
+
+When Agent B encounters Agent A's work:
+
+```javascript
+const results = await orbit_search({
+  agent: { id: "agent-b", project: "..." },
+  query: "pricing model"
+});
+
+const result = results.results[0];
+
+console.log(result.trust_level);   // authoritative, conclusion, or exploratory
+console.log(result.source_trust);  // agent_authoritative, operator_authoritative, etc
+console.log(result.confidence);    // 0-1
+
+// Decision logic:
+if (result.source_trust.includes("operator")) {
+  // Operator said this; use directly
+  useDirectly(result);
+} else if (result.trust_level === "authoritative") {
+  // Agent's authoritative work; use unless conflicting
+  useWithMinimalCheckj(result);
+} else if (result.trust_level === "conclusion" && result.confidence > 0.8) {
+  // High-confidence agent work; safe to use
+  useWithCaution(result);
+} else if (result.trust_level === "exploratory") {
+  // Draft; verify independently
+  verifyIndependently(result);
+}
+```
+
+## Confidence Best Practices
+
+### 0.0-0.3: Exploratory
+Early-stage work. May be wrong. Use only for ideation.
+
+Example: "Maybe the market size is $10B" (need data)
+
+### 0.3-0.6: Preliminary
+Some evidence, but limited. Needs validation.
+
+Example: "Preliminary estimate: $10B market" (based on 2 sources)
+
+### 0.6-0.8: Validated
+Multiple checks, spot-verified, reasonable.
+
+Example: "Market size: $10B (confirmed by 3 reports, cross-checked)" (confidence 0.75)
+
+### 0.8-1.0: High Confidence
+Thoroughly verified, from authoritative source, or operator-approved.
+
+Example: "Market size: $10B (Gartner, multiple years)" (confidence 0.95)
+
+## Confidence Decay
+
+Confidence may decrease over time:
+
+```javascript
+// Recent data: high confidence
+await orbit_result({
+  title: "Q3 2026 market forecast",
+  content: "Based on latest data...",
+  confidence: 0.85
+});
+
+// 6 months later: still true but older
+// Operator might reduce confidence in Vault view
+// New agent should verify
+```
+
+## Updating Trust
+
+If you're updating prior work:
+
+```javascript
+const prior = await orbit_search({ query: "market size" });
+const priorId = prior.results[0].id;
+
+await orbit_result({
+  title: "Updated market size",
+  content: "New analysis with recent 2026 data...",
+  supersedes: priorId,
+  relation_type: "updates",
+  trust_level: "conclusion",
+  confidence: 0.9,
+  reasoning: "Updated with H2 2026 data; confidence increased"
+});
+```
+
+Vault shows both versions with lineage.
+
+## Operator Promotion
+
+Operator can promote work in the Vault:
+
+```
+Agent files: trust_level="conclusion", confidence=0.85
+         │
+  Operator reviews in Vault
+         │
+  Operator sees quality is good
+         │
+  Operator promotes: trust_level="authoritative"
+         │
+  All agents see it as ground truth
+```
+
+No API call needed. Operator edits directly in dashboard.
+
+## Honesty About Uncertainty
+
+**Always report genuine uncertainty.**
+
+```javascript
+// BAD: False confidence
+await orbit_result({
+  title: "Market forecast",
+  content: "Market is $10B",
+  confidence: 0.95  // ← But I really only have 2 data points!
+});
+
+// GOOD: Honest about limits
+await orbit_result({
+  title: "Early market forecast",
+  content: "Preliminary estimate: $10B (range: $8B-$12B)",
+  trust_level: "exploratory",
+  confidence: 0.4,
+  reasoning: "Limited sample; needs validation"
+});
+```
+
+Operators and other agents trust your confidence scores. Inflating them wastes everyone's time.
+
+## Examples
+
+### Exploratory to Conclusion to Authoritative
+
+Run 1 (Agent A):
+```javascript
+await orbit_result({
+  title: "Draft: Q3 forecast",
+  content: "Preliminary estimate...",
+  trust_level: "exploratory",
+  confidence: 0.3
+});
+```
+
+Run 2 (Agent A, with more data):
+```javascript
+const prior = await orbit_search({ query: "Q3 forecast" });
+
+await orbit_result({
+  title: "Updated Q3 forecast",
+  content: "Validated estimate...",
+  supersedes: prior.results[0].id,
+  trust_level: "conclusion",
+  confidence: 0.8
+});
+```
+
+Run 3 (Operator):
+Operator reviews in Vault, sees quality is high, promotes to authoritative.
+
+Now:
+- All agents treat it as ground truth
+- No other agent questions it
+- Decisions can reference it
+- It becomes the canonical forecast
+
+## See Also
+
+- **[Results API](/api/results)** - How to set trust_level and confidence
+- **[Heartbeat API](/api/heartbeat)** - How to read active_knowledge with trust tiers
+- **[Best Practices](/guides/best-practices)** - Patterns for accurate confidence
