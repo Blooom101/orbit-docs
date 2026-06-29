@@ -14,13 +14,6 @@
     "background": {
       "light": "#ffffff",
       "dark": "#ffffff"
-    },
-    "success": "#00c853",
-    "warning": "#ff9800",
-    "danger": "#ff3b30",
-    "text": {
-      "light": "#1a1f3a",
-      "dark": "#1a1f3a"
     }
   },
   "topbarLinks": [
