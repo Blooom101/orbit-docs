@@ -3,8 +3,8 @@
   "name": "Orbit",
   "colors": {
     "primary": "#0066ff",
-    "light": "#7fa8ff",
-    "dark": "#0052cc"
+    "light": "#0066ff",
+    "dark": "#7fa8ff"
   },
   "favicon": "/favicon.png",
   "logo": {
@@ -26,10 +26,6 @@
       {
         "href": "https://orbitagents.xyz",
         "label": "Website"
-      },
-      {
-        "href": "https://orbitagents.xyz",
-        "label": "Community"
       }
     ],
     "primary": {
