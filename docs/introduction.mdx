@@ -1,65 +1,82 @@
----
-title: "Introduction to Orbit"
-description: "The operating system for Claude-powered businesses"
----
+# Orbit: Your AI Company's Operating Layer
 
-# Introduction to Orbit
+> One place where your AI agents share memory, file their work, and operate from a single source of truth — so you can run a real company with AI, not just a collection of disconnected tools.
 
-Orbit is the operating system for your Claude-powered business. It transforms how AI agents collaborate, remember, and execute by providing a unified management layer that every agent reads before acting.
+---
 
 ## What is Orbit?
 
-Orbit is three things at once:
+If you're running more than one AI agent — whether that's Claude handling your research, Codex writing your code, or an n8n workflow managing your outreach — you've probably hit the same wall:
 
-1. **A Control Plane** - Every agent reads your active decisions and ground-truth knowledge before executing
-2. **A Vault** - Durable storage for decisions, knowledge, deliverables, and structured data that persists across agent runs
-3. **A Dashboard** - Real-time visibility into agent activity, outputs, and the reasoning behind decisions
+**Each agent starts every session from zero. They don't know what the others figured out. They don't remember what you decided last week. And you have no idea what any of them are doing right now.**
 
-Instead of agents working in isolation with no shared context, Orbit creates a coherent workspace where:
-- Agents know what you've decided
-- You see what agents are doing as it happens
-- Decisions made once apply across all agents automatically
-- Knowledge is ratified once, reused everywhere
+Orbit fixes this. It's the shared layer your agents read from and write to — so your entire AI operation compounds over time instead of starting fresh every run.
 
-## Core Principle: Three Observable Behaviors
+---
 
-An Orbit-integrated workspace exhibits three concrete, observable behaviors:
+## The three things Orbit gives you
 
-1. **Agents read directives before acting** - Every agent calls `orbit_heartbeat` to receive active decisions and knowledge
-2. **Conflicts surface immediately** - When an agent would contradict a decision, Orbit flags it; the operator chooses whether to override
-3. **Decisions are durable** - Once filed, a decision applies to all agents (or scoped targets) until explicitly closed
+### 1. Shared Memory (The Vault)
+Every output your agents produce gets stored in the Orbit Vault — reports, decisions, research, notes. Every agent can search this vault before acting. So when your sales agent runs today, it already knows what your research agent found yesterday. Nothing gets lost between tools.
 
-This is not a suggestion system. Decisions are constraints. Knowledge is ground truth.
+### 2. A Live Dashboard
+Open Orbit and see exactly what every agent is doing, what they've produced, and what needs your attention. Your Briefing page gives you a CEO-style morning brief every day. Your Inbox shows what's new and needs review. Your org chart shows your whole AI workforce at a glance.
 
-## Key Concepts
+### 3. Decisions That Stick
+File a decision once — "always use this pricing," "don't contact this lead," "the auth flow works like this" — and every agent reads it before every run. Change the rule once; every future run picks it up automatically. No more re-explaining the same thing to every new chat.
 
-**Agents** - AI systems (Claude, ChatGPT, custom services) that integrate with Orbit via its MCP server
+---
 
-**Knowledge** - Ratified facts and conclusions stored in the Vault with trust levels (authoritative, conclusion, exploratory)
+## Who is Orbit for?
 
-**Decisions** - Directives and rules that constrain future agent behavior, or conclusions that close out open questions
+**Solo founders building with AI** — You're running multiple Claude agents, maybe Cursor for code, maybe n8n for automation. You need them to work as a team, not as isolated tools. Orbit is your company's operating layer.
 
-**Results** - Deliverables agents produce and publish to the Vault (reports, analyses, outputs)
+**AI power users** — You live in Claude, ChatGPT, and other AI tools daily. You're tired of every new chat forgetting everything the last one figured out. Orbit gives all your tools a shared memory.
 
-**Events** - Activity logs that make agent work visible on the dashboard in real-time
+**Lean teams** — Two to five people, all using AI. No shared context, no visibility into what agents decided. Orbit gives your team one place where everything lands.
 
-**Files** - Artifacts (PDFs, images, CSVs, etc.) agents upload and attach to results
+---
 
-**Tables** - Persistent structured data (trackers, ledgers, pipelines) that survive across runs
+## What Orbit is not
 
-## Why Orbit?
+Orbit is not another AI chatbot. It's not a prompt tool. It's not a note-taking app.
 
-Traditional agent systems suffer from:
+It's the coordination layer that sits underneath your entire AI operation — reading, writing, governing, and surfacing everything your agents do, so you can run your business instead of managing your tools.
 
-- **Silent failures** - You don't see what agents are doing until they're done
-- **Lost context** - Each agent run starts blind; decisions made yesterday aren't reused
-- **Cascading rewrites** - When you change a decision, agents don't know; they keep following the old rule
-- **No audit trail** - You can't trace why an agent did something or when the decision was made
+---
 
-Orbit solves this by making agent work transparent, decisions portable, and knowledge cumulative.
+## How to get started
 
-## Next Steps
+<Steps>
+  <Step title="Create your Orbit workspace">
+    Sign up at [app.orbitagents.xyz](https://app.orbitagents.xyz). Your workspace is where your agents, vault, and dashboard live.
+  </Step>
+  <Step title="Connect your first agent">
+    Add your Orbit MCP endpoint to your AI tool of choice. Takes about 2 minutes. See the [Quickstart](/docs/quickstart) for step-by-step instructions.
+  </Step>
+  <Step title="Watch your agents check in">
+    Once connected, your agent will register with Orbit at the start of every run — appearing on your dashboard, reading active decisions, and filing its outputs to your vault automatically.
+  </Step>
+  <Step title="Build your AI company">
+    Add more agents, assign them to departments, give them roles. Your org chart builds itself as agents connect. Your vault grows smarter every day.
+  </Step>
+</Steps>
 
-- **[Quickstart](/docs/quickstart)** - Wire Orbit into your first agent in 5 minutes
-- **[Core Concepts](/docs/core-concepts)** - Deep dive into agents, decisions, and the Vault
-- **[API Reference](/api/overview)** - Complete tool reference
+---
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/docs/quickstart">
+    Connect your first agent in 5 minutes.
+  </Card>
+  <Card title="Core Concepts" icon="layer-group" href="/docs/core-concepts">
+    Understand the Vault, Briefing, Inbox, and how it all fits together.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/guides/integrations">
+    Claude, Codex, n8n, Cursor, ChatGPT — see what connects to Orbit.
+  </Card>
+  <Card title="Trust Levels" icon="shield-check" href="/docs/trust-levels">
+    How Orbit decides what to trust and what to flag.
+  </Card>
+</CardGroup>

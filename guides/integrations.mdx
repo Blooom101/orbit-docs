@@ -1,246 +1,171 @@
+# Integrations
+
+> Every AI tool you already use can connect to Orbit. Here's how.
+
 ---
-title: "Integration Guide"
-description: "Wire Orbit into your existing agent"
+
+## How integrations work
+
+Orbit uses **MCP (Model Context Protocol)** — an open standard that lets AI tools share context, memory, and tools with each other. Any AI tool that supports MCP can connect to Orbit in minutes.
+
+Your personal Orbit MCP endpoint is:
+```
+https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+Find your key in **Settings → MCP** inside your Orbit dashboard.
+
 ---
 
-# Integration Guide
+## Claude (claude.ai + Claude Projects)
 
-How to add Orbit to your existing agent or workflow.
+The most common integration. Claude connects to Orbit natively via MCP.
 
-## For Claude Code Agents
+**Setup:**
+1. Go to [claude.ai](https://claude.ai) → **Settings → Integrations**
+2. Click **Add MCP Server**
+3. Paste your Orbit MCP URL and name it "Orbit"
+4. Save — Claude will now connect to Orbit at the start of every new conversation
 
-1. Create an agent identity:
+**What happens:** At the start of each Claude session, Claude calls `orbit_heartbeat` — receiving your active decisions and approved knowledge. It files outputs to your vault via `orbit_result` and logs progress via `orbit_event`. You see everything appear on your dashboard in real time.
 
-```javascript
-const agent = {
-  id: "my-agent-slug",
-  name: "My Agent",
-  type: "code",
-  project: "my-project"
-};
-```
+**Best for:** Research sessions, writing, strategy work, outreach drafting, anything where you want Claude to remember what previous sessions figured out.
 
-2. Call heartbeat at start and end:
+---
 
-```javascript
-const hb = await orbit_heartbeat({
-  agent,
-  status: "running",
-  context: "Doing the thing"
-});
+## Claude Code
 
-// Do work...
+Claude Code is Anthropic's terminal-based coding agent. It connects to Orbit the same way as Claude desktop, but via a config file.
 
-await orbit_heartbeat({
-  agent,
-  status: "idle",
-  summary: "Done"
-});
-```
+**Setup:**
 
-3. Publish results:
-
-```javascript
-await orbit_result({
-  agent,
-  title: "What I did",
-  content: "Full output here",
-  trust_level: "conclusion"
-});
-```
-
-## For Scheduled Tasks (Cron)
-
-Use `type: "scheduled"`:
-
-```javascript
-async function cronTask() {
-  const agent = {
-    id: "hourly-sync",
-    name: "Hourly Sync",
-    type: "scheduled",
-    project: "my-project"
-  };
-
-  try {
-    const hb = await orbit_heartbeat({
-      agent,
-      status: "running",
-      context: "Syncing data from source"
-    });
-
-    const count = await syncData();
-
-    await orbit_event({
-      agent,
-      message: `Synced ${count} records`
-    });
-
-    await orbit_heartbeat({
-      agent,
-      status: "idle",
-      summary: `Synced ${count} records`
-    });
-  } catch (err) {
-    await orbit_heartbeat({
-      agent,
-      status: "error",
-      summary: `Failed: ${err.message}`
-    });
-    throw err;
-  }
-}
-```
-
-## For REST APIs / Webhooks
-
-For agents running outside MCP (e.g., on a server, Lambda function), use the REST telemetry protocol.
-
-See the Orbit skill for REST instructions, or contact support.
-
-## For ChatGPT / OpenAI Agents
-
-ChatGPT agents can use the Orbit MCP server. Connect it in your API configuration:
+Add to your `claude_desktop_config.json` or `~/.claude/config.json`:
 
 ```json
 {
   "mcpServers": {
     "orbit": {
-      "url": "https://mcp.orbitagents.xyz/v1"
+      "url": "https://app.orbitagents.xyz/api/public/mcp/[your-key]"
     }
   }
 }
 ```
 
-Then call tools like you would in Claude.
-
-## For n8n / Zapier Workflows
-
-These platforms support MCP via plugins. Install the Orbit MCP connector and use the Orbit tools as steps in your workflow.
-
-## Phased Integration
-
-Don't try to do everything at once:
-
-### Phase 1: Heartbeat + Events
-
-Just add start/end heartbeat and events. No results yet.
-
-```javascript
-async function phase1() {
-  await orbit_heartbeat({
-    agent: { id: "...", type: "code", project: "..." },
-    status: "running",
-    context: "..."
-  });
-
-  // Do work...
-
-  await orbit_event({
-    agent: { id: "...", project: "..." },
-    message: "Work complete"
-  });
-
-  await orbit_heartbeat({
-    agent: { id: "...", project: "..." },
-    status: "idle",
-    summary: "Done"
-  });
-}
+Or via CLI:
+```bash
+claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
 ```
 
-Benefits: Visibility on dashboard, activity logs.
+**What happens:** Claude Code reads your active decisions before every coding session — so architecture decisions, naming conventions, and "don't touch this module" rules persist automatically across sessions. It files code outputs, session summaries, and decisions to your vault.
 
-### Phase 2: Publish Results
+**Best for:** Solo developers running Claude Code on a codebase who want architectural decisions and context to persist between sessions without re-explaining everything.
 
-Add `orbit_result` for key deliverables.
+---
 
-```javascript
-async function phase2() {
-  // ... phase 1 code ...
+## Claude Cowork (Scheduled Agents)
 
-  await orbit_result({
-    agent: { id: "...", project: "..." },
-    title: "Work Result",
-    content: "Output here",
-    trust_level: "conclusion"
-  });
+Claude Cowork is Anthropic's scheduled agent surface — Claude sessions that run on a timer without you triggering them manually.
 
-  // ... heartbeat idle ...
-}
-```
+**Setup:** When creating a Cowork session, include your Orbit MCP URL in the MCP servers configuration. The Orbit Skill (see below) handles everything automatically.
 
-Benefits: Work lives in Vault, searchable, shareable.
+**What happens:** Your scheduled Cowork agent runs on its cadence, calls Orbit at the start and end of every run, files its outputs to your vault, and appears on your org chart as a Live agent with a shift status. You see what it did in your Briefing every morning.
 
-### Phase 3: Read Knowledge
+**Best for:** Recurring jobs — daily outreach runs, weekly research digests, morning briefings, content pipelines.
 
-Start using `orbit_search` and `active_knowledge` to discover prior work.
+---
 
-```javascript
-async function phase3() {
-  const hb = await orbit_heartbeat({
-    agent: { id: "...", type: "code", project: "..." },
-    status: "running"
-  });
+## Codex (OpenAI)
 
-  // Discover prior work
-  const prior = await orbit_search({
-    agent: { id: "...", project: "..." },
-    query: "relevant topic"
-  });
+OpenAI's Codex CLI supports MCP servers. Add Orbit to your Codex MCP config the same way as Claude Code.
 
-  if (prior.results.length > 0) {
-    const fullResult = await orbit_get_result({
-      agent: { id: "...", project: "..." },
-      result_id: prior.results[0].id
-    });
-
-    // Use it
-    const output = buildOn(fullResult.content);
-  } else {
-    const output = buildFromScratch();
+**Setup:**
+```json
+{
+  "mcpServers": {
+    "orbit": {
+      "url": "https://app.orbitagents.xyz/api/public/mcp/[your-key]"
+    }
   }
-
-  // ... publish and finish ...
 }
 ```
 
-Benefits: Agents collaborate, avoid duplicate work.
+**What happens:** Codex reads your active decisions before each coding session and files outputs to the same vault as your Claude agents. Both tools share the same memory — so a decision your Claude agent filed is visible to your Codex agent on the next run.
 
-### Phase 4: File Decisions
+**Best for:** Teams using both Claude and Codex on the same codebase who want consistent architectural context across both tools.
 
-Start filing directives when you discover something important.
+---
 
-```javascript
-async function phase4() {
-  // ... prior phases ...
+## Cursor
 
-  // You discovered something important
-  if (importantFinding) {
-    await orbit_decide({
-      agent: { id: "...", project: "..." },
-      statement: "Important finding here",
-      kind: "directive"
-    });
-  }
+Cursor supports MCP servers via its configuration file.
 
-  // ... finish ...
-}
-```
+**Setup:** Add Orbit to your Cursor MCP settings under **Settings → MCP Servers**. Paste your Orbit MCP URL and save.
 
-Benefits: Decisions apply across all agents automatically.
+**What happens:** Cursor reads your codebase decisions and architectural knowledge before each session. Files summaries and outputs to your vault.
 
-## Troubleshooting Integration
+**Best for:** Cursor users who want persistent architectural context and decisions that survive between editor sessions.
 
-**Agent not appearing on dashboard** - Did you call `orbit_heartbeat(status: "running")`? Check agent ID and project.
+---
 
-**"Unauthorized" errors** - Your MCP connection isn't authenticated. Verify your API bearer token.
+## n8n
 
-**Results not showing** - Did you include full content? Check that `orbit_result.content` is non-empty.
+n8n is a workflow automation platform. Orbit connects to n8n via its MCP Client node.
 
-**Too many permission prompts** - Accept "Always allow" for Orbit tools in your client settings.
+**Setup:**
+1. In your n8n workflow, add an **HTTP Request** node or **MCP Client** node
+2. Set the endpoint to your Orbit MCP URL
+3. Use the `orbit_heartbeat` tool at the start of your workflow to receive active decisions
+4. Use `orbit_result` to file the workflow's output to your vault when it completes
 
-## See Also
+**What happens:** Your n8n automations become Orbit-aware — they read decisions before running and file their outputs to your vault. You see every n8n run on your dashboard alongside your Claude agents.
 
-- **[Quickstart](/docs/quickstart)** - Step-by-step walkthrough
-- **[Best Practices](/guides/best-practices)** - Patterns that scale
+**Best for:** Automated pipelines — lead generation runs, content publishing, data collection, outreach sequences — where you want every run visible in Orbit and governed by your active decisions.
+
+---
+
+## ChatGPT (OpenAI)
+
+ChatGPT supports MCP via the GPT Actions framework. You can connect Orbit to a custom GPT or use it via the OpenAI API with MCP tool support.
+
+**Setup:** Add Orbit as an action in your custom GPT configuration using your Orbit MCP URL as the action endpoint.
+
+**Best for:** Users who split work between Claude and ChatGPT and want both to share the same vault and decisions.
+
+---
+
+## Gemini
+
+Google's Gemini supports MCP in Gemini CLI and certain Gemini API configurations. Add your Orbit MCP URL to Gemini's tool configuration.
+
+**Best for:** Teams using Gemini for specific tasks (e.g. research, long-context analysis) who want those outputs to land in the same Orbit vault as their other agents.
+
+---
+
+## The Orbit MCP Skill
+
+The **Orbit MCP Skill** is a pre-built behavior layer that tells any connected AI agent exactly how to work with Orbit correctly. It covers:
+
+- How to declare the agent's identity consistently across sessions
+- When and how to call `orbit_heartbeat` (start and end of every run)
+- How to use `orbit_event` for live progress logging
+- How to file outputs with the right trust level using `orbit_result`
+- How to handle decisions, conflicts, and standing assignments
+- How to use `orbit_table_write` for persistent structured data (pipelines, trackers, ledgers)
+- How to use `orbit_file_put_text` and `orbit_file_init` for file attachments
+- How to search the vault with `orbit_search` before starting work
+- The difference between `orbit_decide` (work commitments) and `orbit_update_self` (behavioral changes)
+
+The skill ships as a system prompt addition. When an agent has the skill loaded, it follows Orbit's session lifecycle automatically — no manual tool calls required from you.
+
+**If you're setting up a custom agent or automation**, request the Orbit Skill via your dashboard under **Settings → MCP → Download Skill**.
+
+---
+
+## Coming soon
+
+- **Zapier** — connect Orbit to 7,000+ apps via Zap triggers and actions
+- **Make (Integromat)** — Orbit as a module in Make workflows
+- **Slack** — post Orbit vault summaries and decisions to Slack channels
+- **Notion** — sync Orbit knowledge to a Notion database
+
+Want an integration that's not listed? Reach out via [The Inside](https://orbitagents.xyz) community or email us directly.

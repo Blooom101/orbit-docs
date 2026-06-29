@@ -1,181 +1,132 @@
+# Quickstart: Connect Your First Agent to Orbit
+
+> Get your first AI agent reporting to Orbit in under 5 minutes. No infrastructure setup, no code required for most integrations.
+
 ---
-title: "Quickstart"
-description: "Get Orbit running in your agent in 5 minutes"
+
+## Before you start
+
+You'll need:
+- An Orbit account at [app.orbitagents.xyz](https://app.orbitagents.xyz)
+- Your personal MCP endpoint URL — find this in **Settings → MCP** inside your Orbit dashboard. It looks like this:
+
+```
+https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+Keep this URL private — it's your agent's authentication key.
+
 ---
 
-# Quickstart
+## Option A — Connect Claude (Recommended for most users)
 
-This guide walks you through wiring Orbit into your Claude agent using the MCP server in under 5 minutes.
+This is the fastest way to get started. Claude connects to Orbit via MCP (Model Context Protocol) — a standard that lets AI tools share context and tools.
 
-## Prerequisites
+### In Claude.ai (Claude Projects)
 
-- Access to an Orbit workspace (https://app.orbitagents.xyz)
-- An MCP-capable Claude client (Claude Code, Cowork, or API with MCP)
-- The Orbit MCP server endpoint (provided by your Orbit admin)
+1. Open [claude.ai](https://claude.ai) and go to **Settings → Integrations**
+2. Click **Add MCP Server**
+3. Paste your Orbit MCP URL:
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+4. Name it "Orbit" and save
+5. Start a new conversation — Claude will automatically connect to Orbit at the start of the session
 
-## Step 1: Connect the Orbit MCP Server
+### In Claude Code (Terminal)
 
-In your Claude client or application, configure the Orbit MCP server:
+Add Orbit to your `claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "orbit": {
-      "command": "https://mcp.orbitagents.xyz/v1",
-      "args": []
+      "command": "npx",
+      "args": ["-y", "@orbit/mcp-server"],
+      "env": {
+        "ORBIT_MCP_URL": "https://app.orbitagents.xyz/api/public/mcp/[your-key]"
+      }
     }
   }
 }
 ```
 
-The connection authenticates automatically via your Claude API bearer token.
+Or add it directly via the Claude Code CLI:
 
-## Step 2: Start Your Agent's First Run
-
-Call `orbit_heartbeat` at the start of every agent run:
-
-```javascript
-const result = await orbit_heartbeat({
-  agent: {
-    id: "my-agent-slug",
-    name: "My Agent",
-    type: "code",
-    project: "my-project"
-  },
-  context: "Starting daily digest compilation",
-  status: "running"
-});
-
-// Read pending messages and active decisions
-console.log(result.pending_messages);
-console.log(result.active_knowledge);
+```bash
+claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
 ```
 
-This call:
-- Registers your agent on the Orbit dashboard
-- Returns any pending messages from the operator
-- Returns active decisions that constrain your behavior
-- Returns authoritative knowledge (ground truth) you should use
+---
 
-## Step 3: Do Your Work
+## Option B — Connect via n8n
 
-Build your agent normally. When you're ready to publish a result:
+If you're running automated workflows in n8n, add Orbit as an MCP tool in your workflow:
 
-```javascript
-await orbit_result({
-  agent: { id: "my-agent-slug", project: "my-project" },
-  title: "Daily Sales Summary",
-  content: "Sales today: $45,000 (↑12% vs yesterday)...",
-  trust_level: "conclusion",
-  format: "markdown"
-});
-```
+1. In your n8n workflow, add an **MCP Client** node
+2. Set the server URL to your Orbit MCP endpoint
+3. The node will expose all `orbit_*` tools — use `orbit_heartbeat` at the start of your workflow and `orbit_result` to file outputs
 
-Log what you're doing:
+See the [n8n Integration guide](/guides/integrations#n8n) for a full walkthrough with example workflows.
 
-```javascript
-await orbit_event({
-  agent: { id: "my-agent-slug", project: "my-project" },
-  message: "Analyzed sales data, published summary",
-  kind: "log"
-});
-```
+---
 
-## Step 4: End Your Run
+## Option C — Connect Codex or Cursor
 
-Call `orbit_heartbeat` again with status `idle`:
+Both Codex CLI and Cursor support MCP servers. Add your Orbit MCP URL to your tool's MCP configuration the same way as Claude Code above. Your coding agent will automatically check in with Orbit at the start of each session, read your active decisions, and file its outputs to your vault.
 
-```javascript
-await orbit_heartbeat({
-  agent: { id: "my-agent-slug", project: "my-project" },
-  status: "idle",
-  summary: "Compiled and filed daily digest"
-});
-```
+---
 
-## Full Example: Daily Digest Agent
+## What happens after you connect
 
-```javascript
-async function dailyDigestAgent() {
-  const agent = {
-    id: "daily-digest-claude",
-    name: "Daily Digest",
-    type: "code",
-    project: "my-project"
-  };
+Once your agent is connected and runs for the first time:
 
-  // START
-  const heartbeat = await orbit_heartbeat({
-    agent,
-    context: "Compiling daily digest",
-    status: "running"
-  });
+**On your dashboard**, you'll see the agent appear in your **Orbits** list with a "Live" status badge.
 
-  // Check for pending messages
-  if (heartbeat.pending_messages.length > 0) {
-    for (const msg of heartbeat.pending_messages) {
-      // Handle operator messages
-      await orbit_message({
-        agent,
-        content: `Received and processing: ${msg.text}`
-      });
-    }
-  }
+**In your Vault**, the agent's first outputs will start appearing — reports, notes, and any knowledge it files.
 
-  // Read active decisions that constrain us
-  const decisions = heartbeat.active_decisions;
-  const knowledge = heartbeat.active_knowledge;
+**In your Briefing**, the agent shows up in your daily morning overview — what it did, what it produced, when it last ran.
 
-  // DO WORK (example: compile stories)
-  const stories = await fetchTopStories();
-  const summary = summarizeStories(stories);
+**In your org chart**, the agent appears as a node — you can assign it to a department and give it a role title.
 
-  // PUBLISH RESULT
-  await orbit_result({
-    agent,
-    title: "Daily Digest",
-    content: summary,
-    trust_level: "conclusion",
-    format: "markdown"
-  });
+---
 
-  // LOG ACTIVITY
-  await orbit_event({
-    agent,
-    message: `Compiled ${stories.length} stories, filed digest`,
-    kind: "log"
-  });
+## Your first test
 
-  // END
-  await orbit_heartbeat({
-    agent,
-    status: "idle",
-    summary: "Daily digest compiled and published"
-  });
-}
-```
+After connecting, start a Claude session and ask it to:
 
-## What Happens Next?
+> "Check in with Orbit, tell me what decisions are active, and file a test result to the vault."
 
-- Your agent appears on the Orbit dashboard in real-time
-- The operator sees your activity and output
-- Any decisions they file automatically apply to your next run
-- Your results live in the Vault and are discoverable by other agents
+Claude will call `orbit_heartbeat`, receive your active decisions and knowledge, then call `orbit_result` to file a test entry. You'll see both actions appear on your Orbit dashboard in real time.
 
-## Permissions
+---
 
-When you first call an Orbit tool, your client will ask for permission. Click **"Always allow"** for Orbit tools to prevent repeated permission prompts from breaking the heartbeat loop.
+## What the agent does automatically
 
-## Troubleshooting
+Once connected, a properly set up agent will:
 
-**"Agent not found"** - Did you use the same `agent.id` and `project` across all calls? These must be stable and consistent.
+- **Call `orbit_heartbeat` at the start of every run** — receiving your active decisions and any knowledge you've approved as ground truth
+- **Call `orbit_event` throughout the run** — so you see live progress on your dashboard, not just a result at the end
+- **Call `orbit_result` when it completes work** — filing the output to your vault with a trust level
+- **Call `orbit_heartbeat` again at the end** — closing the run and recording what shipped
 
-**"Unauthorized"** - Your MCP connection isn't authenticated. Check your Claude API bearer token.
+All of this happens automatically for agents using the Orbit skill. For custom setups, see the [API Reference](/api/overview).
 
-**"Result rejected"** - The `content` field is required and must be non-empty. Make sure you're including the full markdown/text body, not just a summary.
+---
 
-## Next Steps
+## Next steps
 
-- **[Core Concepts](/docs/core-concepts)** - Understand agents, decisions, and the Vault
-- **[Best Practices](/guides/best-practices)** - Patterns that work at scale
-- **[API Reference](/api/heartbeat)** - Detailed tool documentation
+<CardGroup cols={2}>
+  <Card title="Core Concepts" icon="layer-group" href="/docs/core-concepts">
+    Understand the Vault, Inbox, Briefing, and how agents get their instructions.
+  </Card>
+  <Card title="Integrations" icon="plug" href="/guides/integrations">
+    Full guides for Claude, Codex, n8n, Cursor, and more.
+  </Card>
+  <Card title="Trust Levels" icon="shield-check" href="/docs/trust-levels">
+    How to tell Orbit how much to trust what your agent files.
+  </Card>
+  <Card title="Best Practices" icon="star" href="/guides/best-practices">
+    Get the most out of Orbit from day one.
+  </Card>
+</CardGroup>

@@ -1,200 +1,152 @@
----
-title: "Core Concepts"
-description: "The foundational ideas behind Orbit"
----
-
 # Core Concepts
 
-## Agents
+> Everything you need to understand about how Orbit works — explained plainly, without jargon.
 
-An agent is any AI system (Claude, ChatGPT, custom service) integrated with Orbit via the MCP server. Every agent has:
+---
 
-- **`agent.id`** - A stable, kebab-case slug that persists across runs. Examples: `daily-digest-claude`, `research-gpt4`, `email-responder`
-- **`agent.name`** - Display name on the dashboard (Title Case, 2-4 words). Example: `Daily Digest Agent`
-- **`agent.type`** - One of: `code` (Claude Code), `cowork` (interactive), `scheduled` (cron job), `custom`
-- **`agent.project`** - Which workspace/project this agent belongs to
+## The big picture
 
-On first run, an agent calls `orbit_heartbeat` and appears on the dashboard. It stays there forever, accumulating a history of its outputs, decisions, and activity.
+Orbit is built around one core idea: **your AI agents should share a brain.**
 
-## Decisions (Directives, Rules, Conclusions)
+Right now, every time you start a new Claude session, a new Codex run, or a new n8n workflow — the agent starts from zero. It doesn't know what your other agents figured out. It doesn't remember the decision you made last month. It has no idea what's already been tried.
 
-A decision is a constraint or conclusion filed into Orbit. Decisions are atomic, durable, and change how agents behave.
+Orbit gives every agent access to the same memory, the same decisions, and the same ground truth — so your whole operation compounds instead of resetting.
 
-### Three types:
+---
 
-**Directive** - An action to be taken or a constraint on future behavior. Example: "Update the homepage hero copy to 'The OS for your Claude business.'"
+## The Vault
 
-**Rule** - A standing instruction that applies across multiple agents or runs. Example: "All research outputs must cite sources via `source_urls`."
+The Vault is Orbit's permanent memory. Everything your agents produce lives here.
 
-**Conclusion** - Record that an open question is decided. Closes out an open directive.
+Think of it like your company's filing room — not a to-do list, not a inbox, but a permanent record of everything your AI workforce has figured out, produced, and decided. Every report, every research note, every decision, every file.
 
-### Key properties:
+The Vault has three types of content:
 
-- **Scope** - Who does this apply to? Just this agent? All agents in the project? All agents? The operator picks.
-- **Rationale** - Why was this decision made? (visible to agents and other humans)
-- **Expiry** - Optional: this decision expires on a given date
-- **Status** - Open, Done, or Superseded
+- **Reports** — finished outputs from your agents. A lead list, a content draft, a research summary, a run log.
+- **Knowledge** — facts and conclusions your agents (or you) have ratified as ground truth. These get injected into future agent runs automatically.
+- **Notes** — rough working material, drafts, exploratory outputs. Lower signal, kept for reference.
 
-When an agent calls `orbit_heartbeat`, it receives all decisions scoped to it (or broader) in `active_decisions`. If the agent's planned output would contradict a decision, Orbit flags it; the operator can choose to override or the agent can adjust.
+The Vault never empties. It only grows. That's intentional — your company's institutional memory compounds over time.
 
-## Knowledge (The Vault)
+---
 
-The Vault is durable storage for facts, conclusions, and analysis. Everything filed has three properties:
+## The Inbox
 
-### Trust Level
+The Inbox is your daily ops surface. It shows everything from the Vault that's new and hasn't been reviewed yet.
 
-**Authoritative** (★) - Ground truth, ratified by the operator. When two sources conflict and one is authoritative, the authoritative one wins. Treat as the single source of truth.
+**The Inbox and Vault are the same data** — the Inbox is just a filtered view of it. When something arrives in the Vault from an agent, it shows up in your Inbox as new. Once you've reviewed it (or approved it), it's marked as seen and stays in the Vault permanently.
 
-**Conclusion** (✓) - A finished, vetted deliverable. Created by agents, reviewed by operator.
+Think of it this way: the Inbox is your ops desk. The Vault is the filing room. Same documents, two different views.
 
-**Exploratory** (~) - Scratch, intermediate, unverified work. Default when unsure.
+Items in your Inbox are grouped by urgency:
+- **Needs Action** — conflicts detected, flags raised, items needing your decision
+- **Ready to File** — standard agent outputs you can approve in one click
+- **Recently Actioned** — just in case you want to undo something
 
-### Bucket (Legacy)
+---
 
-For backwards compatibility, results also use `bucket`:
+## The Briefing
 
-- `wiki` = authoritative (durable knowledge, reference docs)
-- `output` = conclusion (finished deliverables)
-- `raw` = exploratory (scratch, notes)
+The Briefing is your morning brief — a daily summary of what your entire AI workforce produced.
 
-### Lifecycle
+Open Orbit in the morning and you see one card per agent, with a one-line summary of what they did and links to everything they filed. You're not starting your day — you're catching up on a company that's already been running.
 
-1. Agent calls `orbit_result` with `trust_level: "exploratory"` (initial draft)
-2. Operator reviews in Vault, comments, asks for changes
-3. Agent reads feedback via `orbit_search` or `pending_messages`, revises
-4. Operator promotes to `trust_level: "conclusion"` or `"authoritative"`
-5. Other agents read and reuse it via `active_knowledge` in heartbeat
+The Briefing is read-only. It's for visibility, not action. If something needs your attention, it's in the Inbox.
 
-## Events (Activity Log)
+---
 
-An event is a one-line log entry: "Analyzed 500 rows, filed report." Events make agent work visible on the dashboard in real-time without requiring you to dig into results or files.
+## Agents (Orbits)
 
-Call `orbit_event` at key moments:
+Each AI agent connected to Orbit is called an **Orbit** — a scheduled, recurring agent with a role, a department, and a permanent identity in your workspace.
 
-- After you complete a major task
-- After you publish a result
-- On errors (use `kind: "system"`)
-- At the end of a run (summary)
+Every agent has:
+- **A role title** — e.g. "Head of Sales," "Research Analyst," "Content Lead"
+- **A department** — Sales, Marketing, Research, Content, Operations, or custom
+- **A shift status** — On Shift (actively running), Onboarding (newly connected), Idle (paused or blocked), Live (connected and ready)
+- **A project** — the context bucket this agent files its work into
 
-## Results (Deliverables)
+Agents appear in your **org chart** — a visual map of your entire AI workforce, organized by department and hierarchy.
 
-A result is a finished deliverable: a report, analysis, CSV export, code snippet, etc. Results are:
+---
 
-- **Searchable** - Other agents find them via `orbit_search`
-- **Versioned** - Update a result multiple times; old versions are archived
-- **Attachable** - Link files (PDFs, images) via `file_ids`
-- **Trustable** - Other agents weight them based on trust level and source
+## Decisions
 
-When you publish a result, include:
+A decision is a directive you file once that every relevant agent reads before every run.
 
-- **Title** - Short action-led phrase (e.g. "Analyzed Q3 sales", "Fixed onboarding flow")
-- **Content** - Full markdown body (not a summary)
-- **Trust level** - How sure are you? (authoritative/conclusion/exploratory)
-- **Format** - markdown, text, code, json, or table
-- **Confidence** - 0-1 score (capped by your trust tier)
-- **Source URLs** - Where did you derive this from? (required for external facts)
+Examples:
+- "Always use the $49 pricing for outbound"
+- "Don't contact leads from Company X"
+- "The auth flow uses JWT — don't suggest alternatives"
+- "Today, focus on finding leads in the healthcare sector"
 
-## Files (Artifacts)
+Decisions are the most powerful feature in Orbit. File one, and every future agent run respects it automatically — no re-explaining, no copy-pasting into system prompts, no hoping the agent remembers.
 
-When you produce a binary artifact (PDF, image, CSV, Excel, zip), upload it:
+Decisions have a scope (which agents they apply to) and can be closed when they're no longer relevant.
 
-```javascript
-// Step 1: Initialize
-const file = await orbit_file_init({
-  agent: { id: "...", project: "..." },
-  name: "q3-report.pdf",
-  mime: "application/pdf",
-  size: 1048576,
-  ref: "output/q3-report"  // Stable slug for versioning
-});
+---
 
-// Step 2: Upload to signed URL
-await fetch(file.upload_url, {
-  method: "PUT",
-  headers: { "Content-Type": "application/pdf", "x-upsert": true },
-  body: pdfBytes
-});
+## Trust Levels
 
-// Step 3: Commit
-await orbit_file_commit({
-  agent: { id: "...", project: "..." },
-  file_id: file.file_id
-});
+Not everything an agent files is equally reliable. Orbit uses three trust levels to weight what it knows:
 
-// Step 4: Attach to a result
-await orbit_result({
-  agent: { id: "...", project: "..." },
-  title: "Q3 Report",
-  content: "See attached PDF...",
-  file_ids: [file.file_id]
-});
+| Trust Level | What it means | Example |
+|---|---|---|
+| **Exploratory** | Rough finding, unverified, use with caution | A first-pass research note |
+| **Conclusion** | Finished, vetted output — reliable | A completed lead report |
+| **Authoritative** | Ground truth — treated as fact by all agents | A locked pricing decision |
+
+Trust levels matter because Orbit's RAG system weights higher-trust content more heavily when agents query the vault. An authoritative decision from 3 months ago outranks a fresh exploratory note automatically.
+
+See [Trust Levels](/docs/trust-levels) for the full explanation.
+
+---
+
+## The Org Chart
+
+The org chart is a live visual map of your AI company — every agent, every department, every connection between them.
+
+It's not something you build manually. It builds itself as agents connect and are assigned to departments. You can see at a glance:
+- Which departments exist and how many agents are in each
+- Which agent is the department lead
+- Which agents are currently on shift vs. idle
+- The connections and relationships between agents
+
+---
+
+## Projects
+
+Projects are how Orbit organizes work. Each agent files its outputs into a project — a named context bucket like `orbit-product`, `client-xyz`, or `content-pipeline`.
+
+The project cards row on your dashboard shows all your active projects at a glance — how many agents are working in each, what was filed recently, and a link to the full project detail view.
+
+---
+
+## The MCP Skill
+
+The Orbit MCP skill is what makes your agents actually Orbit-aware. When an agent has the skill loaded, it knows to:
+
+1. Call `orbit_heartbeat` at the start of every run — to receive your active decisions, authoritative knowledge, and any pending messages from you
+2. Call `orbit_event` throughout the run — so you see live progress on your dashboard
+3. Call `orbit_result` when it produces something — filing the output to your vault with the right trust level
+4. Call `orbit_heartbeat` again at the end — closing the run cleanly
+
+Each of these tools is described in detail in the [MCP Tools Reference](/api/overview).
+
+---
+
+## How it all fits together
+
+```
+You file a decision → 
+  Agent runs → 
+    Reads decision via orbit_heartbeat → 
+      Does the work → 
+        Files output via orbit_result → 
+          Output lands in Vault → 
+            Appears in your Inbox as new → 
+              You review and approve → 
+                Stays in Vault permanently →
+                  Future agents read it as knowledge
 ```
 
-Use `ref` to version files in place. Reuse the same ref to update a file; Orbit keeps old versions in history.
-
-## Tables (Persistent Trackers)
-
-For ongoing structured data (a prospect pipeline, outreach tracker, link queue, run ledger), use `orbit_table_write` instead of local CSVs:
-
-```javascript
-await orbit_table_write({
-  agent: { id: "...", project: "..." },
-  table_ref: "outreach/q3-prospects",
-  title: "Q3 Prospects",
-  columns: ["Name", "Email", "Status", "Last Contacted"],
-  rows: [
-    { Name: "Alice", Email: "alice@...", Status: "Contacted", "Last Contacted": "2026-06-28" },
-    { Name: "Bob", Email: "bob@...", Status: "Qualified", "Last Contacted": "2026-06-25" }
-  ],
-  mode: "append"  // or "upsert" to merge by key columns
-});
-```
-
-Tables live in the Vault and are readable by other agents. Local CSVs are deleted; tables persist.
-
-## Search (Finding Knowledge)
-
-Agents search the Vault via `orbit_search`:
-
-```javascript
-const results = await orbit_search({
-  agent: { id: "...", project: "..." },
-  query: "Q3 sales forecast"
-});
-```
-
-Search returns:
-- Results ranked by relevance (semantic + recency)
-- Trust level and source for each
-- Full content via `orbit_get_result(id)`
-
-## Handoff (Cross-Agent Collaboration)
-
-When one agent's work becomes another agent's input:
-
-1. First agent publishes result with `trust_level: "conclusion"`
-2. Second agent calls `orbit_search` to find it
-3. Second agent fetches full content via `orbit_get_result`
-4. Second agent reads `source_trust` and `confidence` to decide how much to rely on it
-
-This creates a chain of custody: every deliverable is traced back to its source.
-
-## Standing Prompt (Your Operating Rules)
-
-Once you integrate with Orbit, you get a "standing prompt" from the operator. This is your instruction set for the next run. It lives in Orbit and you fetch it via `orbit_get_instructions`. The operator can edit it in the dashboard; every future run reads the updated version immediately (no redeploy).
-
-Never hardcode your prompt. Always fetch it:
-
-```javascript
-const instructions = await orbit_get_instructions({
-  agent: { id: "...", project: "..." }
-});
-
-// Use instructions.system_prompt, instructions.rules, etc.
-```
-
-## Next Steps
-
-- **[Quickstart](/docs/quickstart)** - Wire these concepts into code
-- **[Best Practices](/guides/best-practices)** - Patterns for scale
-- **[API Reference](/api/heartbeat)** - Detailed tool docs
+That loop, running across multiple agents, across multiple tools, every day — is what makes Orbit compound. Each run makes the next one smarter.

@@ -1,0 +1,168 @@
+# MCP Tools Reference
+
+> Every tool your agents can call in Orbit, explained plainly. For technical parameter details, see the API Reference.
+
+---
+
+## Overview
+
+When an agent connects to Orbit via MCP, it gets access to a set of `orbit_*` tools. These tools are how agents read from and write to Orbit — checking in at the start of a run, filing work, logging progress, and closing out cleanly.
+
+Most users never call these tools manually. Your connected AI agents handle them automatically. But understanding what each tool does helps you understand what's happening inside Orbit and how to get the most out of it.
+
+---
+
+## orbit_heartbeat
+
+**The most important tool. Called at the start and end of every agent run.**
+
+`orbit_heartbeat` is how an agent registers with Orbit and receives its operating context. When an agent calls it at the start of a run, Orbit returns:
+
+- **Active decisions** — any directives you've filed that apply to this agent. The agent reads these before doing anything else.
+- **Active knowledge** — authoritative facts your workspace has ratified as ground truth.
+- **Pending messages** — any instructions you've left for this agent since its last run.
+- **Known projects** — the project slugs already in use in your workspace, so the agent files to the right place.
+
+When called at the end of a run, `orbit_heartbeat` closes the session and records what was produced.
+
+**Why it matters for you:** This is what makes decisions actually stick. Every time your agent runs, it reads your decisions fresh — so a rule you filed yesterday is respected today, without you copy-pasting it into a new chat.
+
+---
+
+## orbit_event
+
+**How agents show you what they're doing in real time.**
+
+`orbit_event` lets an agent log one-line progress updates to your dashboard as it works — not just a result at the end, but a live feed of what's happening.
+
+Example events you'd see on your dashboard:
+- "Searching Upwork for voice receptionist clients"
+- "Found 3 qualifying jobs, writing proposals"
+- "Proposals drafted, filing to vault"
+
+**Why it matters for you:** Without `orbit_event`, your dashboard would only update when a run finishes. With it, you can watch your agents work in real time — and spot if something's going wrong before the run ends.
+
+---
+
+## orbit_result
+
+**How agents file their finished work to your Vault.**
+
+When an agent completes a deliverable — a report, an analysis, a lead list, a content draft — it calls `orbit_result` to file it permanently to your Vault. Every result includes:
+
+- The full content of the output
+- A trust level (exploratory, conclusion, or authoritative)
+- Which project it belongs to
+- Which agent produced it and when
+
+Results appear in your Vault immediately, show up in your Inbox as new, and contribute to your morning Briefing.
+
+**Why it matters for you:** This is your company's institutional memory. Every report your agents have ever produced is searchable and retrievable — and can be read by future agents before they start work.
+
+---
+
+## orbit_decide
+
+**How agents (and you) file decisions that govern future runs.**
+
+`orbit_decide` records a commitment, rule, or conclusion that future agent runs should respect. Unlike a result (which is output), a decision is a directive — it changes how agents behave going forward.
+
+Examples:
+- "Use the $49 pricing for all outbound this week"
+- "The retry logic for the auth endpoint has been fixed — don't refactor it"
+- "Prioritize healthcare leads for the next 30 days"
+
+Decisions filed by agents are visible to you on the dashboard and can be promoted, edited, or closed at any time.
+
+**Why it matters for you:** File a decision once and every relevant agent reads it on their next run. No more repeating yourself in every new chat.
+
+---
+
+## orbit_search
+
+**How agents find relevant context from your Vault before acting.**
+
+Before starting work, a well-behaved agent searches the Vault for anything relevant — prior research on the same topic, outputs from other agents, decisions that might affect the task. `orbit_search` does this semantic search, weighted by trust level.
+
+**Why it matters for you:** This is what makes your vault compound. Each new agent run starts smarter than the last because it searches for what previous runs already figured out.
+
+---
+
+## orbit_update_self
+
+**How agents update their own standing instructions.**
+
+If you tell an agent "from now on, always include a summary at the top of every report," the agent calls `orbit_update_self` to rewrite its own system prompt — so the new behavior persists on every future run, not just the current one.
+
+**Why it matters for you:** You can change how any agent behaves permanently by telling it once, in plain English. The agent handles updating its own instructions.
+
+---
+
+## orbit_declare + orbit_ready
+
+**How new scheduled agents register themselves on your dashboard.**
+
+When a new recurring agent is set up (a scheduled Claude task, an n8n workflow, a cron job), it calls `orbit_declare` to register itself with Orbit — claiming a slot on your org chart with a role, department, and cadence. It then calls `orbit_ready` to confirm it's live and what schedule it's running on.
+
+After these two calls, the agent appears on your dashboard as a Live agent — without you having to manually add it.
+
+**Why it matters for you:** New agents appear on your dashboard automatically the moment they're set up. Your org chart stays current without manual maintenance.
+
+---
+
+## orbit_table_write / orbit_table_get / orbit_table_list
+
+**How agents maintain persistent structured data across runs.**
+
+Some agent tasks involve tracking structured data over time — a prospect pipeline, an outreach log, a content queue, a job search tracker. `orbit_table_write` lets agents write rows to a persistent table in the Vault that survives between runs.
+
+Unlike a local CSV (which disappears when the session ends), an Orbit table persists permanently, is readable by any future agent run, and is visible to you in the Vault.
+
+**Why it matters for you:** Your agents can maintain running trackers — "here are all the leads we've contacted this month" — that accumulate across every run, not just the current session.
+
+---
+
+## orbit_file_put_text + orbit_file_init + orbit_file_commit
+
+**How agents attach files to their vault entries.**
+
+When an agent produces a file artifact — a CSV export, a PDF report, an image, a document — it can attach it directly to a vault result. `orbit_file_put_text` handles text files in one call. `orbit_file_init` + `orbit_file_commit` handles binary files (PDFs, images, zip archives) via a two-step upload.
+
+Files are versioned — the same file can be updated in place across runs using a stable reference slug.
+
+**Why it matters for you:** Your vault doesn't just store text — it stores the actual deliverables your agents produce, downloadable and shareable directly from the Orbit dashboard.
+
+---
+
+## orbit_message
+
+**How you and your agents communicate asynchronously.**
+
+`orbit_message` lets an agent reply to messages you've left for it — and lets you send instructions that the agent picks up on its next run (via `pending_messages` in the heartbeat response).
+
+**Why it matters for you:** You don't have to be in an active session to communicate with your agents. Leave a message, and they'll pick it up the next time they run.
+
+---
+
+## The full session lifecycle
+
+A properly integrated agent follows this sequence on every run:
+
+```
+1. orbit_heartbeat (status: running) 
+   → receive decisions, knowledge, messages
+
+2. orbit_search 
+   → find relevant prior context
+
+3. Do the work
+   → orbit_event throughout (live progress)
+
+4. orbit_result 
+   → file the output to the vault
+
+5. orbit_heartbeat (status: idle)
+   → close the run, record what shipped
+```
+
+Silent endings — runs that don't close with an idle heartbeat — are flagged on your dashboard as incomplete. A well-integrated agent never goes silent.

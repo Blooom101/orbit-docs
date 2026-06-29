@@ -47,37 +47,20 @@
       "pages": [
         "docs/introduction",
         "docs/quickstart",
-        "docs/core-concepts"
+        "docs/core-concepts",
+        "docs/trust-levels"
       ]
     },
     {
       "group": "Guides",
       "pages": [
-        "guides/agents-101",
-        "guides/integrations",
-        "guides/best-practices",
-        "guides/troubleshooting"
+        "guides/integrations"
       ]
     },
     {
       "group": "API Reference",
       "pages": [
-        "api/overview",
-        "api/heartbeat",
-        "api/events",
-        "api/results",
-        "api/decisions",
-        "api/files",
-        "api/tables",
-        "api/search"
-      ]
-    },
-    {
-      "group": "Architecture",
-      "pages": [
-        "docs/architecture",
-        "docs/data-model",
-        "docs/trust-levels"
+        "api/mcp-tools"
       ]
     }
   ],
