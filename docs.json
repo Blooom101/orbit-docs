@@ -1,0 +1,180 @@
+{
+  "theme": "mint",
+  "name": "Orbit",
+  "colors": {
+    "primary": "#0066ff",
+    "light": "#7fa8ff",
+    "dark": "#0052cc"
+  },
+  "favicon": "/favicon.png",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://orbitagents.xyz"
+  },
+  "appearance": {
+    "default": "light"
+  },
+  "background": {
+    "color": {
+      "light": "#ffffff",
+      "dark": "#ffffff"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "href": "https://orbitagents.xyz",
+        "label": "Website"
+      },
+      {
+        "href": "https://orbitagents.xyz",
+        "label": "Community"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Open Dashboard",
+      "href": "https://app.orbitagents.xyz"
+    }
+  },
+  "footer": {
+    "socials": {
+      "twitter": "https://twitter.com/orbitagents",
+      "linkedin": "https://linkedin.com/company/orbitagents"
+    }
+  },
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Start Here",
+            "pages": [
+              "start/what-is-orbit",
+              "start/why-orbit",
+              "start/is-orbit-right",
+              "start/quickstart",
+              "start/what-next"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/overview",
+              "concepts/briefing",
+              "concepts/inbox",
+              "concepts/vault",
+              "concepts/agents",
+              "concepts/org-chart",
+              "concepts/projects",
+              "concepts/decisions",
+              "concepts/trust-levels",
+              "concepts/knowledge",
+              "concepts/how-it-fits"
+            ]
+          },
+          {
+            "group": "Help & Resources",
+            "pages": [
+              "help/pricing",
+              "help/security",
+              "help/troubleshooting",
+              "help/faq",
+              "help/comparisons",
+              "help/glossary",
+              "help/status",
+              "help/changelog",
+              "help/community"
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "Use Orbit",
+        "icon": "wand-magic-sparkles",
+        "groups": [
+          {
+            "group": "Use Orbit",
+            "pages": [
+              {
+                "group": "Daily workflow",
+                "pages": [
+                  "use/read-briefing",
+                  "use/process-inbox",
+                  "use/search-vault",
+                  "use/update-decision"
+                ]
+              },
+              {
+                "group": "Set up your AI company",
+                "pages": [
+                  "use/add-agent",
+                  "use/assign-departments",
+                  "use/organize-org-chart",
+                  "use/create-project",
+                  "use/scheduled-agents"
+                ]
+              },
+              {
+                "group": "Work with knowledge",
+                "pages": [
+                  "use/promote-note",
+                  "use/handle-conflict",
+                  "use/share-knowledge",
+                  "use/file-authoritative"
+                ]
+              },
+              {
+                "group": "Connect your tools",
+                "pages": [
+                  "use/connect-claude",
+                  "use/connect-claude-code",
+                  "use/connect-cursor",
+                  "use/connect-codex",
+                  "use/connect-n8n",
+                  "use/connect-chatgpt",
+                  "use/connect-gemini",
+                  "use/mcp-skill"
+                ]
+              },
+              {
+                "group": "Communicate with agents",
+                "pages": [
+                  "use/send-message",
+                  "use/standing-instructions",
+                  "use/pause-agent",
+                  "use/broadcast"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "Reference",
+        "icon": "rectangle-terminal",
+        "groups": [
+          {
+            "group": "Reference",
+            "pages": [
+              "reference/mcp-tools",
+              "reference/mcp-skill",
+              "reference/data-model",
+              "reference/webhooks",
+              "reference/api",
+              "reference/self-hosted"
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "Community",
+        "icon": "users",
+        "href": "https://orbitagents.xyz"
+      }
+    ]
+  }
+}
