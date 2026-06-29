@@ -2,7 +2,8 @@
   "name": "Orbit",
   "logo": {
     "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "light": "/logo/light.svg",
+    "href": "https://orbitagents.xyz"
   },
   "favicon": "/favicon.png",
   "colors": {
