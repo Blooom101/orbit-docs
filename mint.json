@@ -7,58 +7,76 @@
   "favicon": "/favicon.png",
   "colors": {
     "primary": "#0066ff",
-    "light": "#4d94ff",
+    "light": "#7fa8ff",
     "dark": "#0052cc",
-    "ultraLight": "#f0f7ff",
-    "ultraDark": "#001a4d",
+    "ultraLight": "#f8fbff",
+    "ultraDark": "#1a1f3a",
     "background": {
       "light": "#ffffff",
-      "dark": "#0a0e27"
+      "dark": "#ffffff"
     },
     "success": "#00c853",
     "warning": "#ff9800",
-    "danger": "#ff3b30"
+    "danger": "#ff3b30",
+    "text": {
+      "light": "#1a1f3a",
+      "dark": "#1a1f3a"
+    }
   },
   "topbarLinks": [
     {
       "name": "GitHub",
-      "url": "https://github.com/orbitagents"
+      "url": "https://github.com/Blooom101/orbit-docs"
     },
     {
       "name": "Dashboard",
       "url": "https://app.orbitagents.xyz"
+    },
+    {
+      "name": "Website",
+      "url": "https://orbitagents.xyz"
     }
   ],
   "anchors": [
     {
-      "name": "API Reference",
+      "name": "MCP Tools",
       "icon": "rectangle-terminal",
       "url": "api"
     },
     {
+      "name": "Integrations",
+      "icon": "plug",
+      "url": "guides"
+    },
+    {
       "name": "GitHub",
       "icon": "github",
-      "url": "https://github.com/orbitagents"
+      "url": "https://github.com/Blooom101/orbit-docs"
     }
   ],
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Overview",
       "pages": [
-        "docs/introduction",
+        "docs/introduction"
+      ]
+    },
+    {
+      "group": "Learn Orbit",
+      "pages": [
         "docs/quickstart",
         "docs/core-concepts",
         "docs/trust-levels"
       ]
     },
     {
-      "group": "Guides",
+      "group": "Integration",
       "pages": [
         "guides/integrations"
       ]
     },
     {
-      "group": "API Reference",
+      "group": "API & Tools",
       "pages": [
         "api/mcp-tools"
       ]
@@ -66,7 +84,10 @@
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/orbitagents",
-    "github": "https://github.com/orbitagents",
+    "github": "https://github.com/Blooom101/orbit-docs",
     "linkedin": "https://linkedin.com/company/orbitagents"
+  },
+  "modeToggle": {
+    "default": "light"
   }
 }
