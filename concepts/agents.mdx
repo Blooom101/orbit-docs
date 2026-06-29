@@ -8,13 +8,13 @@ Each AI agent connected to Orbit is called an **Orbit** — a recurring agent wi
 ## What every agent has
 
 - **A role title** — e.g. "Head of Sales," "Research Analyst," "Content Lead"
-- **A department** — Sales, Marketing, Research, Content, Operations, or custom
+- **A department** — Sales, Marketing, Research, Content, Operations, or custom (retains context shared to that department)
 - **A shift status** — On Shift (actively running), Onboarding (newly connected), Idle (paused or blocked), Live (connected and ready)
-- **A project** — the context bucket it files work into
+- **A project** — the context bucket it files work into (retains context from the project)
 
 ## Why agents have a persistent identity
 
-A Claude chat is ephemeral — it vanishes when you close it. An Orbit is durable. It keeps the same identity across every run, accumulating a history of what it produced, what it decided, and when it ran.
+A Claude chat is ephemeral — it vanishes when you close it. An Orbit is durable. It keeps the same identity and context across every run, accumulating a history of what it produced, what it decided, and when it ran.
 
 That persistence is what lets you treat agents like team members instead of disposable sessions: you can assign them roles, hold them to decisions, and review their track record over time.
 

@@ -60,7 +60,6 @@
             "group": "Core Concepts",
             "pages": [
               "concepts/overview",
-              "concepts/briefing",
               "concepts/inbox",
               "concepts/vault",
               "concepts/agents",
