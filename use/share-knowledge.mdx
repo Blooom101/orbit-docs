@@ -1,0 +1,24 @@
+---
+title: "How to share knowledge between projects"
+description: "Make a fact available across more than one project."
+---
+
+By default, an agent reads the knowledge scoped to its [project](/concepts/projects). Sometimes a fact should apply everywhere — your brand voice, your company-wide pricing, a universal constraint.
+
+## Steps
+
+1. Open the Vault item you want to share.
+2. Change its **scope** from a single project to **workspace-wide** (or select multiple projects).
+3. If it's ground truth, file it as [authoritative](/use/file-authoritative) so it's injected into every relevant agent's context automatically.
+4. Save. Agents across the selected projects now read it.
+
+## When to share vs. keep scoped
+
+- **Share:** brand voice, pricing, legal constraints, anything that should be true everywhere.
+- **Keep scoped:** client-specific facts, project-specific decisions, anything that only makes sense in one context.
+
+Over-sharing pollutes every agent's context with irrelevant facts. Share only what's genuinely universal.
+
+<Card title="Knowledge" icon="brain" href="/concepts/knowledge">
+  How ground truth reaches your agents.
+</Card>

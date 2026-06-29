@@ -18,66 +18,145 @@
   },
   "topbarLinks": [
     {
-      "name": "GitHub",
-      "url": "https://github.com/Blooom101/orbit-docs"
-    },
-    {
-      "name": "Dashboard",
-      "url": "https://app.orbitagents.xyz"
-    },
-    {
       "name": "Website",
+      "url": "https://orbitagents.xyz"
+    },
+    {
+      "name": "Community",
       "url": "https://orbitagents.xyz"
     }
   ],
+  "topbarCtaButton": {
+    "name": "Open Dashboard",
+    "url": "https://app.orbitagents.xyz"
+  },
   "anchors": [
     {
-      "name": "MCP Tools",
+      "name": "Use Orbit",
+      "icon": "wand-magic-sparkles",
+      "url": "use"
+    },
+    {
+      "name": "Reference",
       "icon": "rectangle-terminal",
-      "url": "api"
+      "url": "reference"
     },
     {
-      "name": "Integrations",
-      "icon": "plug",
-      "url": "guides"
-    },
-    {
-      "name": "GitHub",
-      "icon": "github",
-      "url": "https://github.com/Blooom101/orbit-docs"
+      "name": "Community",
+      "icon": "users",
+      "url": "https://orbitagents.xyz"
     }
   ],
   "navigation": [
     {
-      "group": "Overview",
+      "group": "Start Here",
       "pages": [
-        "docs/introduction"
+        "start/what-is-orbit",
+        "start/why-orbit",
+        "start/is-orbit-right",
+        "start/quickstart",
+        "start/what-next"
       ]
     },
     {
-      "group": "Learn Orbit",
+      "group": "Core Concepts",
       "pages": [
-        "docs/quickstart",
-        "docs/core-concepts",
-        "docs/trust-levels"
+        "concepts/overview",
+        "concepts/briefing",
+        "concepts/inbox",
+        "concepts/vault",
+        "concepts/agents",
+        "concepts/org-chart",
+        "concepts/projects",
+        "concepts/decisions",
+        "concepts/trust-levels",
+        "concepts/knowledge",
+        "concepts/how-it-fits"
       ]
     },
     {
-      "group": "Integration",
+      "group": "Use Orbit",
       "pages": [
-        "guides/integrations"
+        {
+          "group": "Daily workflow",
+          "pages": [
+            "use/read-briefing",
+            "use/process-inbox",
+            "use/search-vault",
+            "use/update-decision"
+          ]
+        },
+        {
+          "group": "Set up your AI company",
+          "pages": [
+            "use/add-agent",
+            "use/assign-departments",
+            "use/organize-org-chart",
+            "use/create-project",
+            "use/scheduled-agents"
+          ]
+        },
+        {
+          "group": "Work with knowledge",
+          "pages": [
+            "use/promote-note",
+            "use/handle-conflict",
+            "use/share-knowledge",
+            "use/file-authoritative"
+          ]
+        },
+        {
+          "group": "Connect your tools",
+          "pages": [
+            "use/connect-claude",
+            "use/connect-claude-code",
+            "use/connect-cursor",
+            "use/connect-codex",
+            "use/connect-n8n",
+            "use/connect-chatgpt",
+            "use/connect-gemini",
+            "use/mcp-skill"
+          ]
+        },
+        {
+          "group": "Communicate with agents",
+          "pages": [
+            "use/send-message",
+            "use/standing-instructions",
+            "use/pause-agent",
+            "use/broadcast"
+          ]
+        }
       ]
     },
     {
-      "group": "API & Tools",
+      "group": "Reference",
       "pages": [
-        "api/mcp-tools"
+        "reference/mcp-tools",
+        "reference/mcp-skill",
+        "reference/data-model",
+        "reference/webhooks",
+        "reference/api",
+        "reference/self-hosted"
+      ]
+    },
+    {
+      "group": "Help & Resources",
+      "pages": [
+        "help/pricing",
+        "help/security",
+        "help/troubleshooting",
+        "help/faq",
+        "help/comparisons",
+        "help/glossary",
+        "help/status",
+        "help/changelog",
+        "help/community"
       ]
     }
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/orbitagents",
-    "github": "https://github.com/Blooom101/orbit-docs",
     "linkedin": "https://linkedin.com/company/orbitagents"
   },
   "modeToggle": {

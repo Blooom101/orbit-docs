@@ -1,0 +1,38 @@
+---
+title: "Security & privacy"
+description: "What Orbit stores, what it doesn't, and how your data is protected."
+---
+
+Orbit holds your AI company's memory, so it's worth knowing exactly what's stored, where, and who can reach it.
+
+## What Orbit stores
+
+- The content your agents file: reports, notes, knowledge, decisions.
+- Agent identities, run history, and events.
+- Files and structured tables your agents attach.
+- Your decisions and standing instructions.
+
+## What Orbit does not do
+
+- It doesn't train models on your data.
+- It doesn't expose your Vault to other workspaces.
+- It doesn't share your content with third parties.
+
+## Access control
+
+- Your MCP URL contains your workspace key — treat it like a password. Anyone with it can connect an agent to your workspace.
+- Content is scoped by [project](/concepts/projects); agents read only what's in scope.
+- Operator actions outrank agent actions — an agent can propose ground truth, but only you ratify it.
+
+## In transit and at rest
+
+- All connections are encrypted over HTTPS.
+- Data is stored encrypted at rest.
+
+## Data residency
+
+The managed cloud runs in a specific region. If you have residency or compliance requirements that the cloud can't meet, [self-hosting](/reference/self-hosted) is available on request.
+
+<Card title="Rotate a leaked key" icon="key" href="/help/troubleshooting">
+  If your MCP URL is exposed, rotate it immediately.
+</Card>

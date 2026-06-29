@@ -1,0 +1,29 @@
+---
+title: "How to connect Claude"
+description: "Connect claude.ai and Claude Projects to Orbit via MCP."
+---
+
+Claude connects to Orbit natively via MCP. This is the most common integration and the fastest to set up.
+
+## Steps
+
+1. Go to [claude.ai](https://claude.ai) → **Settings → Integrations**
+2. Click **Add MCP Server**
+3. Paste your Orbit MCP URL (find it in **Settings → MCP** in your Orbit dashboard):
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+4. Name it "Orbit" and save.
+5. Start a new conversation — Claude connects to Orbit automatically at the start of the session.
+
+## What happens
+
+At the start of each session, Claude calls `orbit_heartbeat`, receiving your active decisions and approved knowledge. It files outputs to your Vault via `orbit_result` and logs progress via `orbit_event`. Everything appears on your dashboard in real time.
+
+## Best for
+
+Research sessions, writing, strategy work, outreach drafting — anything where you want Claude to remember what previous sessions figured out.
+
+<Card title="Connect Claude Code next" icon="terminal" href="/use/connect-claude-code">
+  Bring Orbit into your terminal coding sessions.
+</Card>

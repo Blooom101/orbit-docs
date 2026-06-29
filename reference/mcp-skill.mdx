@@ -1,0 +1,29 @@
+---
+title: "The Orbit MCP Skill"
+description: "What the Skill is, what it does, and how to install it."
+---
+
+The Orbit MCP Skill is a behavior layer — a system-prompt addition — that makes any connected agent follow Orbit's session lifecycle correctly without you wiring up each call by hand.
+
+## What it does
+
+When loaded, the Skill instructs the agent to:
+
+1. **Declare a stable identity** — the same `agent.id` every run, so Orbit tracks it as one continuous agent.
+2. **Heartbeat at both ends** — `orbit_heartbeat` at the start (to receive decisions, knowledge, and messages) and at the end (to close the run).
+3. **Log progress live** — `orbit_event` throughout, so you see activity in real time.
+4. **File outputs at the right trust level** — `orbit_result` with `exploratory`, `conclusion`, or `authoritative`.
+5. **Use the right tool for the job** — `orbit_table_write` for structured trackers, `orbit_file_*` for attachments, `orbit_search` before starting work.
+6. **Separate work from behavior** — `orbit_decide` for work commitments, `orbit_update_self` for changes to its own operating rules.
+
+## Install
+
+From your dashboard: **Settings → MCP → Download Skill**. Add it to your agent as a system-prompt addition. Every future run then follows the lifecycle automatically.
+
+## Why it exists
+
+The Skill is the difference between an agent that's *connected* and an agent that's *well-behaved*. Without it, runs can go silent, outputs land at the wrong trust level, and identity drifts across sessions. With it, every run is visible, every output is filed correctly, and identity stays stable.
+
+<Card title="The tools it orchestrates" icon="rectangle-terminal" href="/reference/mcp-tools">
+  Full reference for every orbit_* tool.
+</Card>

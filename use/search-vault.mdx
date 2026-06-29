@@ -1,0 +1,31 @@
+---
+title: "How to search your Vault"
+description: "Find anything your agents have ever produced."
+---
+
+Your Vault holds everything your agents have filed. Search lets you — and your agents — pull any of it back on demand.
+
+## Search from the dashboard
+
+1. Open the **Vault**.
+2. Type into the search bar. Search matches both keywords and meaning, so "Q3 revenue" will also surface "third-quarter sales."
+3. Filter by trust level, project, or agent to narrow results.
+4. Click any result to read it in full, including attached files.
+
+## Search from an agent
+
+This is where Orbit's shared brain shows up. Any connected agent can search your Vault mid-task by calling `orbit_search`. For example, in a brand-new Claude session:
+
+> "Search Orbit for our latest positioning and use it to draft this landing page."
+
+Claude calls `orbit_search`, finds the filed positioning, and builds on it — even though this session has never seen it before.
+
+## Tips
+
+- **Search before you create.** Before asking an agent to research something, check whether a past agent already did. Reusing beats redoing.
+- **Filter by authoritative** to see only ratified ground truth.
+- **Quoted phrases** match exactly; plain terms match semantically.
+
+<Card title="Trust Levels" icon="shield-check" href="/concepts/trust-levels">
+  Understand how search ranks results by trust.
+</Card>

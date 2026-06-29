@@ -1,0 +1,38 @@
+---
+title: "How to connect Claude Code"
+description: "Connect Anthropic's terminal coding agent to Orbit."
+---
+
+Claude Code connects to Orbit via a config file or a single CLI command. Once connected, your architecture decisions and context persist across coding sessions.
+
+## Quickest: CLI
+
+```bash
+claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+## Or: config file
+
+Add to your `claude_desktop_config.json` or `~/.claude/config.json`:
+
+```json
+{
+  "mcpServers": {
+    "orbit": {
+      "url": "https://app.orbitagents.xyz/api/public/mcp/[your-key]"
+    }
+  }
+}
+```
+
+## What happens
+
+Claude Code reads your active decisions before every coding session — so architecture choices, naming conventions, and "don't touch this module" rules persist automatically across sessions. It files code outputs, session summaries, and decisions to your Vault.
+
+## Best for
+
+Solo developers running Claude Code on a codebase who want architectural context to survive between sessions without re-explaining everything each time.
+
+<Card title="Connect Codex" icon="code" href="/use/connect-codex">
+  Share the same Vault with OpenAI's Codex.
+</Card>

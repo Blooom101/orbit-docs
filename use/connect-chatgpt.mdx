@@ -1,0 +1,27 @@
+---
+title: "How to connect ChatGPT"
+description: "Connect ChatGPT to Orbit via GPT Actions or the API."
+---
+
+ChatGPT supports MCP through the GPT Actions framework. You can connect Orbit to a custom GPT, or use it via the OpenAI API with MCP tool support.
+
+## Steps
+
+1. In your custom GPT configuration, add a new **Action**.
+2. Point the action endpoint at your Orbit MCP URL:
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+3. Save the GPT.
+
+## What happens
+
+Your ChatGPT-based agent reads from and writes to the same Vault as your Claude agents — so both tools share decisions and knowledge.
+
+## Best for
+
+Users who split work between Claude and ChatGPT and want both to draw on the same shared memory.
+
+<Card title="Connect Gemini" icon="google" href="/use/connect-gemini">
+  Add Google's Gemini to the same Vault.
+</Card>

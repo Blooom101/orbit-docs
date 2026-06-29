@@ -1,0 +1,53 @@
+---
+title: "Data model"
+description: "The objects Orbit stores and how they relate."
+---
+
+Orbit is built on a small set of objects. Understanding how they relate makes the rest of the product click.
+
+## The objects
+
+| Object | What it is |
+|---|---|
+| **Agent (Orbit)** | A connected AI agent with a stable identity, role, department, and project. |
+| **Project** | A named context bucket that groups work and scopes what agents read. |
+| **Vault entry** | A piece of stored content: a Report, a Note, or Knowledge. |
+| **Decision** | A standing directive scoped to one or more agents. |
+| **Event** | A timestamped activity log entry from an agent run. |
+| **Message** | A one-off instruction from you to an agent (or its reply). |
+| **File** | A binary or text artifact attached to a Vault entry. |
+| **Table** | Persistent structured rows (pipelines, trackers, ledgers). |
+
+## How they relate
+
+```
+Workspace
+ ├── Projects
+ │    └── Vault entries (Reports / Notes / Knowledge)
+ │         ├── Files (attachments)
+ │         └── Tables (structured rows)
+ ├── Agents (Orbits)
+ │    ├── Events (run history)
+ │    ├── Messages (your instructions + replies)
+ │    └── Decisions (scoped directives)
+ └── Org Chart (agents grouped by department)
+```
+
+## Trust attributes on every Vault entry
+
+Each Vault entry carries:
+
+- **Trust level** — `exploratory`, `conclusion`, or `authoritative`. How confident the content is. See [Trust Levels](/concepts/trust-levels).
+- **Source trust** — how reliable the *source* (agent or operator) is, assigned automatically.
+- **Provenance** — which agent filed it, when, and with what reasoning.
+- **Version history** — prior versions are archived, never deleted.
+
+## Identity and versioning
+
+- Agents are identified by a stable `agent.id`. Reuse it across runs.
+- Files and tables version in place via a stable `ref` / `table_ref` — re-uploading under the same ref archives the old version and shows the new one.
+- Decisions move through states: open → done (or closed).
+
+<Card title="The tools that read and write this" icon="rectangle-terminal" href="/reference/mcp-tools">
+  See how each object is created and queried.
+</Card>

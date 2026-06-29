@@ -1,0 +1,32 @@
+---
+title: "How to connect Codex"
+description: "Connect OpenAI's Codex CLI to Orbit via MCP."
+---
+
+OpenAI's Codex CLI supports MCP servers. Connect it the same way as Claude Code, and it shares the same Vault as your Claude agents.
+
+## Steps
+
+Add Orbit to your Codex MCP config:
+
+```json
+{
+  "mcpServers": {
+    "orbit": {
+      "url": "https://app.orbitagents.xyz/api/public/mcp/[your-key]"
+    }
+  }
+}
+```
+
+## What happens
+
+Codex reads your active decisions before each coding session and files outputs to the same Vault as your Claude agents. Both tools share one memory — so a decision your Claude agent filed is visible to Codex on its next run, and vice versa.
+
+## Best for
+
+Teams using both Claude and Codex on the same codebase who want consistent architectural context across both tools.
+
+<Card title="Connect n8n" icon="diagram-project" href="/use/connect-n8n">
+  Bring your automations into Orbit.
+</Card>

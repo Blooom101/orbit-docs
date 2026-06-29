@@ -1,0 +1,26 @@
+---
+title: "How to set up scheduled (recurring) agents"
+description: "Run agents on a timer without triggering them manually."
+---
+
+A scheduled agent runs on a cadence — daily, hourly, weekly — without you starting it. It checks in with Orbit at the start and end of every run, so its work shows up in your Briefing automatically.
+
+## Steps
+
+1. Set up the agent in a surface that supports scheduling — Claude Cowork, a cron job, an n8n schedule trigger, or any recurring runner.
+2. Make sure it has your Orbit MCP URL configured and the [Orbit MCP Skill](/use/mcp-skill) loaded (or implements the heartbeat lifecycle manually).
+3. On its first run it calls `orbit_declare` to register as a recurring agent, then `orbit_ready` to go live on your dashboard.
+4. Set its **cadence** — e.g. "Every weekday at 9am."
+5. Each run: it heartbeats running → does work → files results → heartbeats idle.
+
+## What you'll see
+
+The scheduled agent appears on your org chart as a Live agent with a shift status. Every run files into your Vault and surfaces in your [Briefing](/use/read-briefing) the next morning.
+
+## Telemetry for runners outside MCP
+
+If your agent runs somewhere MCP isn't available (a raw cron script, a serverless function), embed Orbit's REST telemetry so it still heartbeats, logs events, and files results. Otherwise the run is invisible to you.
+
+<Card title="Best for recurring jobs" icon="clock" href="/use/connect-n8n">
+  Daily outreach, weekly digests, morning briefings.
+</Card>

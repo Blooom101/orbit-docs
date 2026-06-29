@@ -1,0 +1,31 @@
+---
+title: "Decisions"
+description: "Standing instructions that survive across sessions."
+---
+
+A decision is a directive you file once that every relevant agent reads before every run. Decisions are the most powerful feature in Orbit.
+
+## What a decision looks like
+
+- "Always use the $49 pricing for outbound"
+- "Don't contact leads from Company X"
+- "The auth flow uses JWT — don't suggest alternatives"
+- "Today, focus on finding leads in the healthcare sector"
+
+## Why they matter
+
+File a decision once and every future agent run respects it automatically — no re-explaining, no copy-pasting into system prompts, no hoping the agent remembers. This is the difference between being the glue between your tools and actually directing them.
+
+## Scope and lifecycle
+
+Every decision has a **scope** — which agents it applies to. You can target a single agent, a project, a surface (like all Claude Code sessions), or your entire workspace.
+
+Decisions stay active until you close them. When a decision is no longer relevant, you close it out and agents stop reading it.
+
+## How agents receive decisions
+
+When an agent calls `orbit_heartbeat` at the start of a run, Orbit returns the active decisions scoped to that agent. If the agent's planned output would contradict a decision, Orbit surfaces the conflict instead of letting it slip through.
+
+<Card title="Update a decision" icon="pen-to-square" href="/use/update-decision">
+  File, edit, or close a decision from your dashboard.
+</Card>

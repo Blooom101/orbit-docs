@@ -1,0 +1,35 @@
+---
+title: "Why Orbit exists"
+description: "Why multi-agent stacks break without a shared layer — and what changes when they have one."
+---
+
+Multi-agent setups don't fail because the models are weak. They fail because nothing connects them. Orbit exists to be that connection.
+
+## The stack everyone ends up with
+
+You start with one Claude chat. Then you add a scheduled agent for outreach. Then an n8n workflow for lead gen. Then Codex for code. Each one is genuinely useful on its own.
+
+But none of them share anything. The outreach agent doesn't know the positioning your strategy session locked in. The lead-gen workflow contacts people your sales notes said to avoid. The coding agent suggests an architecture you already rejected.
+
+Every tool is an island. You're the only bridge between them — and you don't scale.
+
+## Why "just use longer context" doesn't fix it
+
+Bigger context windows help a single conversation. They do nothing across tools, across sessions, or across time. A 200k-token window is still empty at the start of every new run. Memory that lives inside one tool can't be read by another.
+
+The missing piece isn't more context. It's a **shared, durable layer** that every agent reads from and writes to — independent of which tool is running.
+
+## What changes with Orbit
+
+When agents share a brain, your operation compounds instead of resetting:
+
+- A decision filed once governs every agent, forever, until you change it.
+- Work one agent produces becomes context the next agent builds on.
+- You stop re-explaining and start reviewing.
+- Conflicts surface instead of silently corrupting your knowledge.
+
+Each run makes the next one smarter. That's the whole point.
+
+<Card title="See the core concepts" icon="book-open" href="/concepts/vault">
+  Understand the Vault, Decisions, and Trust Levels that make this work.
+</Card>

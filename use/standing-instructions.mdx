@@ -1,0 +1,30 @@
+---
+title: "How to give your agent standing instructions"
+description: "Change how an agent behaves on every future run."
+---
+
+Standing instructions live in an agent's operating prompt — its persistent rules for tone, format, what to always include, what to skip. Unlike a [message](/use/send-message) (one-off) or a [decision](/use/update-decision) (a fact/choice about the work), standing instructions change *how the agent itself behaves*.
+
+## Steps
+
+1. Open the agent from your **Orbits** list.
+2. Open its **Instructions** (operating prompt).
+3. Edit the rules — add a tone guideline, a formatting requirement, a source to always cite, a thing to never do.
+4. Save. The agent reads the updated prompt on its very next run. No redeploy needed.
+
+## Behavioral rule vs. work decision
+
+This is the distinction that trips people up:
+
+- **Standing instruction** → how the agent operates: *"Always write in a concise, no-jargon voice."* Lives in the prompt.
+- **Decision** → a choice about the work: *"Quote the $49 plan."* Lives in [Decisions](/concepts/decisions).
+
+If an agent keeps making the same *behavioral* mistake, fix its standing instructions — filing it as a decision won't change how it writes.
+
+## Under the hood
+
+Agents fetch their current instructions via `orbit_get_instructions` and update them via `orbit_update_self`. Because the prompt lives in Orbit, your edits go live immediately on the next run.
+
+<Card title="Send a one-off message" icon="message" href="/use/send-message">
+  For temporary, single-run instructions.
+</Card>

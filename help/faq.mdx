@@ -1,0 +1,44 @@
+---
+title: "FAQ"
+description: "The questions people ask about Orbit most often."
+---
+
+## Does Orbit replace Claude?
+
+No. Orbit makes Claude — and every other agent you run — remember and coordinate. Claude still does the thinking; Orbit gives it shared memory and direction.
+
+## Do I need to be a developer to use Orbit?
+
+No. Connecting Claude takes a few clicks. Most value — decisions, the Vault, the Briefing, the Inbox — needs no code. Developers get extra surface area (MCP tools, the API), but it's not required.
+
+## What tools can I connect?
+
+Claude, Claude Code, Claude Cowork, Codex, Cursor, n8n, ChatGPT, and Gemini today, with more coming. Any MCP-capable tool can connect. See [How to connect your tools](/use/connect-claude).
+
+## How is a decision different from a message?
+
+A [decision](/concepts/decisions) is a standing rule every relevant agent reads on every run. A [message](/use/send-message) is a one-off instruction for the next run. Decisions persist; messages don't.
+
+## What's the difference between a Report, a Note, and Knowledge?
+
+All three live in the [Vault](/concepts/vault). Notes are exploratory/rough. Reports are finished outputs. Knowledge is ratified ground truth that's injected into every relevant agent automatically. The difference is [trust level](/concepts/trust-levels).
+
+## Can two different AI tools share the same memory?
+
+Yes — that's the point. A decision your Claude agent files is visible to your Codex agent, your n8n workflow, and everything else connected to the same workspace.
+
+## What happens if two agents contradict each other?
+
+Orbit detects the conflict and surfaces it in your Inbox instead of silently overwriting. You decide which version is canonical. See [How to handle a conflict](/use/handle-conflict).
+
+## Is my data used to train models?
+
+No. See [Security & privacy](/help/security).
+
+## Can I self-host?
+
+Yes, on request, for enterprise requirements. See [Self-hosted](/reference/self-hosted).
+
+<Card title="Compare Orbit to alternatives" icon="scale-balanced" href="/help/comparisons">
+  Honest comparisons with memory and observability tools.
+</Card>

@@ -1,0 +1,28 @@
+---
+title: "Knowledge"
+description: "Authoritative facts your agents read before acting."
+---
+
+Knowledge is the ratified, ground-truth layer of your Vault — the facts and conclusions your agents read automatically before they act.
+
+## Knowledge vs. a regular Vault entry
+
+Most things in your [Vault](/concepts/vault) sit there until an agent searches for them. Knowledge is different: it's the highest [trust level](/concepts/trust-levels) (**authoritative**), and it gets injected directly into every relevant agent's context at the start of each run — before the agent does anything else.
+
+In other words: regular Vault entries are pulled when needed. Knowledge is pushed automatically.
+
+## What belongs in Knowledge
+
+- Your positioning and messaging
+- Confirmed pricing
+- Architectural decisions
+- Brand voice rules
+- Anything that should govern every agent's behavior without being asked for
+
+## How something becomes Knowledge
+
+An agent (or you) files content as authoritative. Because authoritative content governs future behavior, Orbit flags it for your review first — you approve it, and from that point forward every agent reads it as ground truth. See [the trust intercept](/concepts/trust-levels).
+
+<Card title="File something as authoritative" icon="crown" href="/use/file-authoritative">
+  Promote a fact to ground truth your whole workforce reads.
+</Card>

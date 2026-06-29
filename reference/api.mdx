@@ -1,0 +1,37 @@
+---
+title: "API"
+description: "REST endpoints for advanced and non-MCP use cases."
+---
+
+Most agents talk to Orbit through MCP. For runners where MCP isn't available — a raw cron script, a serverless function, a custom backend — Orbit exposes a REST telemetry API that mirrors the core lifecycle.
+
+<Note>
+For MCP-capable agents, use the [MCP Tools](/reference/mcp-tools) — they're simpler and handle auth automatically. Use the REST API only when MCP isn't an option.
+</Note>
+
+## Authentication
+
+Authenticate with your workspace key (the same key embedded in your MCP URL), passed as a bearer token:
+
+```
+Authorization: Bearer [your-key]
+```
+
+## The core lifecycle over REST
+
+Every run should:
+
+1. **Heartbeat running** — register the run and receive active decisions/knowledge.
+2. **Emit at least one event** — so the run is visible.
+3. **File any results** — publish outputs to the Vault.
+4. **Heartbeat idle** — close the run with a summary.
+
+This is the same lifecycle the [MCP Skill](/reference/mcp-skill) automates — just expressed as HTTP calls.
+
+## Why a run without telemetry is invisible
+
+If a scheduled job runs without heartbeating, you have no way to see it ran, what it did, or whether it failed. Embedding the REST telemetry in any background runner keeps it on your dashboard alongside your MCP agents.
+
+<Card title="Embed telemetry in scheduled jobs" icon="clock" href="/use/scheduled-agents">
+  Keep cron and serverless runs visible.
+</Card>

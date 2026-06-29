@@ -1,0 +1,55 @@
+---
+title: "Troubleshooting"
+description: "Real problems and how to fix them."
+---
+
+The most common issues connecting agents to Orbit, and how to solve each one.
+
+## My agent isn't appearing on the dashboard
+
+**Likely causes:**
+- The agent never called `orbit_heartbeat`. It must heartbeat at least once to register.
+- The `agent.id` changes between runs, so each run looks like a new agent.
+- The MCP URL is wrong or the connection failed silently.
+
+**Fix:** Confirm the agent calls `orbit_heartbeat` on start, uses a stable `agent.id`, and has the correct MCP URL from **Settings → MCP**.
+
+## I'm getting authentication errors
+
+**Likely causes:**
+- The MCP URL is missing or malformed.
+- The workspace key in the URL is wrong or was rotated.
+
+**Fix:** Re-copy your MCP URL from **Settings → MCP**. If you recently rotated your key, update it everywhere the old one was used.
+
+## My MCP connection keeps dropping
+
+**Likely causes:**
+- A network or proxy issue between your tool and Orbit.
+- The tool's MCP client timing out.
+
+**Fix:** Check your network, confirm the tool supports long-lived MCP connections, and re-add the server. If it persists, capture the error and contact support.
+
+## My results aren't showing in the Vault
+
+**Likely causes:**
+- The agent called `orbit_result` with empty content.
+- It's filing into a different project than the one you're viewing.
+
+**Fix:** Make sure `orbit_result` includes real content and the agent's project matches where you're looking.
+
+## I think my MCP URL leaked
+
+Your MCP URL is your key. If it's exposed:
+
+1. Go to **Settings → MCP** and rotate the key.
+2. Update every agent that used the old URL.
+3. The old URL stops working immediately.
+
+## Still stuck?
+
+Reach out via [The Inside](https://orbitagents.xyz) community or contact the team directly with the exact error message.
+
+<Card title="Frequently asked questions" icon="circle-question" href="/help/faq">
+  The questions users ask most.
+</Card>

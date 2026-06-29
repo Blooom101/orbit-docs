@@ -1,0 +1,28 @@
+---
+title: "How to connect n8n"
+description: "Make your n8n workflows Orbit-aware."
+---
+
+n8n is a workflow automation platform. Connecting it to Orbit makes your automations read decisions before running and file their outputs to your Vault.
+
+## Steps
+
+1. In your n8n workflow, add an **MCP Client** node (or an **HTTP Request** node).
+2. Set the endpoint to your Orbit MCP URL:
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+3. Call `orbit_heartbeat` at the **start** of the workflow to receive active decisions.
+4. Call `orbit_result` when the workflow completes to file its output to your Vault.
+
+## What happens
+
+Your n8n automations become Orbit-aware — they read decisions before running and file outputs to your Vault. Every n8n run shows up on your dashboard alongside your Claude agents.
+
+## Best for
+
+Automated pipelines — lead generation, content publishing, data collection, outreach sequences — where you want every run visible in Orbit and governed by your active decisions.
+
+<Card title="Set up recurring runs" icon="clock" href="/use/scheduled-agents">
+  Schedule n8n workflows as recurring Orbit agents.
+</Card>

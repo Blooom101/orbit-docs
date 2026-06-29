@@ -1,0 +1,71 @@
+---
+title: "Quickstart"
+description: "Get your first AI agent reporting to Orbit in under 5 minutes."
+---
+
+Connect your first agent to Orbit in under five minutes. No infrastructure to set up, and no code required for most integrations.
+
+## Before you start
+
+You'll need:
+- An Orbit account at [app.orbitagents.xyz](https://app.orbitagents.xyz)
+- Your personal MCP endpoint URL — find it in **Settings → MCP** inside your dashboard. It looks like this:
+
+```
+https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+Keep this URL private — it's your agent's authentication key.
+
+## Option A — Connect Claude (recommended)
+
+The fastest way to start. Claude connects to Orbit via MCP (Model Context Protocol), the standard that lets AI tools share context and tools.
+
+### In Claude.ai
+
+1. Open [claude.ai](https://claude.ai) → **Settings → Integrations**
+2. Click **Add MCP Server**
+3. Paste your Orbit MCP URL
+4. Name it "Orbit" and save
+5. Start a new conversation — Claude connects to Orbit automatically at the start of the session
+
+### In Claude Code (terminal)
+
+```bash
+claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+## Option B — Connect via n8n
+
+1. In your n8n workflow, add an **MCP Client** node
+2. Set the server URL to your Orbit MCP endpoint
+3. Call `orbit_heartbeat` at the start of the workflow and `orbit_result` to file outputs
+
+See the [n8n connection guide](/use/connect-n8n) for a full walkthrough.
+
+## Option C — Connect Codex or Cursor
+
+Both support MCP servers. Add your Orbit MCP URL to the tool's MCP config the same way as Claude Code. Your coding agent checks in with Orbit at the start of each session, reads your active decisions, and files its outputs to your Vault.
+
+## Your first test
+
+After connecting, start a Claude session and ask:
+
+> "Check in with Orbit, tell me what decisions are active, and file a test result to the Vault."
+
+Claude will call `orbit_heartbeat`, receive your active decisions and knowledge, then call `orbit_result`. You'll see both actions appear on your dashboard in real time.
+
+## What the agent does automatically
+
+A properly connected agent will:
+
+- **Call `orbit_heartbeat` at the start of every run** — receiving your active decisions and approved knowledge
+- **Call `orbit_event` throughout** — so you see live progress, not just a final result
+- **Call `orbit_result` when it finishes work** — filing the output to your Vault with a trust level
+- **Call `orbit_heartbeat` again at the end** — closing the run cleanly
+
+All of this happens automatically for agents using the [Orbit MCP Skill](/use/mcp-skill).
+
+<Card title="Now what?" icon="arrow-right" href="/start/what-next">
+  Three concrete first wins once your agent is connected.
+</Card>

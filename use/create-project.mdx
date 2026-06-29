@@ -1,0 +1,26 @@
+---
+title: "How to create a new project"
+description: "Set up a context bucket for a stream of work."
+---
+
+A project is a named context bucket — like `client-xyz` or `content-pipeline` — that groups related agent work and scopes the context agents read.
+
+## Steps
+
+1. Open **Projects** from your dashboard.
+2. Click **New Project**.
+3. Give it a clear, lowercase slug: `orbit-product`, `client-acme`, `q3-launch`.
+4. Save. Agents can now file into this project.
+
+## Point an agent at a project
+
+Set an agent's **Project** field to the new slug. From then on, its outputs file into that project, and it reads the decisions and knowledge scoped to that project rather than your whole workspace.
+
+## When to create a project vs. reuse one
+
+- **New project:** a genuinely separate stream of work — a new client, a distinct product, a one-off launch.
+- **Reuse:** ongoing work in an area you already track. Don't spin up `client-acme-2` when `client-acme` is the right home.
+
+<Card title="What projects are" icon="folder" href="/concepts/projects">
+  The concept behind context buckets.
+</Card>

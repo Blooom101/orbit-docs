@@ -1,0 +1,27 @@
+---
+title: "How to connect Cursor"
+description: "Connect the Cursor editor to Orbit via MCP."
+---
+
+Cursor supports MCP servers through its configuration. Connecting it to Orbit gives your editor persistent architectural context.
+
+## Steps
+
+1. Open Cursor → **Settings → MCP Servers**.
+2. Add a new server and paste your Orbit MCP URL:
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+3. Save.
+
+## What happens
+
+Cursor reads your codebase decisions and architectural knowledge before each session, and files summaries and outputs to your Vault — the same Vault your Claude and Codex agents use.
+
+## Best for
+
+Cursor users who want persistent architectural context and decisions that survive between editor sessions.
+
+<Card title="All integrations" icon="plug" href="/use/connect-claude">
+  See every tool you can connect.
+</Card>
