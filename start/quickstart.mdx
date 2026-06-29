@@ -1,33 +1,35 @@
 ---
 title: "Quickstart"
-description: "Get your first AI agent reporting to Orbit in under 5 minutes."
+description: "Get AI reporting to Orbit in under 5 minutes."
 ---
 
-Connect your first agent to Orbit in under five minutes. No infrastructure to set up, and no code required for most integrations.
+Connect your AI to Orbit in under two minutes. No infrastructure to set up, and no code required for most integrations.
 
 ## Before you start
 
 You'll need:
-- An Orbit account at [app.orbitagents.xyz](https://app.orbitagents.xyz)
-- Your personal MCP endpoint URL — find it in **Settings → MCP** inside your dashboard. It looks like this:
 
-```
+- An Orbit account at [app.orbitagents.xyz](https://app.orbitagents.xyz)
+- Your personal MCP endpoint URL — find it in **Settings → setup** inside your dashboard. It looks like this:
+
+```text
 https://app.orbitagents.xyz/api/public/mcp/[your-key]
 ```
 
 Keep this URL private — it's your agent's authentication key.
 
-## Option A — Connect Claude (recommended)
+## Option 1 — Connect Claude (recommended)
 
 The fastest way to start. Claude connects to Orbit via MCP (Model Context Protocol), the standard that lets AI tools share context and tools.
 
-### In Claude.ai
+### In [Claude.ai](http://Claude.ai) or Desktop
 
 1. Open [claude.ai](https://claude.ai) → **Settings → Integrations**
 2. Click **Add MCP Server**
 3. Paste your Orbit MCP URL
 4. Name it "Orbit" and save
 5. Start a new conversation — Claude connects to Orbit automatically at the start of the session
+6. Copy the Skill and paste it in chat for Claude to save (important).
 
 ### In Claude Code (terminal)
 
@@ -35,7 +37,15 @@ The fastest way to start. Claude connects to Orbit via MCP (Model Context Protoc
 claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
 ```
 
-## Option B — Connect via n8n
+## Option 2 — Connect Codex or Cursor
+
+Both support MCP servers. Add your Orbit MCP URL to the tool's MCP config the same way as Claude Code. Your coding agent checks in with Orbit at the start of each session, reads your active decisions, and files its outputs to your Vault.
+
+## Option 3 — Perplexity
+
+Support MCP servers. Add your Orbit MCP URL to the tool's MCP config the same way as Claude Code. Your coding agent checks in with Orbit at the start of each session, reads your active decisions, and files its outputs to your Vault.
+
+## Option 4 — Connect via n8n
 
 1. In your n8n workflow, add an **MCP Client** node
 2. Set the server URL to your Orbit MCP endpoint
@@ -43,9 +53,11 @@ claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
 
 See the [n8n connection guide](/use/connect-n8n) for a full walkthrough.
 
-## Option C — Connect Codex or Cursor
+---
 
-Both support MCP servers. Add your Orbit MCP URL to the tool's MCP config the same way as Claude Code. Your coding agent checks in with Orbit at the start of each session, reads your active decisions, and files its outputs to your Vault.
+> More native MCP connections are coming in the future. Theoretically any agent can connect to Orbit with the MCP url and skill.  
+
+---
 
 ## Your first test
 
@@ -65,6 +77,18 @@ A properly connected agent will:
 - **Call `orbit_heartbeat` again at the end** — closing the run cleanly
 
 All of this happens automatically for agents using the [Orbit MCP Skill](/use/mcp-skill).
+
+**It can also:**
+
+- **Search your Vault before acting** with `orbit_search` — so the agent finds what other agents already figured out instead of starting from scratch
+- **File decisions** with `orbit_decide` — turning a conclusion into a standing rule that future runs respect
+- **Track structured data over time** with `orbit_table_write` — pipelines, prospect lists, content queues, anything that needs to persist across runs
+- **Attach files** with `orbit_file_init` — PDFs, CSVs, images, exports that belong alongside the result
+- **Reply to your messages** with `orbit_message` — picking up instructions you left between runs and responding when it gets back online
+- **Update its own behavior** with `orbit_update_self` — when you give it a standing instruction ("always include a summary at the top"), it rewrites its own prompt so the change sticks forever, not just for the current session
+- **Supersede or extend prior outputs** — so a weekly report updates the same vault entry in place instead of creating a new one every time, keeping your Vault clean and your history intact
+
+The full set of tools and what each one does is in the [MCP Tools Reference](https://docs.orbitagents.xyz/reference/mcp-tools).
 
 <Card title="Now what?" icon="arrow-right" href="/start/what-next">
   Three concrete first wins once your agent is connected.

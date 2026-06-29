@@ -161,7 +161,8 @@
               "reference/data-model",
               "reference/webhooks",
               "reference/api",
-              "reference/self-hosted"
+              "reference/self-hosted",
+              "reference/agents-vs-sessions"
             ]
           }
         ]
