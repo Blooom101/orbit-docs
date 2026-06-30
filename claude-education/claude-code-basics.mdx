@@ -1,58 +1,42 @@
 ---
-title: "Claude Code: your first session"
-description: "What Claude Code is, how to start it, and how to run a clean first session with Orbit connected."
+title: "Getting things done with Claude"
+description: "How to have Claude actually do work on your computer — not just chat about it."
 icon: "terminal"
 ---
 
-Claude Code is Claude with hands — it reads and edits your files, runs commands, and works across a whole project. This page gets you from install to a productive first session.
+There's a version of Claude that doesn't just answer questions — it rolls up its sleeves and does the work: organizing files, building simple tools, fixing things, editing documents. It's called **Claude Code**, but you talk to it in plain English just like a chat.
 
-## Where Claude Code runs
+## What it actually is
 
-Same Claude Code, four places:
+Regular Claude *talks*. This version *acts*. You tell it what you want, and it goes and does it on your computer (or in the cloud), showing you each step and asking before anything important.
 
-- **Terminal** — the CLI, the classic way.
-- **Desktop app** — Mac and Windows.
-- **Web** — at [claude.ai/code](https://claude.ai/code), runs in the cloud.
-- **IDE extensions** — VS Code and JetBrains.
+You don't need to know how to code. You describe the outcome; Claude figures out the how.
 
-Pick whichever fits; the behavior is the same.
+## How a session feels
 
-## Start a session
+1. **You ask for something real and specific.** "Sort these invoices into folders by month." "Build me a simple page that collects emails."
+2. **Claude looks around first.** It checks what's there before doing anything.
+3. **It shows you a plan** for anything bigger than a one-liner. You can redirect it.
+4. **It asks permission** before changing things ([more on that here](/claude-education/permissions)).
+5. **It proves the work** — shows you the result so you can confirm it's right.
 
-In a project directory, launch Claude Code and tell it what you want in plain language:
+## A good first thing to try
 
-> "Add input validation to the signup form and write tests for it."
+Pick something small and real that you'd normally do by hand:
 
-Claude explores the relevant files, proposes changes, and (with your permission) edits them and runs the tests.
+> "Go through this folder of receipts and make me a simple summary of what I spent, grouped by category."
 
-## The first-session rhythm
+Watch how it works, approve the steps, and you'll quickly get a feel for it.
 
-1. **Point it at a real task** — concrete and scoped beats vague. "Fix the failing auth test" not "improve auth."
-2. **Let it explore first** — it reads files before editing. Don't over-specify; let it find context.
-3. **Review its plan** — for anything non-trivial it'll outline steps. Course-correct early.
-4. **Approve actions** — edits and commands ask permission (see [Permissions](/claude-education/permissions)).
-5. **Verify** — have it run the tests or the app to prove the change works.
+## With Orbit connected
 
-## Connect Orbit on day one
+Two nice things happen automatically:
 
-With Orbit connected, Claude Code checks in before it touches anything:
+- **It already knows your rules.** Before it starts, it reads the decisions you've set — so it doesn't do something you've already said not to.
+- **It saves what it did.** When it's done, a short summary lands in your Vault. Your next session (or tomorrow's you) can see what happened and build on it.
 
-```bash
-claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
-```
+So it's not a one-off helper that forgets — it's part of a system that remembers.
 
-Now every session:
-- **Reads your decisions first** — "use JWT for auth," "don't touch the `v2` module" — so it doesn't fight choices you already made.
-- **Files a summary to your Vault** at the end — what it changed and why, searchable by your next session.
-
-See [Connect Claude Code](/use/connect-claude-code) for the full setup.
-
-## A good first ask, end to end
-
-> "Check in with Orbit for any active decisions, add a health-check endpoint to the API, run the tests, then file a short summary of what you did to the Vault."
-
-That single prompt exercises the whole loop: read context → do work → verify → file results.
-
-<Card title="Next: folders & CLAUDE.md" icon="folder-tree" href="/claude-education/folders-context">
-  How Claude reads your project and remembers your rules.
+<Card title="Next: shortcuts & skills" icon="slash" href="/claude-education/commands">
+  Teach Claude once, reuse it forever.
 </Card>

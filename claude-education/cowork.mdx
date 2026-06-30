@@ -1,45 +1,42 @@
 ---
-title: "Cowork: scheduled agents"
-description: "What Claude Cowork is, and how to run unattended agents that report into Orbit."
+title: "Agents that work while you sleep"
+description: "Claude on a schedule — like hiring an employee who shows up on their own."
 icon: "clock"
 ---
 
-Cowork is Claude that runs on a **schedule**, without you starting it. A Cowork agent wakes on its cadence, does its job, files its work, and goes back to sleep — turning Claude from a tool you operate into a teammate that shows up on its own.
+This is where it gets exciting for a solopreneur. Instead of you starting Claude every time, you can set it up to **run on its own schedule** — every morning, every few hours, every Monday. Like an employee who clocks in without being told.
 
-## What makes Cowork different
+## What it is
 
-- **Chat** and **Claude Code** are things you actively drive.
-- **Cowork** runs itself on a timer — overnight, every morning, every hour.
+A scheduled agent (Claude calls this **Cowork**) is just Claude with a job and a time. You set it up once: *"Every weekday at 8am, gather yesterday's sign-ups and send me a summary."* From then on, it does it. Forever. Without you.
 
-That's the unlock for recurring work: a daily news digest, a morning outreach batch, a weekly report. You set it up once; it runs forever.
+## Why this is a big deal when you're solo
 
-## Setting one up
+You can't be everywhere. A scheduled agent is the closest thing to cloning yourself:
 
-1. Create a Cowork agent and give it a clear job and cadence ("every weekday at 9am, compile yesterday's signups into a summary").
-2. Make sure it has your **Orbit MCP URL** and the [Orbit MCP Skill](/use/mcp-skill) loaded.
-3. It runs on schedule from then on.
+- A **morning brief** waiting when you wake up.
+- **Outreach** drafted and queued before you sit down.
+- A **weekly report** that just appears.
 
-## Why Cowork needs Orbit more than any other surface
+Work that used to eat your mornings now happens while you sleep.
 
-When *you* drive a chat, you can see what happened. A scheduled agent runs while you're asleep — so without a reporting layer, it's a black box. Orbit is that layer:
+## The catch — and why Orbit fixes it
 
-- The agent **heartbeats** at the start and end of every run, so you know it ran.
-- It **files its output** to your Vault — the digest, the report, the leads.
-- It appears in your **[Briefing](/use/read-briefing)** the next morning: one card, one-line summary, links to everything it produced.
-- It reads your **decisions** first, so it stays on-policy even unattended.
+Here's the problem with an assistant that works while you're away: *how do you know it actually did its job?* If you can't see it, you can't trust it.
 
-A silent scheduled agent effectively doesn't exist. With Orbit, every run is visible and accountable.
+This is the single biggest reason to connect Orbit. With it, every scheduled run:
 
-## Good first Cowork agents
+- **Checks in** so you know it ran.
+- **Saves its work** to your Vault — the summary, the report, the leads.
+- **Shows up in your morning Briefing** — one tidy card per agent, with what it did and a link to everything it made.
+- **Follows your rules**, even unattended.
 
-- **Morning brief** — summarize overnight activity and what needs you today.
-- **Daily digest** — compile a source (news, signups, metrics) into one filed report.
-- **Recurring outreach** — draft and queue a batch on a schedule.
+Without Orbit, a scheduled agent is a black box you just have to hope is working. With Orbit, it's an employee who leaves a clear report on your desk every time.
 
-## Model choice matters here
+## Keep the cost sensible
 
-Scheduled agents run repeatedly, so cost compounds. Use [the right model for the cadence](/claude-education/models): Haiku for frequent simple runs, Sonnet for daily moderate work, Opus only when the task genuinely needs it.
+Since these run over and over, use a cheaper, faster model for simple jobs (see [Which Claude to use](/claude-education/models)). A daily summary doesn't need the expensive expert model.
 
-<Card title="Next: routines & schedules" icon="calendar" href="/claude-education/routines-schedules">
-  Cadences, cron, and keeping every run visible.
+<Card title="Next: setting the schedule" icon="calendar" href="/claude-education/routines-schedules">
+  How often should it run? And making sure you always see it.
 </Card>

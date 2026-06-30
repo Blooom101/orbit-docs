@@ -1,42 +1,36 @@
 ---
-title: "Working with GitHub"
-description: "A clean branch-and-PR flow with Claude, and how Orbit keeps the context across reviews."
+title: "If you're building software (GitHub)"
+description: "A short, friendly note on GitHub — only relevant if Claude is writing code for you."
 icon: "code-branch"
 ---
 
-GitHub is where cloud Claude Code does its best work: it branches, commits, and opens pull requests you review. Here's the flow that keeps things safe and legible.
+<Note>
+This page only matters if you're having Claude **build software** for you. If you're not, feel free to skip straight to [agents on a schedule](/claude-education/cowork).
+</Note>
 
-## The core flow
+If Claude is writing code, your project usually lives in **GitHub** — think of it as Google Drive for code, with a built-in history of every change. You don't need to master it; you just need to know the safe way to let Claude work there.
 
-1. **Branch, don't push to main.** Have Claude work on a feature branch.
-2. **Make focused commits.** One logical change per commit, clear messages.
-3. **Open a PR.** Claude opens a pull request describing what changed and why.
-4. **Review and merge.** You stay the approver — read the diff, request changes, merge.
+## The one safe habit
 
-A good standing rule (set it once): *never commit directly to `main`; always branch and open a PR.* Put it in [CLAUDE.md](/claude-education/folders-context) for one repo, or an [Orbit decision](/concepts/decisions) to bind every coding agent you run.
+Tell Claude to **never change the "live" version directly** — always make changes in a separate copy first, and let you look before it goes live. In GitHub terms that's "work on a branch and open a pull request," but you can just say it in plain English:
 
-## Telling Claude what you want
+> "Make this change in a separate copy and show me before anything goes live."
 
-Be explicit about the GitHub action:
+This way nothing reaches your real project until you've okayed it. You stay the final approver.
 
-> "Create a branch `fix/login-timeout`, fix the bug, open a PR against `main`, and summarize the change."
+## Why this matters to you
 
-Claude uses the GitHub CLI / API to do exactly that — no manual git choreography from you.
+It's the difference between "Claude quietly changed my live site and I didn't notice" and "Claude proposed a change, I looked, I approved it." The second one is how you sleep at night.
 
-## Keeping context across PRs with Orbit
+## How Orbit helps
 
-A PR review can span days and multiple sessions. Without shared memory, each session re-derives the context. With Orbit:
+A code change might take a few sessions to finish. Without shared memory, each session forgets *why* the earlier one made its choices. With Orbit:
 
-- The reasoning behind the change is **filed to your Vault**, so a later session (or a different agent) picks up why it was done that way.
-- An [Orbit decision](/concepts/decisions) like "auth uses JWT" is read by every agent touching the repo, so reviews stay consistent.
-- Architectural conclusions reached in review become **Knowledge** the next agent reads before it acts.
+- The reasoning behind each change is **saved to your Vault**, so later sessions don't undo or contradict earlier ones.
+- A decision like "we always do it this way" is followed by **every** session that touches the project.
 
-## Safe defaults
+So even longer build projects stay consistent instead of drifting.
 
-- Branch + PR always; gate direct pushes to `main`.
-- Keep destructive git operations (force-push, history rewrite) behind explicit approval — see [Permissions](/claude-education/permissions).
-- Let humans merge. Claude proposes; you dispose.
-
-<Card title="Next: Cowork & scheduled agents" icon="clock" href="/claude-education/cowork">
-  Claude that runs on a timer without you.
+<Card title="Next: agents on a schedule" icon="clock" href="/claude-education/cowork">
+  The fun part — Claude that works while you sleep.
 </Card>

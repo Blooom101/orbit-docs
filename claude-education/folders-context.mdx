@@ -1,53 +1,47 @@
 ---
-title: "Folders & CLAUDE.md"
-description: "How Claude reads your project, and how CLAUDE.md gives it durable rules — plus how Orbit goes further."
+title: "Never losing your work"
+description: "How Claude remembers your rules and files — and why Orbit means a new laptop or fresh chat no longer means starting over."
 icon: "folder-tree"
 ---
 
-Claude Code understands your project through its **folder structure** and special **`CLAUDE.md`** memory files. Get these right and Claude stops guessing and starts following your conventions.
+Claude needs to know two things to be useful: *where your stuff is* and *what your rules are*. The old way of giving it those lived on your computer — and broke the moment anything changed. Orbit fixes that. Here's the plain version.
 
-## How Claude reads a folder
+## The old way: it all lived on your machine
 
-When you work in a directory, Claude Code explores it on demand — opening the files relevant to your task rather than ingesting everything. The cleaner and more conventional your structure, the better it navigates. Good folder hygiene is good Claude hygiene.
+When you work with Claude on your computer, it learns about your project from your **folders** (where your files are) and from notes you leave it about your preferences ("always write in this tone," "never touch this file").
 
-## CLAUDE.md — your project's standing rules
+That works — but it's fragile, and here's the problem nobody tells you:
 
-A `CLAUDE.md` file is durable memory Claude reads automatically. Put the things you'd otherwise repeat every session:
+- **New laptop?** It's all gone. You start over.
+- **New chat?** Claude forgets. You re-explain everything.
+- **Switch from chat to a scheduled agent?** They don't share anything.
+- **Working in two places?** Each one knows different things.
 
-```markdown
-# Project rules
-- Use TypeScript, no `any`.
-- Tests live next to the file they test.
-- Never edit files in /legacy.
-- Run `npm test` before declaring done.
-```
+Your memory was trapped on one machine, in one place. Lose the machine or open a new window, and you're back to square one.
 
-### Where it lives
+## The Orbit way: your memory lives in the cloud
 
-- **Project root `CLAUDE.md`** — rules for this repo, shared with your team (check it in).
-- **Global `~/.claude/CLAUDE.md`** — your personal rules across every project.
-- **Subfolder `CLAUDE.md`** — rules scoped to one part of a big repo.
+Orbit moves all of that off your computer and into one shared place that every tool reads from. Your rules, your decisions, and everything your AI has produced live in your **Vault** — not on a hard drive.
 
-Claude reads the relevant ones automatically. No need to paste them into each prompt.
+So now:
 
-## CLAUDE.md vs Orbit decisions
+- **New laptop?** Connect Orbit, and everything's still there.
+- **New chat?** It already knows your decisions and your past work.
+- **Scheduled agent?** Reads the same memory as your live chats.
+- **Two computers?** Both see the same brain.
 
-These work together, at different scopes:
+You stop being the one who has to remember and re-explain. That job moves to Orbit.
 
-| | `CLAUDE.md` | Orbit Decisions |
-|---|---|---|
-| Scope | One repo / one machine | Every agent, every tool, everywhere |
-| Read by | Claude Code in that folder | All connected agents (Claude, Codex, Cowork…) |
-| Best for | Repo conventions, build commands | Company-wide rules, positioning, cross-tool policy |
+## What this means for you, practically
 
-Rule of thumb: **repo-specific mechanics** go in `CLAUDE.md`; **decisions that should govern your whole AI workforce** go in [Orbit Decisions](/concepts/decisions) so Claude Code, Codex, and your Cowork agents all honor them.
+You barely have to think about folders and setup files anymore. Instead of writing rules into a file on one computer, you just **tell Orbit a decision once** — "always quote the $49 plan," "our brand voice sounds like this" — and every tool, on every device, follows it forever.
 
-## Practical setup
+→ [How to set a decision](/use/update-decision)
 
-1. Add a root `CLAUDE.md` with build/test commands and hard "don't touch" rules.
-2. Keep a personal `~/.claude/CLAUDE.md` with your style preferences.
-3. File anything cross-tool or company-wide as an Orbit decision instead — so it's not trapped in one repo.
+## The short version
 
-<Card title="Next: permissions & safety" icon="shield-halved" href="/claude-education/permissions">
-  Control exactly what Claude is allowed to do.
+> The old way kept your AI's memory on one computer, where it broke easily. Orbit keeps it in the cloud, so nothing is ever lost — change devices, open a new chat, switch tools, and your AI picks up right where you left off.
+
+<Card title="Next: agents on a schedule" icon="clock" href="/claude-education/cowork">
+  Claude that shows up for work on its own.
 </Card>

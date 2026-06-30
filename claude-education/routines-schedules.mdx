@@ -1,50 +1,44 @@
 ---
-title: "Routines & schedules"
-description: "Set cadences for recurring work — and make sure every scheduled run reports into Orbit."
+title: "Setting the schedule"
+description: "How often your agents should run, and making sure you always see what they did."
 icon: "calendar"
 ---
 
-A routine is recurring work on a cadence. Claude can run routines via Cowork, and other tools can too (cron, n8n, serverless). The golden rule: **every scheduled run must report into Orbit**, or it's invisible.
+Once you have an agent that runs on its own, two simple questions matter: *how often should it run?* and *how do I make sure I see what it did?* Here's the plain answer to both.
 
-## Picking a cadence
+## How often?
 
-Match frequency to the work, not the other way around:
+Match the schedule to the job — don't overdo it:
 
-| Cadence | Good for |
+| How often | Good for |
 |---|---|
-| Hourly | Time-sensitive monitoring, fast-moving queues |
-| Daily | Digests, briefings, outreach batches |
-| Weekly | Reports, reviews, summaries |
-| Event-driven | "When X happens, do Y" (via webhooks/triggers) |
+| **Every day** | Morning summaries, daily outreach, a digest |
+| **Every week** | Reports, reviews, a weekly round-up |
+| **Every few hours** | Things that genuinely change through the day |
+| **When something happens** | "When a new lead comes in, do X" |
 
-Don't over-schedule. An hourly agent that has nothing to do most hours is just cost and noise. Start daily; tighten only if the work demands it.
+A good rule: **start with daily.** Only make it more frequent if the work actually needs it. An agent running every hour with nothing new to do is just wasted money and noise.
 
-## The lifecycle every routine should follow
+## Making sure you never miss what it did
 
-Whether it's Cowork, a cron job, or an n8n flow, each run should:
+The golden rule of scheduled agents: **if you can't see it, you can't trust it.** An agent quietly doing work you never check is worse than no agent at all.
 
-1. **Heartbeat running** — register the run, pull active decisions and knowledge.
-2. **Do the work.**
-3. **File results** — publish output to the Vault.
-4. **Heartbeat idle** — close the run with a one-line summary.
+This is what Orbit is for. Every scheduled run automatically:
 
-Agents with the [Orbit MCP Skill](/use/mcp-skill) do this automatically. See [How to set up scheduled agents](/use/scheduled-agents).
+- **Checks in** at the start and end, so you know it ran.
+- **Saves its work** to your Vault.
+- **Lands in your morning Briefing** — your daily one-page catch-up.
 
-## Routines outside Claude
+So your routine isn't "hope the robot did its job." It's "read the one-line summary over coffee, done in a few minutes."
 
-If a routine runs somewhere MCP isn't available — a raw cron script, a serverless function, a Zapier/n8n flow — embed Orbit's **REST telemetry** so it still heartbeats, logs events, and files results. Give it its own stable agent identity and reuse it every run. See [the API reference](/reference/api).
+→ [How to set up a scheduled agent](/use/scheduled-agents)
 
-<Note>
-A routine with no telemetry effectively doesn't exist to you. If you can't see it in your Briefing, you can't trust it ran.
-</Note>
+## A healthy routine, in practice
 
-## Keeping routines healthy
+- **Glance at your Briefing each morning** — it's your early warning if something stopped working.
+- **Watch for silence.** An agent that suddenly stops sending its summary is telling you something.
+- **Use a cheap model for frequent simple jobs** to keep costs low ([model guide](/claude-education/models)).
 
-- **Review the Briefing daily** — it's your early warning when a routine breaks or goes quiet.
-- **Watch for silence** — an agent that suddenly stops filing is a signal.
-- **Right-size the model** per cadence to control cost ([model guide](/claude-education/models)).
-- **Scope permissions tightly** — unattended agents should have the minimum access they need.
-
-<Card title="Finish: build optimally with Orbit" icon="stars" href="/claude-education/optimal-setup">
-  Put it all together into one compounding system.
+<Card title="Last step: your best setup" icon="stars" href="/claude-education/optimal-setup">
+  Put it all together.
 </Card>

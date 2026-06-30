@@ -1,56 +1,45 @@
 ---
-title: "Local vs cloud (GitHub)"
-description: "Run Claude Code on your own machine or in the cloud — the tradeoffs, and why Orbit makes the choice not matter."
+title: "On your computer or in the cloud"
+description: "Should Claude work on your laptop or up in the cloud? A simple way to decide."
 icon: "cloud"
 ---
 
-Claude Code can run **locally** on your machine or in the **cloud** (the web surface, connected to GitHub). Each has a sweet spot. With Orbit connected, both write to the same brain — so you can mix them freely.
+Claude can do its work in two places: right there **on your computer**, or up **in the cloud** while your laptop is closed. Neither is "better" — they're for different moments. And with Orbit, it doesn't matter which you pick, because both share the same memory.
 
-## Local
+## On your computer
 
-Claude Code runs on your computer, against files on your disk.
+Claude works directly with the files and apps on your machine, with you watching.
 
-**Strengths:**
-- Direct access to your real local environment, tools, and secrets.
-- Fast, tactile, full control.
-- Great for active development where you're in the loop.
+**Good when:** you're sitting there, hands-on, doing something now — and you want to see it happen.
 
-**Tradeoffs:**
-- Tied to your machine being on.
-- Not ideal for long unattended runs.
+**The catch:** it only runs while your computer is on and you're around.
 
-## Cloud (GitHub-connected)
+## In the cloud
 
-Claude Code runs in the cloud (e.g. [claude.ai/code](https://claude.ai/code)), working against a repo it pulls from GitHub. It can branch, commit, and open pull requests.
+Claude works up in the cloud on its own. You can close your laptop and walk away; it keeps going.
 
-**Strengths:**
-- Runs without your laptop open.
-- Natural fit for the GitHub flow — branches and PRs you review.
-- Good for parallel and longer-running tasks.
+**Good when:** you want to say "go do this" and come back later — or you've got something long-running.
 
-**Tradeoffs:**
-- Works against the repo, not your uncommitted local state.
-- Needs GitHub connected.
+**The catch:** it's working on a copy in the cloud, not the files sitting open on your desk.
 
-## Which to use
+## The simple way to choose
 
-| Situation | Use |
+| Your situation | Where |
 |---|---|
-| Active hands-on coding, local tools | **Local** |
-| "Go do this and open a PR" | **Cloud** |
-| Long or parallel unattended work | **Cloud** |
-| Tweaking uncommitted local files | **Local** |
+| You're working hands-on right now | **Your computer** |
+| "Go do this, I'll check later" | **The cloud** |
+| Something long or that should run while you're away | **The cloud** |
 
-## Why Orbit makes this seamless
+## Why Orbit makes this a non-issue
 
-The risk of mixing local and cloud is fragmentation — work in one place the other never sees. Orbit removes that: **both surfaces file to the same Vault and read the same decisions.**
+Normally, splitting work between your computer and the cloud means the two never see each other's progress. With Orbit, **both save to the same Vault and follow the same decisions.**
 
-- A decision you set applies to local *and* cloud runs.
-- A summary your cloud PR-bot files is searchable from your local session, and vice versa.
-- Your dashboard shows runs from both in one timeline.
+- A rule you set applies in both places.
+- Work done in the cloud is waiting for you when you're back on your laptop.
+- Your dashboard shows everything in one place, no matter where it ran.
 
-So "local or cloud" becomes a per-task convenience choice, not a commitment that splits your context.
+So you just pick whatever's convenient in the moment — your memory stays in one piece either way.
 
-<Card title="Next: working with GitHub" icon="code-branch" href="/claude-education/github">
-  Branches, PRs, and a clean review flow.
+<Card title="Next: if you're building software" icon="code-branch" href="/claude-education/github">
+  A quick note on GitHub (skip if that's not you).
 </Card>

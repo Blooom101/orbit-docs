@@ -1,47 +1,40 @@
 ---
-title: "Commands, skills & hooks"
-description: "The three ways to make Claude repeat good behavior: slash commands, skills, and hooks."
+title: "Shortcuts & skills"
+description: "Teach Claude something once and reuse it forever, instead of re-explaining every time."
 icon: "slash"
 ---
 
-Once you know the basics, these three features turn one-off prompts into reliable, reusable behavior. They're how power users get consistency out of Claude.
+Once you find yourself asking Claude for the same thing over and over, you can save it so you never have to type it out again. Two simple tools do this: shortcuts and skills.
 
-## Slash commands
+## Shortcuts (saved prompts)
 
-Type `/` to run a command. There are built-in ones (like `/fast` to toggle fast mode) and **custom commands** you define for prompts you run often.
+A shortcut is just a prompt you've saved with a name. Instead of typing out "review this and check for mistakes and anything risky" every time, you save it once and trigger it with a quick command like `/review`.
 
-A custom command is just a saved prompt with a name. Instead of re-typing "review the diff for bugs and security issues," you save it once and run `/review`.
+**Use it for:** anything you ask repeatedly — a weekly report format, a standard review, a tone you always want.
 
-**Use them for:** repeated workflows — reviews, releases, test runs, standard refactors.
+Type `/` to see the shortcuts available. There are handy built-in ones too (like `/fast` to make Claude respond quicker).
 
-## Skills
+## Skills (packaged know-how)
 
-A **skill** is a packaged capability — instructions (and sometimes scripts) that teach Claude how to do a specific kind of task well, loaded only when relevant. Think of skills as expertise modules: a skill for writing in your brand voice, a skill for a specific build pipeline, the **Orbit MCP Skill** for working with Orbit correctly.
+A skill is a step up: it's a little bundle of expertise you give Claude so it does a specific kind of task *your* way, without being reminded. Think of it as training a teammate once.
 
-**Use them for:** domain knowledge and procedures you want Claude to apply consistently without re-explaining.
+For example: a skill for writing in your exact brand voice, or a skill that knows your standard process for a task.
 
-The [Orbit MCP Skill](/use/mcp-skill) is the one to install first — it makes any agent follow Orbit's lifecycle (heartbeat, file results at the right trust level, search before working) automatically.
+**The one to install first:** the **Orbit Skill**. It teaches any Claude (or other AI) how to work with Orbit correctly — checking your memory before it starts and saving its work when it's done — all on its own.
 
-## Hooks
+→ [How to use the Orbit Skill](/use/mcp-skill)
 
-A **hook** runs your own logic automatically at defined moments — before or after Claude uses a tool, when a session starts or stops. Hooks are executed by the harness, not by Claude's judgment, so they're how you enforce things deterministically.
+## Why this matters to you
 
-**Use them for:** "always run the linter after an edit," "block commits to main," "notify me when a session finishes."
+Every minute you spend re-explaining the same thing is wasted. Shortcuts and skills turn "let me write that long prompt again" into a single word. Set them up once, save yourself forever.
 
-## How they relate
+## The Orbit angle
 
-| Feature | What it is | Triggered by |
-|---|---|---|
-| **Slash command** | A saved prompt | You typing `/name` |
-| **Skill** | Packaged expertise | Claude, when relevant |
-| **Hook** | Deterministic automation | The harness, on an event |
+A shortcut or skill lives wherever you made it. A **decision in Orbit** applies everywhere, to every tool, automatically. So:
 
-## With Orbit
+- Repeating a *prompt*? Make a **shortcut**.
+- Want a *rule* every tool follows? Set an **[Orbit decision](/use/update-decision)** instead — it's read by all your AI, on every device, forever.
 
-- Install the **Orbit MCP Skill** so every session heartbeats and files results without you asking.
-- Use a **slash command** like `/file-to-orbit` to push the current work to your Vault on demand.
-- Use a **hook** to, say, log an Orbit event every time a session ends — guaranteeing no run goes silent.
-
-<Card title="Next: local vs cloud" icon="cloud" href="/claude-education/local-vs-cloud">
-  Run on your machine or in the cloud with GitHub.
+<Card title="Next: on your computer or in the cloud" icon="cloud" href="/claude-education/local-vs-cloud">
+  Where Claude does the work.
 </Card>

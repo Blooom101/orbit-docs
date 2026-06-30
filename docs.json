@@ -126,7 +126,7 @@
                 ]
               },
               {
-                "group": "Claude Code",
+                "group": "Getting Things Done",
                 "pages": [
                   "claude-education/claude-code-basics",
                   "claude-education/folders-context",
@@ -135,21 +135,21 @@
                 ]
               },
               {
-                "group": "Local vs Cloud",
+                "group": "Where Claude Works",
                 "pages": [
                   "claude-education/local-vs-cloud",
                   "claude-education/github"
                 ]
               },
               {
-                "group": "Automate with Cowork",
+                "group": "On a Schedule",
                 "pages": [
                   "claude-education/cowork",
                   "claude-education/routines-schedules"
                 ]
               },
               {
-                "group": "Putting It Together",
+                "group": "Your Setup",
                 "pages": [
                   "claude-education/optimal-setup"
                 ]

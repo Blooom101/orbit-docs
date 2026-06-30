@@ -1,46 +1,44 @@
 ---
-title: "Permissions & safety"
-description: "Control exactly what Claude can do — and set it up so Orbit tools never interrupt you."
+title: "Letting Claude do things (permissions)"
+description: "Why Claude asks before it acts, and when to just let it run — explained for non-technical users."
 icon: "shield-halved"
 ---
 
-Claude Code asks permission before it does anything consequential — editing files, running commands, calling tools. Understanding permissions lets you move fast safely, and stop repetitive prompts.
+When Claude is doing real work on your computer, it will often stop and ask: *"Can I do this?"* That's a good thing. Here's what it means and how to make it stop slowing you down once you trust it.
 
-## The basic model
+## Why it asks permission
 
-By default, Claude proposes an action and you approve it. For each prompt you can:
+Think of Claude like a brand-new assistant on their first day. Before they delete a file, send something, or change your setup, you'd want them to check with you first. That's all permissions are: Claude checking before it does something that actually changes things.
 
-- **Allow once** — just this time.
-- **Always allow** — remember this kind of action so it stops asking.
-- **Deny** — refuse; Claude adapts.
+When it asks, you have three choices:
+- **Yes, go ahead** — just this once.
+- **Always allow this** — stop asking me for this kind of thing.
+- **No** — don't. Claude will simply try another way.
 
-A denied call is feedback, not a dead end — Claude will try another approach.
+Saying no never breaks anything. It's just feedback.
 
-## Permission modes
+## Why it matters to you
 
-Claude Code runs under a permission mode that sets how cautious it is — from approving each step, to auto-approving safe actions, to fuller autonomy for trusted workflows. Start cautious; loosen it as you trust a given task. Match the mode to the stakes: tight for production repos, looser for a scratch project.
+Permissions are your **safety net and your steering wheel**. They let you move fast without worrying Claude will do something you didn't want. You stay in control, even when Claude is doing a lot.
 
-## Allowlists in settings
+## Auto mode: when to take the training wheels off
 
-For commands and tools you run constantly, pre-approve them so you're never prompted. These live in your Claude Code settings (`settings.json`) as allow/deny rules — for example, always allowing read-only commands while still gating anything destructive.
+Approving every little step gets tiring once you trust Claude with a task. That's what **auto mode** is for — you tell Claude "you don't need to keep asking, just do it," and it runs the whole task start to finish on its own.
 
-<Note>
-Good practice: allow the safe, high-frequency stuff (tests, builds, reads) and keep a hard gate on the dangerous stuff (deletes, force-pushes, production deploys).
-</Note>
+A simple way to think about it:
+- **New or risky task?** Keep approving step by step. Watch what it does.
+- **Done this a hundred times and trust it?** Turn on auto mode and let it fly.
 
-## The one Orbit-specific setting that matters
+## Why auto mode isn't scary with Orbit
 
-When you connect Orbit, Claude will ask permission the first time it calls each Orbit tool. **Choose "Always allow" for the Orbit tools** (`orbit_heartbeat`, `orbit_event`, `orbit_result`, and the rest).
+The usual worry with "let it run free" is *what if I miss something it did?* With Orbit connected, that worry goes away: **everything Claude does is automatically saved and shown to you.** Even when it runs on auto, every action lands in your Vault and shows up on your dashboard. You can always look back and see exactly what happened.
 
-Why it matters: Orbit's value comes from Claude heartbeating at the **start and end of every run**. If each heartbeat triggers a permission prompt, the loop breaks and runs go silent. Allowing them once, permanently, keeps your dashboard live.
+So you get the speed of auto mode and the peace of mind of a full record.
 
-## Safety mindset
+## One thing to set up once
 
-- Keep destructive actions gated, always.
-- Review the *plan* before approving a batch of edits.
-- For scheduled/autonomous agents, scope their permissions tightly — they run without you watching.
-- Everything a connected agent does still files to your Vault, so you have an audit trail either way.
+When you first connect Orbit, Claude will ask permission to use the Orbit tools. Click **"Always allow"** for those. It's how Claude quietly checks in with your memory at the start and end of every task — you don't want to be clicking "yes" every time.
 
-<Card title="Next: commands, skills & hooks" icon="slash" href="/claude-education/commands">
-  Reusable shortcuts and automated behaviors.
+<Card title="Next: never losing your work" icon="folder-tree" href="/claude-education/folders-context">
+  Why a new laptop or a fresh chat used to mean starting over.
 </Card>
