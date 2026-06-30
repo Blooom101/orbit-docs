@@ -5,18 +5,30 @@ description: "Real problems and how to fix them."
 
 The most common issues connecting agents to Orbit, and how to solve each one.
 
-## My agent isn't appearing on the dashboard
+## My agent or session isn't appearing on the dashboard
 
 **Likely causes:**
+
 - The agent never called `orbit_heartbeat`. It must heartbeat at least once to register.
 - The `agent.id` changes between runs, so each run looks like a new agent.
 - The MCP URL is wrong or the connection failed silently.
 
 **Fix:** Confirm the agent calls `orbit_heartbeat` on start, uses a stable `agent.id`, and has the correct MCP URL from **Settings → MCP**.
 
+## My agent isn't appearing as an Orbit
+
+**Likely causes:**
+
+- The agent never called `orbit_declare`. It must declare itself at least once to register.
+- The `agent.id` changes between runs, so each run looks like a new agent.
+- The MCP URL is wrong or the connection failed silently.
+
+**Fix:** Tell the agent to declare itself. 
+
 ## I'm getting authentication errors
 
 **Likely causes:**
+
 - The MCP URL is missing or malformed.
 - The workspace key in the URL is wrong or was rotated.
 
@@ -25,6 +37,7 @@ The most common issues connecting agents to Orbit, and how to solve each one.
 ## My MCP connection keeps dropping
 
 **Likely causes:**
+
 - A network or proxy issue between your tool and Orbit.
 - The tool's MCP client timing out.
 
@@ -33,8 +46,10 @@ The most common issues connecting agents to Orbit, and how to solve each one.
 ## My results aren't showing in the Vault
 
 **Likely causes:**
+
 - The agent called `orbit_result` with empty content.
 - It's filing into a different project than the one you're viewing.
+- You haven't installed the skill so the agent doesn't know how to use Orbit properly. 
 
 **Fix:** Make sure `orbit_result` includes real content and the agent's project matches where you're looking.
 

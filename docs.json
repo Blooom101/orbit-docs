@@ -80,8 +80,6 @@
               "help/faq",
               "help/comparisons",
               "help/glossary",
-              "help/status",
-              "help/changelog",
               "help/community"
             ]
           }
@@ -95,18 +93,8 @@
             "group": "Use Orbit",
             "pages": [
               {
-                "group": "Daily workflow",
-                "pages": [
-                  "use/read-briefing",
-                  "use/process-inbox",
-                  "use/search-vault",
-                  "use/update-decision"
-                ]
-              },
-              {
                 "group": "Set up your AI company",
                 "pages": [
-                  "use/add-agent",
                   "use/assign-departments",
                   "use/organize-org-chart",
                   "use/create-project",
