@@ -13,13 +13,16 @@ Your agents produce a lot of output. Some of it is speculative research. Some of
 
 If Orbit treated all of these the same way, agents would give equal weight to a rough first-pass note and a decision you ratified six months ago. That's how you get agents contradicting your most important rules.
 
-Trust levels solve this. Every piece of content in your Vault carries a trust level — and Orbit's retrieval system weights higher-trust content more heavily when agents query for context before a run.
+As you work, conclusions evolve over time. Orbit solves that. 
+
+Trust levels are the solution to this. Every piece of content in your Vault carries a trust level — and Orbit's retrieval system weights higher-trust content more heavily when agents query for context before a run.
 
 ---
 
 ## The three trust levels
 
 ### Exploratory
+
 **"This is a rough finding. Use with caution."**
 
 The default trust level. Everything your agent files lands here unless you specify otherwise. Exploratory content is kept in the vault for reference, but agents know to treat it as provisional — it might be wrong, incomplete, or outdated.
@@ -27,32 +30,36 @@ The default trust level. Everything your agent files lands here unless you speci
 Use exploratory for: first-pass research, working notes, drafts, intermediate outputs, anything that hasn't been verified yet.
 
 ### Conclusion
+
 **"This is a finished, vetted output. It's reliable."**
 
 A conclusion is something your agent produced that you're confident in — a completed report, a verified lead list, a finished analysis. Agents give conclusions real weight when querying the vault.
 
-Use conclusion for: completed deliverables, verified research, outputs you've reviewed and approved.
+Use conclusion for completed deliverables, verified research, and outputs you've reviewed and approved. It's finalized, but it's not the highest level of trust. 
 
 ### Authoritative
+
 **"This is ground truth. Treat it as fact."**
 
 Authoritative content is the highest trust level in Orbit. It's injected directly into every relevant agent's context at the start of each run — before the agent does anything else. An authoritative decision from 3 months ago outranks a fresh exploratory note automatically.
 
 When you file something as authoritative, Orbit flags it for your review before it takes effect. You confirm it, and from that point forward every agent reads it as ground truth.
 
-Use authoritative for: locked decisions, confirmed facts, rules that must never be contradicted, pricing, architectural decisions, standing instructions.
+Use "authoritative" for locked decisions, confirmed facts, rules that must never be contradicted, pricing, architectural decisions, and standing instructions. Documents you'd need to reuse in the future. 
 
 ---
 
 ## How trust levels affect agent behavior
 
 | Trust Level | Injected into heartbeat? | Searchable? | Agent weight |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Exploratory | No | Yes | Low |
 | Conclusion | No | Yes | Medium |
 | Authoritative | Yes (automatically) | Yes | Highest |
 
 Authoritative content is the only type that agents receive automatically without querying. Everything else is available via search — agents retrieve it when they need it, weighted by trust level.
+
+> As of date, agents receive title and summary of authoritative files and can choose to dig deeper. 
 
 ---
 
@@ -91,7 +98,9 @@ This is how Orbit maintains one source of truth without losing the history of ho
 
 Valid values: `exploratory`, `conclusion`, `authoritative`
 
-**From your dashboard:** You can promote or demote any vault item's trust level manually from the item's detail view. Useful for promoting a conclusion to authoritative after you've verified it, or downgrading exploratory content that turned out to be wrong.
+**From your dashboard:** You can promote or demote any vault item's trust level manually from the item's detail view. Useful for promoting a conclusion to authoritative after you've verified it, or downgrading exploratory content that turned out to be wrong. 
+
+You can also move things around in the vault from outputs/reports, wiki/knowledge, and notes. This effectively changes its Trust Level. 
 
 ---
 
@@ -99,10 +108,11 @@ Valid values: `exploratory`, `conclusion`, `authoritative`
 
 Orbit tracks two separate dimensions of trust:
 
-- **Trust level** — how confident we are in the *content* itself (exploratory/conclusion/authoritative)
-- **Source trust** — how much we trust the *agent or operator* who filed it
+- **Trust level** — how confident we are in the _content_ itself (exploratory/conclusion/authoritative)
+- **Source trust** — how much we trust the _agent or operator_ who filed it
 
 Source trust is assigned automatically based on who filed the content:
+
 - Operator (you) — highest trust
 - Agent conclusion — high trust
 - Agent exploratory — standard trust
