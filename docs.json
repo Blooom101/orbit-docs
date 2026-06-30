@@ -132,21 +132,13 @@
           {
             "group": "Reference",
             "pages": [
-              "reference/mcp-tools",
               "reference/mcp-skill",
               "reference/data-model",
-              "reference/webhooks",
-              "reference/api",
               "reference/self-hosted",
               "reference/agents-vs-sessions"
             ]
           }
         ]
-      },
-      {
-        "anchor": "Community",
-        "icon": "users",
-        "href": "https://orbitagents.xyz"
       }
     ]
   }
