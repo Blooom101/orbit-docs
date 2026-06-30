@@ -1,43 +1,84 @@
 ---
-title: "Setting the schedule"
-description: "How often your agents should run, and making sure you always see what they did."
+title: "Schedules vs routines"
+description: "Two ways to put work on repeat — Cowork schedules (no-code) and Claude Code routines (technical) — and how to pick."
 icon: "calendar"
 ---
 
-Once you have an agent that runs on its own, two simple questions matter: *how often should it run?* and *how do I make sure I see what it did?* Here's the plain answer to both.
+There are two ways to make work happen on repeat, and they look almost identical from the outside. The difference is what's running underneath. Pick the right one and you'll save yourself a lot of headaches.
 
-## How often?
+## The one distinction that matters
 
-Match the schedule to the job — don't overdo it:
+Both run your work on a timer. The difference is the **engine** doing the work:
+
+- **A Schedule runs on Cowork** — the no-code side. Best for everyday, non-technical tasks.
+- **A Routine runs on Claude Code** — the hands-on side. Best for more technical work.
+
+Same idea ("do this on repeat"), different machine under the hood. That's the whole thing.
+
+## Schedule (Cowork) — the simple, no-code choice
+
+If the task doesn't involve code, a **Cowork schedule** is what you want. It just works, no technical setup.
+
+**Great for:**
+- Browser / Chrome automation (clicking around websites, pulling info, filling things in)
+- Writing, outreach, summaries, content
+- Anything you'd describe in plain English
+
+**This is the default for most solopreneurs.** If you're not sure, you want a schedule.
+
+## Routine (Claude Code) — for the technical stuff
+
+If the task actually involves **code** — building something, running data jobs, working in a real project — you want a **Claude Code routine**. It can do the technical work a Cowork schedule can't.
+
+A routine then runs in one of two places, and the choice has real consequences:
+
+**On your computer (local)**
+- Uses your own logins and connections — it can reach the things your computer can reach.
+- **Your computer has to be on** for it to run.
+- Simple to set up; nothing in the cloud to configure.
+
+**In the cloud**
+- Runs without your computer — your laptop can be closed.
+- More technical to set up (it works through GitHub and similar), so there's a bit more plumbing.
+- Good when the job is long, heavy, or needs to run while you're away.
+
+→ More on this in [On your computer or in the cloud](/claude-education/local-vs-cloud).
+
+## Which should you pick?
+
+| What you're scheduling | Use |
+|---|---|
+| Browser automation, content, outreach, summaries | **Cowork schedule** |
+| Anything non-technical, plain-English | **Cowork schedule** |
+| Building or running code, data jobs | **Claude Code routine** |
+| …and your computer's usually on | Routine, **local** |
+| …and it must run while you're away | Routine, **cloud** |
+
+**Rule of thumb:** start with a Cowork schedule. Only reach for a Claude Code routine when the task genuinely needs code.
+
+## How often should it run?
+
+Whichever you pick, match the frequency to the work:
 
 | How often | Good for |
 |---|---|
-| **Every day** | Morning summaries, daily outreach, a digest |
-| **Every week** | Reports, reviews, a weekly round-up |
-| **Every few hours** | Things that genuinely change through the day |
-| **When something happens** | "When a new lead comes in, do X" |
+| **Every day** | Summaries, outreach, a digest |
+| **Every week** | Reports, reviews, round-ups |
+| **Every few hours** | Things that really change through the day |
 
-A good rule: **start with daily.** Only make it more frequent if the work actually needs it. An agent running every hour with nothing new to do is just wasted money and noise.
+Start with daily. Only go more frequent if the work truly needs it — an agent running hourly with nothing to do is just wasted money.
 
-## Making sure you never miss what it did
+## The golden rule: you have to be able to see it
 
-The golden rule of scheduled agents: **if you can't see it, you can't trust it.** An agent quietly doing work you never check is worse than no agent at all.
+A scheduled task you never check is worse than none. This is what Orbit is for — whether it's a Cowork schedule or a Claude Code routine, every run automatically:
 
-This is what Orbit is for. Every scheduled run automatically:
-
-- **Checks in** at the start and end, so you know it ran.
+- **Checks in** so you know it ran.
 - **Saves its work** to your Vault.
-- **Lands in your morning Briefing** — your daily one-page catch-up.
+- **Lands in your morning Briefing** — your one-page daily catch-up.
 
-So your routine isn't "hope the robot did its job." It's "read the one-line summary over coffee, done in a few minutes."
+So it's never "I hope the robot did its job." It's "I read the one-line summary over coffee." And because both engines report into the same Orbit, you watch all your recurring work in one place — no matter which one is running underneath.
 
 → [How to set up a scheduled agent](/use/scheduled-agents)
-
-## A healthy routine, in practice
-
-- **Glance at your Briefing each morning** — it's your early warning if something stopped working.
-- **Watch for silence.** An agent that suddenly stops sending its summary is telling you something.
-- **Use a cheap model for frequent simple jobs** to keep costs low ([model guide](/claude-education/models)).
 
 <Card title="Last step: your best setup" icon="stars" href="/claude-education/optimal-setup">
   Put it all together.
