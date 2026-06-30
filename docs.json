@@ -24,22 +24,6 @@
   "navbar": {
     "links": [
       {
-        "label": "What is Orbitagents",
-        "href": "/start/what-is-orbit"
-      },
-      {
-        "label": "Quickstart",
-        "href": "/start/quickstart"
-      },
-      {
-        "label": "FAQ",
-        "href": "/help/faq"
-      },
-      {
-        "label": "Connect Claude",
-        "href": "/use/connect-claude"
-      },
-      {
         "label": "Website",
         "href": "https://orbitagents.xyz"
       }
@@ -62,6 +46,15 @@
         "anchor": "Documentation",
         "icon": "book-open",
         "groups": [
+          {
+            "group": "Quick Links",
+            "pages": [
+              "start/what-is-orbit",
+              "start/quickstart",
+              "help/faq",
+              "use/connect-claude"
+            ]
+          },
           {
             "group": "Start Here",
             "pages": [
