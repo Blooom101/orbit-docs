@@ -1,0 +1,47 @@
+---
+title: "Commands, skills & hooks"
+description: "The three ways to make Claude repeat good behavior: slash commands, skills, and hooks."
+icon: "slash"
+---
+
+Once you know the basics, these three features turn one-off prompts into reliable, reusable behavior. They're how power users get consistency out of Claude.
+
+## Slash commands
+
+Type `/` to run a command. There are built-in ones (like `/fast` to toggle fast mode) and **custom commands** you define for prompts you run often.
+
+A custom command is just a saved prompt with a name. Instead of re-typing "review the diff for bugs and security issues," you save it once and run `/review`.
+
+**Use them for:** repeated workflows — reviews, releases, test runs, standard refactors.
+
+## Skills
+
+A **skill** is a packaged capability — instructions (and sometimes scripts) that teach Claude how to do a specific kind of task well, loaded only when relevant. Think of skills as expertise modules: a skill for writing in your brand voice, a skill for a specific build pipeline, the **Orbit MCP Skill** for working with Orbit correctly.
+
+**Use them for:** domain knowledge and procedures you want Claude to apply consistently without re-explaining.
+
+The [Orbit MCP Skill](/use/mcp-skill) is the one to install first — it makes any agent follow Orbit's lifecycle (heartbeat, file results at the right trust level, search before working) automatically.
+
+## Hooks
+
+A **hook** runs your own logic automatically at defined moments — before or after Claude uses a tool, when a session starts or stops. Hooks are executed by the harness, not by Claude's judgment, so they're how you enforce things deterministically.
+
+**Use them for:** "always run the linter after an edit," "block commits to main," "notify me when a session finishes."
+
+## How they relate
+
+| Feature | What it is | Triggered by |
+|---|---|---|
+| **Slash command** | A saved prompt | You typing `/name` |
+| **Skill** | Packaged expertise | Claude, when relevant |
+| **Hook** | Deterministic automation | The harness, on an event |
+
+## With Orbit
+
+- Install the **Orbit MCP Skill** so every session heartbeats and files results without you asking.
+- Use a **slash command** like `/file-to-orbit` to push the current work to your Vault on demand.
+- Use a **hook** to, say, log an Orbit event every time a session ends — guaranteeing no run goes silent.
+
+<Card title="Next: local vs cloud" icon="cloud" href="/claude-education/local-vs-cloud">
+  Run on your machine or in the cloud with GitHub.
+</Card>

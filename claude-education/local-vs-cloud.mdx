@@ -1,0 +1,56 @@
+---
+title: "Local vs cloud (GitHub)"
+description: "Run Claude Code on your own machine or in the cloud — the tradeoffs, and why Orbit makes the choice not matter."
+icon: "cloud"
+---
+
+Claude Code can run **locally** on your machine or in the **cloud** (the web surface, connected to GitHub). Each has a sweet spot. With Orbit connected, both write to the same brain — so you can mix them freely.
+
+## Local
+
+Claude Code runs on your computer, against files on your disk.
+
+**Strengths:**
+- Direct access to your real local environment, tools, and secrets.
+- Fast, tactile, full control.
+- Great for active development where you're in the loop.
+
+**Tradeoffs:**
+- Tied to your machine being on.
+- Not ideal for long unattended runs.
+
+## Cloud (GitHub-connected)
+
+Claude Code runs in the cloud (e.g. [claude.ai/code](https://claude.ai/code)), working against a repo it pulls from GitHub. It can branch, commit, and open pull requests.
+
+**Strengths:**
+- Runs without your laptop open.
+- Natural fit for the GitHub flow — branches and PRs you review.
+- Good for parallel and longer-running tasks.
+
+**Tradeoffs:**
+- Works against the repo, not your uncommitted local state.
+- Needs GitHub connected.
+
+## Which to use
+
+| Situation | Use |
+|---|---|
+| Active hands-on coding, local tools | **Local** |
+| "Go do this and open a PR" | **Cloud** |
+| Long or parallel unattended work | **Cloud** |
+| Tweaking uncommitted local files | **Local** |
+
+## Why Orbit makes this seamless
+
+The risk of mixing local and cloud is fragmentation — work in one place the other never sees. Orbit removes that: **both surfaces file to the same Vault and read the same decisions.**
+
+- A decision you set applies to local *and* cloud runs.
+- A summary your cloud PR-bot files is searchable from your local session, and vice versa.
+- Your dashboard shows runs from both in one timeline.
+
+So "local or cloud" becomes a per-task convenience choice, not a commitment that splits your context.
+
+<Card title="Next: working with GitHub" icon="code-branch" href="/claude-education/github">
+  Branches, PRs, and a clean review flow.
+</Card>

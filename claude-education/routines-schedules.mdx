@@ -1,0 +1,50 @@
+---
+title: "Routines & schedules"
+description: "Set cadences for recurring work — and make sure every scheduled run reports into Orbit."
+icon: "calendar"
+---
+
+A routine is recurring work on a cadence. Claude can run routines via Cowork, and other tools can too (cron, n8n, serverless). The golden rule: **every scheduled run must report into Orbit**, or it's invisible.
+
+## Picking a cadence
+
+Match frequency to the work, not the other way around:
+
+| Cadence | Good for |
+|---|---|
+| Hourly | Time-sensitive monitoring, fast-moving queues |
+| Daily | Digests, briefings, outreach batches |
+| Weekly | Reports, reviews, summaries |
+| Event-driven | "When X happens, do Y" (via webhooks/triggers) |
+
+Don't over-schedule. An hourly agent that has nothing to do most hours is just cost and noise. Start daily; tighten only if the work demands it.
+
+## The lifecycle every routine should follow
+
+Whether it's Cowork, a cron job, or an n8n flow, each run should:
+
+1. **Heartbeat running** — register the run, pull active decisions and knowledge.
+2. **Do the work.**
+3. **File results** — publish output to the Vault.
+4. **Heartbeat idle** — close the run with a one-line summary.
+
+Agents with the [Orbit MCP Skill](/use/mcp-skill) do this automatically. See [How to set up scheduled agents](/use/scheduled-agents).
+
+## Routines outside Claude
+
+If a routine runs somewhere MCP isn't available — a raw cron script, a serverless function, a Zapier/n8n flow — embed Orbit's **REST telemetry** so it still heartbeats, logs events, and files results. Give it its own stable agent identity and reuse it every run. See [the API reference](/reference/api).
+
+<Note>
+A routine with no telemetry effectively doesn't exist to you. If you can't see it in your Briefing, you can't trust it ran.
+</Note>
+
+## Keeping routines healthy
+
+- **Review the Briefing daily** — it's your early warning when a routine breaks or goes quiet.
+- **Watch for silence** — an agent that suddenly stops filing is a signal.
+- **Right-size the model** per cadence to control cost ([model guide](/claude-education/models)).
+- **Scope permissions tightly** — unattended agents should have the minimum access they need.
+
+<Card title="Finish: build optimally with Orbit" icon="stars" href="/claude-education/optimal-setup">
+  Put it all together into one compounding system.
+</Card>

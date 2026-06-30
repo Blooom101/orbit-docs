@@ -1,0 +1,45 @@
+---
+title: "Cowork: scheduled agents"
+description: "What Claude Cowork is, and how to run unattended agents that report into Orbit."
+icon: "clock"
+---
+
+Cowork is Claude that runs on a **schedule**, without you starting it. A Cowork agent wakes on its cadence, does its job, files its work, and goes back to sleep — turning Claude from a tool you operate into a teammate that shows up on its own.
+
+## What makes Cowork different
+
+- **Chat** and **Claude Code** are things you actively drive.
+- **Cowork** runs itself on a timer — overnight, every morning, every hour.
+
+That's the unlock for recurring work: a daily news digest, a morning outreach batch, a weekly report. You set it up once; it runs forever.
+
+## Setting one up
+
+1. Create a Cowork agent and give it a clear job and cadence ("every weekday at 9am, compile yesterday's signups into a summary").
+2. Make sure it has your **Orbit MCP URL** and the [Orbit MCP Skill](/use/mcp-skill) loaded.
+3. It runs on schedule from then on.
+
+## Why Cowork needs Orbit more than any other surface
+
+When *you* drive a chat, you can see what happened. A scheduled agent runs while you're asleep — so without a reporting layer, it's a black box. Orbit is that layer:
+
+- The agent **heartbeats** at the start and end of every run, so you know it ran.
+- It **files its output** to your Vault — the digest, the report, the leads.
+- It appears in your **[Briefing](/use/read-briefing)** the next morning: one card, one-line summary, links to everything it produced.
+- It reads your **decisions** first, so it stays on-policy even unattended.
+
+A silent scheduled agent effectively doesn't exist. With Orbit, every run is visible and accountable.
+
+## Good first Cowork agents
+
+- **Morning brief** — summarize overnight activity and what needs you today.
+- **Daily digest** — compile a source (news, signups, metrics) into one filed report.
+- **Recurring outreach** — draft and queue a batch on a schedule.
+
+## Model choice matters here
+
+Scheduled agents run repeatedly, so cost compounds. Use [the right model for the cadence](/claude-education/models): Haiku for frequent simple runs, Sonnet for daily moderate work, Opus only when the task genuinely needs it.
+
+<Card title="Next: routines & schedules" icon="calendar" href="/claude-education/routines-schedules">
+  Cadences, cron, and keeping every run visible.
+</Card>

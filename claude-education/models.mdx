@@ -1,0 +1,44 @@
+---
+title: "Which Claude model to use"
+description: "A plain-English breakdown of Opus, Sonnet, Haiku, and Fable — and how to pick."
+icon: "microchip"
+---
+
+Claude comes in a few models that trade intelligence for speed and cost. Picking the right one per task is free leverage: don't pay Opus prices for a Haiku job, and don't make Haiku do Opus thinking.
+
+## The lineup
+
+| Model | Best at | Use it for |
+|---|---|---|
+| **Opus** (e.g. `claude-opus-4-8`) | Deepest reasoning, hardest problems | Complex architecture, tricky debugging, long multi-step agent work, high-stakes writing |
+| **Sonnet** (e.g. `claude-sonnet-4-6`) | Balanced intelligence + speed | The daily driver — most coding, writing, and analysis |
+| **Haiku** (e.g. `claude-haiku-4-5`) | Speed and low cost | High-volume, simple, repetitive tasks; quick classifications; cheap background runs |
+| **Fable** (e.g. `claude-fable-5`) | Newest flagship family | Reach for the latest capability when you want the most capable model available |
+
+<Note>
+Model names and versions move fast. When you're building anything that calls Claude programmatically, default to the latest and most capable model for the job rather than hardcoding an old one.
+</Note>
+
+## How to choose, in one line each
+
+- **Is it hard, high-stakes, or long-horizon?** → Opus (or the latest flagship).
+- **Is it normal everyday work?** → Sonnet. This is where most of your work should live.
+- **Is it simple and high-volume?** → Haiku. Fast and cheap, perfect for scheduled background jobs.
+
+## Fast mode
+
+Some surfaces offer a **fast mode** — Opus-level quality with faster output (it does *not* drop you to a smaller model). Toggle it with `/fast` where available. Use it when you want Opus's intelligence without the wait.
+
+## Cost discipline with Orbit
+
+This matters most for **scheduled agents**. A Cowork agent that runs every hour on Haiku costs a fraction of one running on Opus — and for routine digests or data pulls, Haiku is plenty. Match the model to the cadence:
+
+- **Hourly/high-frequency, simple** → Haiku
+- **Daily, moderate** → Sonnet
+- **Occasional, complex** → Opus
+
+Because every run files to your Vault, you can review output quality and dial the model up or down per agent.
+
+<Card title="Next: Claude Code basics" icon="terminal" href="/claude-education/claude-code-basics">
+  Your first real agentic session.
+</Card>

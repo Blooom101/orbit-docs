@@ -1,0 +1,46 @@
+---
+title: "Permissions & safety"
+description: "Control exactly what Claude can do — and set it up so Orbit tools never interrupt you."
+icon: "shield-halved"
+---
+
+Claude Code asks permission before it does anything consequential — editing files, running commands, calling tools. Understanding permissions lets you move fast safely, and stop repetitive prompts.
+
+## The basic model
+
+By default, Claude proposes an action and you approve it. For each prompt you can:
+
+- **Allow once** — just this time.
+- **Always allow** — remember this kind of action so it stops asking.
+- **Deny** — refuse; Claude adapts.
+
+A denied call is feedback, not a dead end — Claude will try another approach.
+
+## Permission modes
+
+Claude Code runs under a permission mode that sets how cautious it is — from approving each step, to auto-approving safe actions, to fuller autonomy for trusted workflows. Start cautious; loosen it as you trust a given task. Match the mode to the stakes: tight for production repos, looser for a scratch project.
+
+## Allowlists in settings
+
+For commands and tools you run constantly, pre-approve them so you're never prompted. These live in your Claude Code settings (`settings.json`) as allow/deny rules — for example, always allowing read-only commands while still gating anything destructive.
+
+<Note>
+Good practice: allow the safe, high-frequency stuff (tests, builds, reads) and keep a hard gate on the dangerous stuff (deletes, force-pushes, production deploys).
+</Note>
+
+## The one Orbit-specific setting that matters
+
+When you connect Orbit, Claude will ask permission the first time it calls each Orbit tool. **Choose "Always allow" for the Orbit tools** (`orbit_heartbeat`, `orbit_event`, `orbit_result`, and the rest).
+
+Why it matters: Orbit's value comes from Claude heartbeating at the **start and end of every run**. If each heartbeat triggers a permission prompt, the loop breaks and runs go silent. Allowing them once, permanently, keeps your dashboard live.
+
+## Safety mindset
+
+- Keep destructive actions gated, always.
+- Review the *plan* before approving a batch of edits.
+- For scheduled/autonomous agents, scope their permissions tightly — they run without you watching.
+- Everything a connected agent does still files to your Vault, so you have an audit trail either way.
+
+<Card title="Next: commands, skills & hooks" icon="slash" href="/claude-education/commands">
+  Reusable shortcuts and automated behaviors.
+</Card>

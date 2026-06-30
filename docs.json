@@ -115,6 +115,48 @@
             ]
           },
           {
+            "group": "Claude Education",
+            "pages": [
+              {
+                "group": "Get Oriented",
+                "pages": [
+                  "claude-education/overview",
+                  "claude-education/surfaces",
+                  "claude-education/models"
+                ]
+              },
+              {
+                "group": "Claude Code",
+                "pages": [
+                  "claude-education/claude-code-basics",
+                  "claude-education/folders-context",
+                  "claude-education/permissions",
+                  "claude-education/commands"
+                ]
+              },
+              {
+                "group": "Local vs Cloud",
+                "pages": [
+                  "claude-education/local-vs-cloud",
+                  "claude-education/github"
+                ]
+              },
+              {
+                "group": "Automate with Cowork",
+                "pages": [
+                  "claude-education/cowork",
+                  "claude-education/routines-schedules"
+                ]
+              },
+              {
+                "group": "Putting It Together",
+                "pages": [
+                  "claude-education/optimal-setup"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Reference",
             "pages": [
               "reference/mcp-skill",

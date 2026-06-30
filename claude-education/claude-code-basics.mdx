@@ -1,0 +1,58 @@
+---
+title: "Claude Code: your first session"
+description: "What Claude Code is, how to start it, and how to run a clean first session with Orbit connected."
+icon: "terminal"
+---
+
+Claude Code is Claude with hands — it reads and edits your files, runs commands, and works across a whole project. This page gets you from install to a productive first session.
+
+## Where Claude Code runs
+
+Same Claude Code, four places:
+
+- **Terminal** — the CLI, the classic way.
+- **Desktop app** — Mac and Windows.
+- **Web** — at [claude.ai/code](https://claude.ai/code), runs in the cloud.
+- **IDE extensions** — VS Code and JetBrains.
+
+Pick whichever fits; the behavior is the same.
+
+## Start a session
+
+In a project directory, launch Claude Code and tell it what you want in plain language:
+
+> "Add input validation to the signup form and write tests for it."
+
+Claude explores the relevant files, proposes changes, and (with your permission) edits them and runs the tests.
+
+## The first-session rhythm
+
+1. **Point it at a real task** — concrete and scoped beats vague. "Fix the failing auth test" not "improve auth."
+2. **Let it explore first** — it reads files before editing. Don't over-specify; let it find context.
+3. **Review its plan** — for anything non-trivial it'll outline steps. Course-correct early.
+4. **Approve actions** — edits and commands ask permission (see [Permissions](/claude-education/permissions)).
+5. **Verify** — have it run the tests or the app to prove the change works.
+
+## Connect Orbit on day one
+
+With Orbit connected, Claude Code checks in before it touches anything:
+
+```bash
+claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
+```
+
+Now every session:
+- **Reads your decisions first** — "use JWT for auth," "don't touch the `v2` module" — so it doesn't fight choices you already made.
+- **Files a summary to your Vault** at the end — what it changed and why, searchable by your next session.
+
+See [Connect Claude Code](/use/connect-claude-code) for the full setup.
+
+## A good first ask, end to end
+
+> "Check in with Orbit for any active decisions, add a health-check endpoint to the API, run the tests, then file a short summary of what you did to the Vault."
+
+That single prompt exercises the whole loop: read context → do work → verify → file results.
+
+<Card title="Next: folders & CLAUDE.md" icon="folder-tree" href="/claude-education/folders-context">
+  How Claude reads your project and remembers your rules.
+</Card>
