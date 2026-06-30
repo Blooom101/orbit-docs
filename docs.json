@@ -102,19 +102,9 @@
                 ]
               },
               {
-                "group": "Work with knowledge",
-                "pages": [
-                  "use/promote-note",
-                  "use/handle-conflict",
-                  "use/share-knowledge",
-                  "use/file-authoritative"
-                ]
-              },
-              {
                 "group": "Connect your tools",
                 "pages": [
                   "use/connect-claude",
-                  "use/connect-claude-code",
                   "use/connect-cursor",
                   "use/connect-codex",
                   "use/connect-n8n",
@@ -127,7 +117,6 @@
                 "group": "Communicate with agents",
                 "pages": [
                   "use/send-message",
-                  "use/standing-instructions",
                   "use/pause-agent",
                   "use/broadcast"
                 ]

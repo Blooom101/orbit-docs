@@ -3,25 +3,17 @@ title: "How to send a message to an agent"
 description: "Pass a one-off instruction an agent reads on its next run."
 ---
 
-Messages are how you hand an agent a one-off instruction or piece of context. The agent picks it up the next time it checks in with Orbit.
+Messages are how you hand an agent a new instruction or piece of context. The agent picks it up the each time it checks in with Orbit.
 
 ## Steps
 
-1. Open the agent from your **Orbits** list.
-2. Click **Send Message**.
-3. Write your instruction: *"For today's run, prioritize leads in fintech."*
-4. Send. The message queues for the agent.
+1. Click Instructions in the Orbits page or click the chat icon from the agent in your **Orbits Agents** list. 
+2. Write your instruction: _"For today's run, prioritize leads in fintech."_
+3. Send. The message queues for the agent.
 
 ## How the agent receives it
 
 On its next `orbit_heartbeat`, the agent receives your message in `pending_messages` and acts on it before doing its other work. It can reply via `orbit_message`, and you'll see the reply on your dashboard.
-
-## Message vs. decision
-
-- **Message:** a one-off, for this run or the next. *"Skip the digest today."*
-- **Decision:** a standing rule, for every future run. *"Always send the digest at 9am."*
-
-Use a message when it's temporary; use a [decision](/use/update-decision) when it's a lasting rule.
 
 <Card title="Give standing instructions instead" icon="scroll" href="/use/standing-instructions">
   For rules that should apply every run.
