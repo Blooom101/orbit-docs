@@ -24,8 +24,24 @@
   "navbar": {
     "links": [
       {
-        "href": "https://orbitagents.xyz",
-        "label": "Website"
+        "label": "What is Orbitagents",
+        "href": "/start/what-is-orbit"
+      },
+      {
+        "label": "Quickstart",
+        "href": "/start/quickstart"
+      },
+      {
+        "label": "FAQ",
+        "href": "/help/faq"
+      },
+      {
+        "label": "Connect Claude",
+        "href": "/use/connect-claude"
+      },
+      {
+        "label": "Website",
+        "href": "https://orbitagents.xyz"
       }
     ],
     "primary": {
@@ -72,24 +88,6 @@
             ]
           },
           {
-            "group": "Help & Resources",
-            "pages": [
-              "help/pricing",
-              "help/security",
-              "help/troubleshooting",
-              "help/faq",
-              "help/comparisons",
-              "help/glossary",
-              "help/community"
-            ]
-          }
-        ]
-      },
-      {
-        "anchor": "Use Orbit",
-        "icon": "wand-magic-sparkles",
-        "groups": [
-          {
             "group": "Use Orbit",
             "pages": [
               {
@@ -122,13 +120,7 @@
                 ]
               }
             ]
-          }
-        ]
-      },
-      {
-        "anchor": "Reference",
-        "icon": "rectangle-terminal",
-        "groups": [
+          },
           {
             "group": "Reference",
             "pages": [
@@ -136,6 +128,18 @@
               "reference/data-model",
               "reference/self-hosted",
               "reference/agents-vs-sessions"
+            ]
+          },
+          {
+            "group": "Help & Resources",
+            "pages": [
+              "help/pricing",
+              "help/security",
+              "help/troubleshooting",
+              "help/faq",
+              "help/comparisons",
+              "help/glossary",
+              "help/community"
             ]
           }
         ]
