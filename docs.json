@@ -60,6 +60,7 @@
             "pages": [
               "start/what-is-orbit",
               "start/why-orbit",
+              "start/autonomous-company",
               "start/is-orbit-right",
               "start/quickstart",
               "start/what-next"
@@ -72,6 +73,7 @@
               "concepts/inbox",
               "concepts/vault",
               "concepts/agents",
+              "concepts/orbies",
               "concepts/org-chart",
               "concepts/projects",
               "concepts/decisions",
@@ -86,6 +88,8 @@
               {
                 "group": "Set up your AI company",
                 "pages": [
+                  "use/launch-orbie",
+                  "use/agent-builder",
                   "use/assign-departments",
                   "use/organize-org-chart",
                   "use/create-project",
