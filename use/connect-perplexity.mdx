@@ -1,0 +1,32 @@
+---
+title: "How to connect Perplexity"
+description: "Connect Perplexity to Orbit via its custom connectors — requires a paid Perplexity plan."
+icon: "magnifying-glass"
+---
+
+Perplexity can connect to Orbit through its custom remote connectors, so your research in Perplexity reads from and writes to the same Orbit brain as your other tools.
+
+<Note>
+Custom connectors require a paid Perplexity plan (**Pro, Max, or Enterprise**). They aren't available on the free tier.
+</Note>
+
+## Steps
+
+1. In Perplexity, open **Settings → Connectors** (custom / remote connectors).
+2. Add a new connector pointing at your Orbit MCP URL:
+   ```
+   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   ```
+3. Save and enable it.
+
+## What happens
+
+Perplexity reads your active decisions and knowledge before a task, and files its answers and findings to your Orbit Vault — the same Vault your Claude, Codex, and other agents use. Cited research done in Perplexity becomes context everything else can build on.
+
+## If the connection is rejected
+
+Some Perplexity setups expect an OAuth discovery endpoint (`/.well-known/oauth-authorization-server`) during connector setup. If your connection is refused, that's the usual fix — reach out via [the community](/help/community) and we'll help get it wired up.
+
+<Card title="See all your integrations" icon="plug" href="/use/integrations-overview">
+  Provisioned tools, your tools, and your accounts.
+</Card>

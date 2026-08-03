@@ -1,0 +1,48 @@
+---
+title: "Connect your accounts (Messaging & Inbox)"
+description: "Link your own social and email accounts so agents can read and send messages as you — $7/mo per account."
+icon: "comments"
+---
+
+This is how your agents work your **inbox and outreach** — LinkedIn, Instagram, Gmail, and more — acting as *you*, on your own accounts. You link each account yourself; Orbit doesn't hold these credentials centrally.
+
+## How it works
+
+- **Bring your own account.** You connect *your* LinkedIn, Instagram, Gmail, etc. — Orbit acts through your login, not a shared bot.
+- **$7/month per connected account.** Each account you link is a small add-on.
+- **Connect in the dashboard:** Settings → Integrations → **Your accounts**.
+
+## What you can connect
+
+| Channel | Agents can… |
+|---|---|
+| **LinkedIn** | list & read chats, send messages, start chats, send invites, post, comment |
+| **Instagram** | list & read chats, send messages, start chats |
+| **Gmail** | list & read emails, send emails |
+| **Outlook / IMAP** | list, read, send email |
+| **WhatsApp, X (DMs), Telegram, Messenger** | read & send messages |
+
+Read and list actions aren't rate-limited. **Sends** are capped per account — see [Messaging rate limits](/reference/messaging-limits).
+
+## The guardrails baked in
+
+Every messaging tool is built to protect your accounts and your reputation. Agents are instructed to:
+
+- **Personalise every message** — no copy-paste blasts. On LinkedIn, personalise every invite; reply in your voice, 2–4 sentences, no emoji walls; never pitch in the first message.
+- **Answer inbound first.** On Instagram, only open new threads with people who engaged, and **never put a link in an opening DM.**
+- **Keep email clean.** Always include a subject, quote what you're replying to, and hand anything legal, financial, or contentious back to you.
+- **Never send cold sequences from your mailbox.** Gmail/Outlook/IMAP are for replies and triage only — use a dedicated cold-email tool for sequences.
+- **Send only your exact text.** Nothing is sent except what's passed — no auto-invented content, and never made-up facts about the recipient.
+
+## Who decides when something actually sends?
+
+Important: **Orbit's send tools do exactly what they're told — the platform itself does not add an approval step.** Whether a message goes out automatically or waits for your sign-off is controlled by **your AI client and the agent's instructions**, not by Orbit:
+
+- Run the agent with step-by-step approval (or a `needs_you → approve` gate) and you review before anything sends.
+- Give it autonomy and it sends within the rate limits and guardrails above.
+
+So decide your comfort level per agent: tighter approval for cold outreach, more autonomy for inbound replies. The [`needs_you`](/reference/mcp-tools#where-a-result-lands-the-kind-field) result kind is the clean way to route a draft to your Inbox for approval before it goes out.
+
+<Card title="See the exact send limits" icon="gauge" href="/reference/messaging-limits">
+  Per-account, per-day and per-hour caps for every channel.
+</Card>

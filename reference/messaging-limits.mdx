@@ -1,0 +1,47 @@
+---
+title: "Messaging rate limits"
+description: "Per-account send limits for every messaging channel, tuned to each platform's safety thresholds."
+icon: "gauge"
+---
+
+Orbit caps how many messages each connected account can **send**, tuned to each platform's own bot-detection thresholds so your accounts stay safe. These are per **connected account**. Reading and listing are not capped here.
+
+<Note>
+These protect *your* accounts. Blasting past a platform's limits is how accounts get flagged or banned — Orbit enforces safe ceilings so your agents can't get you in trouble.
+</Note>
+
+## Social DMs & posting
+
+Per connected account:
+
+| Channel | Action | Per day | Per hour |
+|---|---|---|---|
+| LinkedIn | Send message | 50 | 10 |
+| LinkedIn | Start chat | 25 | 6 |
+| LinkedIn | Send invite | 20 | 5 |
+| LinkedIn | Create post | 3 | 1 |
+| LinkedIn | Comment on post | 20 | 5 |
+| Instagram | Send message | 40 | 10 |
+| Instagram | Start chat | 15 | 5 |
+| WhatsApp | Send message | 100 | — |
+| X (Twitter) | Send DM | 40 | — |
+| Telegram | Send message | 120 | — |
+| Messenger | Send message | 40 | — |
+
+## Email sending
+
+Per connected mailbox:
+
+| Mailbox | Per day | Per hour | Note |
+|---|---|---|---|
+| Gmail | 120 | 30 | Replies / triage only — never cold sequences |
+| Outlook | 120 | — | Replies / triage only — never cold sequences |
+| IMAP / SMTP | 100 | — | Replies / triage only — never cold sequences |
+
+## Why mailboxes are "replies only"
+
+Your personal mailbox isn't built for cold outreach — sending sequences from it risks your domain's reputation and deliverability. Use it for replying and triaging inbound; run cold sequences through a dedicated cold-email tool instead. See the [guardrails](/use/connect-your-accounts#the-guardrails-baked-in).
+
+<Card title="Connect an account" icon="comments" href="/use/connect-your-accounts">
+  Link your social & email accounts to start.
+</Card>

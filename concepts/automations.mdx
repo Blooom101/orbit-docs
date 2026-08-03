@@ -1,0 +1,45 @@
+---
+title: "Automations"
+description: "Chain your agents into multi-step flows on a visual canvas."
+icon: "diagram-project"
+---
+
+<Note>
+**Coming soon.** Automations are in build. This page is a preview of how they'll work — details may change before launch.
+</Note>
+
+Automations let you chain your agents into a multi-step flow on a visual canvas — so instead of one agent doing one job, a sequence of steps runs end to end.
+
+## The pieces
+
+- **Automation** — the whole flow.
+- **Entry point** — the *one* existing agent that kicks it off.
+- **Follow-up steps** — what happens next: a Claude call, a tool call, a transformation, or handing off to another existing agent.
+
+Only agents that are already active in your Orbit dashboard can be placed on the canvas — automations connect the team you already have.
+
+## What starts an automation
+
+The entry point can fire on any of:
+
+- **A schedule** — at a set time or cadence.
+- **From a previous step** — when an earlier step completes.
+- **An external event** — something happening outside Orbit.
+
+(Any of these can trigger it — they're OR'd together.)
+
+## What can be an entry point
+
+It depends on the agent's underlying engine:
+
+- **Cowork agent** — schedule triggers.
+- **Claude Code routine** — all trigger types, via a per-routine fire link and token.
+- **Codex / others** — varies by engine.
+
+## Connecting a Claude Code routine
+
+*(How-to coming with launch.)* You'll paste the routine's fire URL and token once, then use a Test button to confirm it's wired up — after which the routine can be an entry point for automations.
+
+<Card title="For now: schedules & routines" icon="calendar" href="/claude-education/routines-schedules">
+  Put a single agent on repeat today.
+</Card>

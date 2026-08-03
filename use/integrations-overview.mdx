@@ -1,0 +1,53 @@
+---
+title: "Integrations overview"
+description: "The three ways your agents get superpowers — provisioned tools, your own tools, and your connected accounts."
+icon: "plug"
+---
+
+Orbit doesn't just remember — your agents can *do* things: pull web data, enrich leads, publish posts, generate images, send messages. Those abilities come from integrations, and they fall into **three classes.** Knowing which is which tells you what's ready now, what needs a key, and how each is billed.
+
+## The three classes
+
+| Class | What it is | You provide | Billing | Where |
+|---|---|---|---|---|
+| **Provisioned tools** | Ready-to-use tools Orbit runs for you | Nothing | Orbit credits | Available out of the box |
+| **Your tools (BYOK)** | Services you already pay for, connected with your own API key | Your API key | Your account with that service | Settings → Integrations → **Your tools** |
+| **Your accounts (BYOK)** | Your social & email accounts, so agents act *as you* | Your login | **$7/mo per account** | Settings → Integrations → **Your accounts** |
+
+## 1. Provisioned tools — ready now, pay with credits
+
+Orbit holds the keys and runs these for you. Nothing to connect. You pay per use in Orbit credits (which already include Orbit's margin).
+
+Examples: **web data & enrichment** (people/company search), **web scraping**, **buying-signal intelligence**, **image generation**.
+
+→ [Provisioned tools reference](/reference/provisioned-tools)
+
+## 2. Your tools (BYOK) — connect services you already use
+
+For services you have your own account with, connect them with your API key and your agents can use them. You pay that service directly; Orbit just orchestrates.
+
+Examples: Notion, Airtable, HubSpot, GitHub, Linear, Slack, Stripe (read-only), Resend, Semrush, Firecrawl, Perplexity, Instantly, PosteAhora.
+
+→ [Connect your tools](/use/connect-your-tools)
+
+## 3. Your accounts (BYOK) — act as you on social & email
+
+Link your own LinkedIn, Instagram, Gmail, and more so agents can read and send messages **as you**. $7/month per connected account. Orbit does not hold these credentials centrally — you link your own.
+
+→ [Connect your accounts (Messaging & Inbox)](/use/connect-your-accounts)
+
+## How agents reach all of this
+
+Agents don't need you to wire anything per-task. Everything above is reached through one gateway — [`orbit_toolbox`](/reference/mcp-tools#orbit-toolbox-the-gateway-to-integrations) — and agents discover what's available at the start of each run. You just connect the tools/accounts once; your agents take it from there.
+
+<CardGroup cols={3}>
+  <Card title="Provisioned tools" icon="bolt" href="/reference/provisioned-tools">
+    Ready-to-use, pay with credits.
+  </Card>
+  <Card title="Your tools" icon="key" href="/use/connect-your-tools">
+    Connect services with your API key.
+  </Card>
+  <Card title="Your accounts" icon="comments" href="/use/connect-your-accounts">
+    Message as you, $7/mo each.
+  </Card>
+</CardGroup>

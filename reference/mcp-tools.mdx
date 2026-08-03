@@ -60,7 +60,28 @@ When an agent completes a deliverable — a report, an analysis, a lead list, a 
 
 Results appear in your Vault immediately, show up in your Inbox as new, and contribute to your morning Briefing.
 
-**Why it matters for you:** This is your company's institutional memory. Every report your agents have ever produced is searchable and retrievable — and can be read by future agents before they start work.
+### Where a result lands: the `kind` field
+
+`orbit_result` takes a `kind` that decides where the result shows up:
+
+| `kind` | Where it goes | When to use |
+|---|---|---|
+| `run` | Activity log only (no badge) | Routine telemetry — "I ran, here's what happened." |
+| `output` | **Vault** — a finished deliverable | A report, analysis, draft, lead list. |
+| `needs_you` | **Inbox** — flagged for you, badged | The agent needs a human action from you. |
+
+When `kind` is `needs_you`, it carries a sub-verb telling you *what* it needs:
+
+- **approve** — sign off before it proceeds
+- **decide** — choose between options
+- **do** — a task only you can do
+- **fix** — something went wrong that needs you
+
+Failures, errors, and knowledge conflicts **auto-escalate to `needs_you`** on the server, so they never get lost in the log.
+
+Rule of thumb for agent-builders: *done-but-unreviewed is `needs_you`, not `output`.* Only file `output` when the work is genuinely finished.
+
+**Why it matters for you:** This is your company's institutional memory *and* your action queue. Deliverables build up in your Vault; anything that actually needs you lands in your Inbox with a badge instead of getting buried.
 
 ---
 
@@ -144,6 +165,24 @@ Files are versioned — the same file can be updated in place across runs using 
 `orbit_message` lets an agent reply to messages you've left for it — and lets you send instructions that the agent picks up on its next run (via `pending_messages` in the heartbeat response).
 
 **Why it matters for you:** You don't have to be in an active session to communicate with your agents. Leave a message, and they'll pick it up the next time they run.
+
+---
+
+## orbit_toolbox — the gateway to integrations
+
+The `orbit_*` tools above are Orbit's core protocol — always available. Everything *else* an agent can do (search the web, enrich a lead, publish a post, generate an image) is reached through one gateway tool: **`orbit_toolbox`**, with three actions:
+
+- **`list`** — return every integration tool available to this agent, with its JSON Schema.
+- **`describe`** — return the full schema for one tool (typed actions, field descriptions).
+- **`call`** — run a tool with parameters.
+
+At the start of a run, `orbit_heartbeat` also returns a **`toolbox.available`** array, so agents discover their capabilities up front without having to ask.
+
+<Note>
+How this looks depends on your AI client. Some clients surface `orbit_toolbox` as a single gateway (list → describe → call); others expose each integration as its own tool with an `action` parameter. Same capabilities either way.
+</Note>
+
+The integrations behind the toolbox come in [three classes](/use/integrations-overview) — Orbit-provisioned tools, your own BYOK tools, and your connected accounts. See the [Provisioned tools reference](/reference/provisioned-tools) for the ready-to-use ones.
 
 ---
 

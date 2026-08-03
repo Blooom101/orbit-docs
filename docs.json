@@ -79,7 +79,8 @@
               "concepts/decisions",
               "concepts/trust-levels",
               "concepts/knowledge",
-              "concepts/how-it-fits"
+              "concepts/how-it-fits",
+              "concepts/automations"
             ]
           },
           {
@@ -97,7 +98,15 @@
                 ]
               },
               {
-                "group": "Connect your tools",
+                "group": "Integrations",
+                "pages": [
+                  "use/integrations-overview",
+                  "use/connect-your-tools",
+                  "use/connect-your-accounts"
+                ]
+              },
+              {
+                "group": "Connect an AI client",
                 "pages": [
                   "use/connect-claude",
                   "use/connect-cursor",
@@ -105,6 +114,7 @@
                   "use/connect-n8n",
                   "use/connect-chatgpt",
                   "use/connect-gemini",
+                  "use/connect-perplexity",
                   "use/mcp-skill"
                 ]
               },
@@ -163,6 +173,9 @@
           {
             "group": "Reference",
             "pages": [
+              "reference/mcp-tools",
+              "reference/provisioned-tools",
+              "reference/messaging-limits",
               "reference/mcp-skill",
               "reference/data-model",
               "reference/self-hosted",

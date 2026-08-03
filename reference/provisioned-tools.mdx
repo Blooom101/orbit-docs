@@ -1,0 +1,59 @@
+---
+title: "Provisioned tools"
+description: "Ready-to-use tools Orbit runs for you — no keys to connect, billed to your Orbit credits."
+icon: "bolt"
+---
+
+Provisioned tools are the abilities Orbit provides out of the box. You don't connect anything — Orbit holds the keys and runs them. You pay per use in **Orbit credits** (prices already include Orbit's margin). Costs below are approximate per-record rates.
+
+<Note>
+These are reached through the [`orbit_toolbox`](/reference/mcp-tools#orbit-toolbox-the-gateway-to-integrations) gateway. Your agents discover and call them automatically — you rarely invoke them by hand.
+</Note>
+
+## Web data & enrichment
+
+Find and enrich people and companies — the raw material for outreach and research.
+
+- **Search people** by title, company domain, or location.
+- **Search companies** by name, domain, size, or location.
+- **Enrich a person** (by domain + name, or LinkedIn URL) or **a company** (by domain).
+- **Dry-run test** any query cheaply before spending, and a free **credits** check.
+
+*Approx. cost:* people search ~$0.005/record, company search ~$0.004/record, person enrich ~$0.05/record, company enrich ~$0.02/record.
+
+## Web scraping
+
+Pull structured data from almost any site by running scraper "actors."
+
+- **Run** a scraper and wait for results, or **start** it and poll for slow jobs.
+- **Check status** and **fetch** results, projecting only the fields you need.
+- **Inspect** an actor's inputs before running.
+
+*Billed to your Orbit budget based on the actor's usage.*
+
+## Buying-signal intelligence
+
+Spot companies showing intent — hiring, funding, launches, tech changes, and more.
+
+- **Company overview**, **job openings**, **detected technologies**, **news**, **product launches**, **financing events**, **website changes**, **connections**.
+- **Discover** companies by technology, by hiring, or by recent events (e.g. "just raised funding").
+- Free **test** and **sources** (valid categories) actions.
+
+*Approx. cost:* overview/financing/discovery ~$0.010/record, events/launches ~$0.008, news/changes ~$0.006, jobs ~$0.005, technologies/connections ~$0.004.
+
+## Image generation
+
+Turn text into images, returned as a ready-to-use link.
+
+- Choose a model tier (fast / quality / gemini) for speed vs polish.
+- The result comes back as a signed URL you can drop into a post or doc.
+
+## Keeping costs sane
+
+- Agents are told to **test first** when tuning a new query — that's a capped, cheap dry run.
+- Every call is billed to credits and **shows up in your activity**, so you can see what a run cost.
+- Match the tool to the job: enrichment is pricier than search; scrape only the fields you need.
+
+<Card title="Connect your own tools too" icon="key" href="/use/connect-your-tools">
+  Bring services you already pay for with your own API key.
+</Card>

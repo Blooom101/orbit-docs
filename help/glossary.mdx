@@ -31,6 +31,18 @@ description: "Plain definitions for every Orbit term."
 
 **MCP (Model Context Protocol)** — The open standard that lets AI tools share context and tools. How agents connect to Orbit.
 
+**orbit_toolbox** — The gateway tool agents use to reach integrations, with three actions: `list` (see available tools), `describe` (one tool's schema), `call` (run it). See [MCP Tools](/reference/mcp-tools#orbit-toolbox-the-gateway-to-integrations).
+
+**Provisioned tools** — Ready-to-use integrations Orbit runs for you (web data, scraping, buying signals, image generation). No key to connect; billed to Orbit credits. See [Provisioned tools](/reference/provisioned-tools).
+
+**Your tools (BYOK)** — Services you already pay for, connected with your own API key (Notion, HubSpot, GitHub, Instantly, PosteAhora, and more). See [Connect your tools](/use/connect-your-tools).
+
+**Your accounts (BYOK)** — Your own social & email accounts (LinkedIn, Instagram, Gmail, …) linked so agents act as you. $7/mo per account. See [Connect your accounts](/use/connect-your-accounts).
+
+**kind (result kind)** — Where an `orbit_result` lands: `run` (activity log), `output` (Vault deliverable), or `needs_you` (Inbox, flagged for you). See [MCP Tools](/reference/mcp-tools#where-a-result-lands-the-kind-field).
+
+**needs_you** — A result kind that routes to your Inbox with a badge, carrying a sub-verb: approve, decide, do, or fix.
+
 **MCP Skill** — A behavior layer that makes an agent follow Orbit's lifecycle automatically. See [The Orbit MCP Skill](/reference/mcp-skill).
 
 **Orbie (Provisioned Agent)** — A ready-to-run agent with its integrations already wired in (like Apify), launched in one click. The fastest way to add a working teammate to your AI company. See [Orbies](/concepts/orbies).
