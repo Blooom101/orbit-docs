@@ -50,6 +50,7 @@
             "group": "Quick Links",
             "pages": [
               "start/what-is-orbit",
+              "concepts/chat",
               "start/quickstart",
               "help/faq",
               "use/connect-claude"
@@ -70,6 +71,7 @@
             "group": "Core Concepts",
             "pages": [
               "concepts/overview",
+              "concepts/chat",
               "concepts/briefing",
               "concepts/inbox",
               "concepts/vault",
@@ -99,6 +101,7 @@
               {
                 "group": "Set up your AI company",
                 "pages": [
+                  "concepts/chat",
                   "use/launch-orbie",
                   "use/agent-builder",
                   "use/add-agent",
