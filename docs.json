@@ -70,6 +70,7 @@
             "group": "Core Concepts",
             "pages": [
               "concepts/overview",
+              "concepts/briefing",
               "concepts/inbox",
               "concepts/vault",
               "concepts/agents",
@@ -87,14 +88,31 @@
             "group": "Use Orbit",
             "pages": [
               {
+                "group": "Daily workflow",
+                "pages": [
+                  "use/read-briefing",
+                  "use/process-inbox",
+                  "use/search-vault",
+                  "use/update-decision"
+                ]
+              },
+              {
                 "group": "Set up your AI company",
                 "pages": [
                   "use/launch-orbie",
                   "use/agent-builder",
+                  "use/add-agent",
                   "use/assign-departments",
                   "use/organize-org-chart",
                   "use/create-project",
                   "use/scheduled-agents"
+                ]
+              },
+              {
+                "group": "Work with knowledge",
+                "pages": [
+                  "use/file-authoritative",
+                  "use/handle-conflict"
                 ]
               },
               {
@@ -109,6 +127,7 @@
                 "group": "Connect an AI client",
                 "pages": [
                   "use/connect-claude",
+                  "use/connect-claude-code",
                   "use/connect-cursor",
                   "use/connect-codex",
                   "use/connect-n8n",
@@ -122,6 +141,7 @@
                 "group": "Communicate with agents",
                 "pages": [
                   "use/send-message",
+                  "use/standing-instructions",
                   "use/pause-agent",
                   "use/broadcast"
                 ]
