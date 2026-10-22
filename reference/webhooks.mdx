@@ -1,33 +1,33 @@
 ---
-title: "Webhooks"
-description: "Outbound events Orbit can send to your own tools."
+title: "Webhooks and agents calling agents"
+description: "Plug any Orbit agent into anything, in both directions, and let agents hand work to each other."
 ---
 
-Webhooks let Orbit notify your external systems when something happens — a new result is filed, a conflict is detected, an agent goes idle.
+Every Orbit agent can be reached from outside and can reach out, so a chain of work can run across Orbit and your own systems.
 
-<Note>
-Webhooks are rolling out. If you need a specific event for an integration today, reach out via [The Inside](https://orbitagents.xyz) and we'll prioritize it.
-</Note>
+## Incoming webhooks
 
-## Typical events
+Every agent gets an **incoming webhook**. A request to that URL becomes the agent's task, and the agent can wait for the result and return it in the response.
 
-- `result.filed` — an agent filed a new Vault entry
-- `conflict.detected` — new content contradicts higher-trust content
-- `decision.created` / `decision.closed` — a decision changed
-- `agent.idle` / `agent.error` — an agent's shift status changed
+- Use it to start a run from a form, a Zapier flow, or your own backend.
+- The request body is handed to the agent as its instructions.
 
-## How it works
+## Outgoing webhooks
 
-1. Register a webhook URL in your dashboard.
-2. Select the events you want delivered.
-3. Orbit sends a signed POST to your URL when a matching event fires.
-4. Your system verifies the signature and acts on the payload.
-
-## Common uses
+Send each finished run to your own URL, **signed**, with a **Send test** button so you can wire it up with confidence.
 
 - Post new Vault results to a Slack channel.
 - Page yourself when an agent errors.
-- Trigger a downstream pipeline when a decision is ratified.
+- Trigger a downstream pipeline when a run finishes.
+
+Your system verifies the signature and acts on the payload.
+
+## Agents calling agents
+
+- **One agent can start another** and hand it data.
+- **Sub-agents:** pick which agents a given agent is allowed to hand work to.
+
+This is how a [workflow](/concepts/automations) connects steps, and how a complex job splits across specialised agents.
 
 <Card title="Prefer pull over push?" icon="magnifying-glass" href="/reference/mcp-tools">
   Agents can query state directly with orbit_search and orbit_context.

@@ -3,7 +3,7 @@
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg",
-    "href": "https://orbitagents.xyz"
+    "href": "https://orbitagents.com"
   },
   "favicon": "/favicon.png",
   "colors": {
@@ -20,16 +20,16 @@
   "topbarLinks": [
     {
       "name": "Website",
-      "url": "https://orbitagents.xyz"
+      "url": "https://orbitagents.com"
     },
     {
       "name": "Community",
-      "url": "https://orbitagents.xyz"
+      "url": "https://orbitagents.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Open Dashboard",
-    "url": "https://app.orbitagents.xyz"
+    "url": "https://app.orbitagents.com"
   },
   "anchors": [
     {
@@ -45,7 +45,7 @@
     {
       "name": "Community",
       "icon": "users",
-      "url": "https://orbitagents.xyz"
+      "url": "https://orbitagents.com"
     }
   ],
   "navigation": [

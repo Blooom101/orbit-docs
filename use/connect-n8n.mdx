@@ -10,7 +10,7 @@ n8n is a workflow automation platform. Connecting it to Orbit makes your automat
 1. In your n8n workflow, add an **MCP Client** node (or an **HTTP Request** node).
 2. Set the endpoint to your Orbit MCP URL:
    ```
-   https://app.orbitagents.xyz/api/public/mcp/[your-key]
+   https://app.orbitagents.com/api/public/mcp/[your-key]
    ```
 3. Call `orbit_heartbeat` at the **start** of the workflow to receive active decisions.
 4. Call `orbit_result` when the workflow completes to file its output to your Vault.

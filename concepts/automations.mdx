@@ -1,53 +1,40 @@
 ---
-title: "Automations"
-description: "Chain your agents into a workflow — each one working on the previous agent's output."
+title: "Workflows"
+description: "Describe a workflow and Orbit builds a chain of agents, each one working on the previous one's output."
 icon: "diagram-project"
 ---
 
-An automation is a **workflow of agents**: several agents wired together so each one works on the previous one's output, in sequence. Instead of one agent doing one job, a chain runs end to end — research feeds a writer, which feeds a publisher — all sharing one memory and governed by your decisions.
+A workflow is a **chain of agents** wired together so each one works on the previous one's output. Instead of one agent doing one job, a chain runs end to end, research feeding a writer, which feeds a publisher, all sharing one [Brain](/concepts/knowledge) and governed by your [decisions](/concepts/decisions).
+
+<Note>
+Workflows were previously called "automations" and built on the chains canvas. Same idea, now with a chat builder and a cleaner canvas.
+</Note>
 
 ## Two ways to build one
 
-- **Just ask [Chat](/concepts/chat).** Describe the end-to-end outcome and Orbie builds the chain for you — the fastest path.
-- **Use the visual canvas.** Drag your agents onto a canvas and connect them yourself when you want fine control.
+- **Just describe it in chat.** At the bottom of the canvas, say what you want ("every Monday find 20 SaaS founders and email me a summary"). Orbit plans 1 to 5 mini agents, picks their tools, decides when it starts and where the result goes, and you press **Build it**.
+- **Use the canvas.** Link agents yourself when you want fine control.
 
 ## The pieces
 
-- **Automation** — the whole workflow.
-- **Entry point** — the *one* existing agent that kicks it off.
-- **Follow-up steps** — what happens next: a Claude call, a tool call, a transformation, or handing off to another one of your existing agents.
+- **Start cards** fire the workflow: by hand, on a schedule, or from a webhook.
+- **Mini agents** are the steps: one instruction each, a chosen set of tools, and a cap on tool calls.
+- **End cards** send the result where it belongs: a Vault report, Telegram, email, or a signed webhook.
 
-Only agents already active in your workspace can be placed — automations connect the team you already have.
+## Running and watching
 
-## What starts an automation
-
-The entry point can fire on any of:
-
-- **A schedule** — at a set time or cadence.
-- **From a previous step** — when an earlier step finishes.
-- **An external event** — something happening outside Orbit.
-
-(Any of these can trigger it.)
+- **A grid of every workflow** is the main view, with each schedule written in plain words.
+- **Test runs** and a **run log** let you prove a chain works before you trust it.
 
 ## Why this is the unlock
 
-Single agents are useful. Chained agents are a *company*. A lead-sourcing agent hands enriched leads to an outreach agent; a research agent hands findings to a content agent. Each step builds on the last, nothing is re-derived, and the whole chain reads from the same [Vault](/concepts/vault) and obeys the same [decisions](/concepts/decisions).
-
-This cross-coordination — agents handing off to each other with shared memory — is what turns a pile of separate bots into an operation that runs itself.
-
-## What can be an entry point
-
-It depends on the agent's underlying engine:
-
-- **Cowork agent** — schedule triggers.
-- **Claude Code routine** — all trigger types.
-- **Codex / others** — varies by engine.
+Single agents are useful. Chained agents are a *company*. A lead-sourcing agent hands enriched leads to an outreach agent, a research agent hands findings to a content agent. Each step builds on the last, nothing is re-derived, and the whole chain reads from the same Brain and obeys the same decisions.
 
 <CardGroup cols={2}>
   <Card title="Build one with Chat" icon="sparkles" href="/concepts/chat">
     Describe the outcome; Orbie wires the chain.
   </Card>
-  <Card title="Put a single agent on repeat" icon="calendar" href="/claude-education/routines-schedules">
-    Schedules and routines for one agent.
+  <Card title="Agents calling agents" icon="code-branch" href="/reference/webhooks">
+    Webhooks and sub-agents for connecting anything.
   </Card>
 </CardGroup>

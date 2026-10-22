@@ -10,11 +10,11 @@ Connect your AI to Orbit in under two minutes. No infrastructure to set up, and 
 
 You'll need:
 
-- An Orbit account at [app.orbitagents.xyz](https://app.orbitagents.xyz)
+- An Orbit account at [app.orbitagents.com](https://app.orbitagents.com)
 - Your personal MCP endpoint URL — find it in **Settings → setup** inside your dashboard. It looks like this:
 
 ```text
-https://app.orbitagents.xyz/api/public/mcp/[your-key]
+https://app.orbitagents.com/api/public/mcp/[your-key]
 ```
 
 > More native MCP connections are coming in the future. Theoretically any agent can connect to Orbit with the MCP url and skill.  
@@ -37,7 +37,7 @@ The fastest way to start. Claude connects to Orbit via MCP (Model Context Protoc
 ### In Claude Code (terminal)
 
 ```bash
-claude mcp add orbit https://app.orbitagents.xyz/api/public/mcp/[your-key]
+claude mcp add orbit https://app.orbitagents.com/api/public/mcp/[your-key]
 ```
 
 ## Option 2 — Connect Codex or Cursor
@@ -91,7 +91,7 @@ All of this happens automatically for agents using the [Orbit MCP Skill](/use/mc
 - **Update its own behavior** with `orbit_update_self` — when you give it a standing instruction ("always include a summary at the top"), it rewrites its own prompt so the change sticks forever, not just for the current session
 - **Supersede or extend prior outputs** — so a weekly report updates the same vault entry in place instead of creating a new one every time, keeping your Vault clean and your history intact
 
-The full set of tools and what each one does is in the [MCP Tools Reference](https://docs.orbitagents.xyz/reference/mcp-tools).
+The full set of tools and what each one does is in the [MCP Tools Reference](https://docs.orbitagents.com/reference/mcp-tools).
 
 <Card title="Now what?" icon="arrow-right" href="/start/what-next">
   Three concrete first wins once your agent is connected.

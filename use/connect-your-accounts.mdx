@@ -17,12 +17,21 @@ This is how your agents work your **inbox and outreach** — LinkedIn, Instagram
 | Channel | Agents can… |
 |---|---|
 | **LinkedIn** | list & read chats, send messages, start chats, send invites, post, comment |
-| **Instagram** | list & read chats, send messages, start chats |
+| **Instagram** | read & answer DMs, **and publish** photo posts, carousels, reels, and stories |
 | **Gmail** | list & read emails, send emails |
 | **Outlook / IMAP** | list, read, send email |
 | **WhatsApp, X (DMs), Telegram, Messenger** | read & send messages |
+| **Twilio (SMS)** | send and read texts from your own number |
 
-Read and list actions aren't rate-limited. **Sends** are capped per account — see [Messaging rate limits](/reference/messaging-limits).
+Read and list actions aren't rate-limited. **Sends** are capped per account — see [Messaging rate limits](/reference/messaging-limits). A LinkedIn account on Sales Navigator sends up to **50 invites a day** instead of 20.
+
+<Note>
+Connecting a Gmail or Outlook account also brings your **calendar** into Orbit, read-only and free, so agents can check your meetings before booking. See [the Calendar](/concepts/calendar).
+</Note>
+
+### Text your leads (Twilio SMS)
+
+Connect your own Twilio number (Account SID, Auth Token, number) and agents send and read texts within safe limits (300 a day, 6 per person a day). Texts in land in the People [Inbox](/concepts/inbox) as SMS conversations, and replies from the inbox go out by SMS. A missed call can get a text back. STOP and START are honoured, and texted numbers become [CRM](/concepts/crm) people.
 
 ## The guardrails baked in
 

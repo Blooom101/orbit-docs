@@ -10,7 +10,7 @@
   "logo": {
     "light": "/logo/light.png",
     "dark": "/logo/dark.png",
-    "href": "https://orbitagents.xyz"
+    "href": "https://orbitagents.com"
   },
   "appearance": {
     "default": "light"
@@ -25,13 +25,13 @@
     "links": [
       {
         "label": "Website",
-        "href": "https://orbitagents.xyz"
+        "href": "https://orbitagents.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Open Dashboard",
-      "href": "https://app.orbitagents.xyz"
+      "href": "https://app.orbitagents.com"
     }
   },
   "footer": {
@@ -71,19 +71,26 @@
             "group": "Core Concepts",
             "pages": [
               "concepts/overview",
+              "concepts/dashboard",
               "concepts/chat",
               "concepts/briefing",
               "concepts/inbox",
               "concepts/vault",
+              "concepts/knowledge",
               "concepts/agents",
               "concepts/orbies",
+              "concepts/learnings",
+              "concepts/automations",
+              "concepts/marketplace",
+              "concepts/crm",
+              "concepts/calendar",
+              "concepts/tasks",
+              "concepts/views",
               "concepts/org-chart",
               "concepts/projects",
               "concepts/decisions",
               "concepts/trust-levels",
-              "concepts/knowledge",
-              "concepts/how-it-fits",
-              "concepts/automations"
+              "concepts/how-it-fits"
             ]
           },
           {
@@ -108,7 +115,15 @@
                   "use/assign-departments",
                   "use/organize-org-chart",
                   "use/create-project",
-                  "use/scheduled-agents"
+                  "use/scheduled-agents",
+                  "use/browser-agents",
+                  "use/teams-agencies"
+                ]
+              },
+              {
+                "group": "Customers and outreach",
+                "pages": [
+                  "use/lead-forms"
                 ]
               },
               {
@@ -199,6 +214,8 @@
               "reference/mcp-tools",
               "reference/provisioned-tools",
               "reference/messaging-limits",
+              "reference/webhooks",
+              "reference/api",
               "reference/mcp-skill",
               "reference/data-model",
               "reference/self-hosted",
